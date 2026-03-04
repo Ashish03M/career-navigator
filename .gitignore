@@ -1,6 +1,6 @@
-# Development Scripts
-scripts/
-**/scripts/
+# Binary assets (keep JSON, ignore PDFs/docs)
+data/*.pdf
+data/*.docx
 
 # Dependencies
 **/node_modules/
@@ -40,7 +40,6 @@ Thumbs.db
 # Test output
 .test-pdf-output/
 test-results/
-e2e/
 
 # Reports
 production_readiness_report.md
