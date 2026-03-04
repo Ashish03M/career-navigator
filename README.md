@@ -43,7 +43,7 @@ Covers 7 career paths: Data Analyst, Data Engineer, Data Scientist, AI Engineer,
 | **Goal-Based Filtering** | The curriculum is filtered to include only subjects relevant to the selected career path (e.g., a Data Analyst path skips Deep Learning and NLP). |
 | **Dynamic Duration Scaling** | Module durations adjust based on experience level and weekly hours available — someone with 5 h/week gets a longer but lighter timeline than someone studying 20+ h/week. |
 | **Branded PDF Export** | Users enter their name and email, then download a professionally designed PDF with custom fonts (Kanit, Saira) and Codebasics branding. Built client-side with `@react-pdf/renderer`. |
-| **Lead Capture** | Name and email are optionally sent to Google Sheets via webhook before PDF download. A honeypot field provides bot protection. |
+| **Lead Capture** | Name and email are optionally sent to Google Sheets via the Google Sheets API before PDF download. A honeypot field provides bot protection. |
 | **Feedback System** | After viewing their roadmap, users can rate the experience (1-5 stars) and leave a comment — captured to Google Sheets. |
 | **Admin Control Center** | A password-protected panel for managing the master syllabus (subjects, chapters, topics, resources). Changes are reflected instantly in new roadmaps. |
 | **Security Hardening** | HMAC-SHA256 auth cookies, HSTS, CSP headers, in-memory rate limiting, Zod input validation, and Edge middleware for admin route protection. |
@@ -75,8 +75,8 @@ The roadmap engine supports 7 career tracks, each with its own curated curriculu
 | **UI Library** | [React 19](https://react.dev/) |
 | **Styling** | [Tailwind CSS 3.4](https://tailwindcss.com/) |
 | **Components** | [shadcn/ui](https://ui.shadcn.com/) + [Radix UI](https://www.radix-ui.com/) |
-| **Animations** | [Framer Motion 12](https://www.framer.com/motion/) |
 | **PDF Generation** | [@react-pdf/renderer 4.3](https://react-pdf.org/) |
+| **Lead Capture** | [Google Sheets API](https://developers.google.com/sheets/api) via `googleapis` |
 | **Validation** | [Zod 4](https://zod.dev/) (runtime schema validation) |
 | **Icons** | [Lucide React](https://lucide.dev/) |
 | **Data Storage** | Local filesystem — JSON file persistence (no database required) |
@@ -134,7 +134,7 @@ career-navigator/
 │   │   └── templates/
 │   │       └── CareerRoadmapPdf.tsx # Branded PDF React component
 │   ├── leads/
-│   │   └── sheets.ts               # Google Sheets webhook integration
+│   │   └── sheets.ts               # Google Sheets API integration (lead & feedback capture)
 │   ├── schemas/
 │   │   └── planInputSchema.ts      # Zod schema for plan input validation
 │   ├── auth.ts                     # HMAC-SHA256 cookie-based admin auth
@@ -155,6 +155,15 @@ career-navigator/
 │   └── fonts/                      # Custom brand fonts (Kanit, Saira)
 ├── .github/workflows/ci.yml        # GitHub Actions CI pipeline
 ├── Dockerfile                       # Multi-stage production Docker build
+├── scripts/                        # Test & validation scripts
+│   ├── patch-next.js               # Next.js patch for React 19 compat
+│   ├── validate-roadmap.ts         # Core roadmap validation
+│   ├── validate-schema.ts          # JSON schema validation
+│   ├── verify-all.ts               # Full verification suite
+│   ├── test-matrix-hardened.ts     # Matrix combination tests
+│   └── test-pdf-hardened.ts        # PDF generation tests
+├── e2e/
+│   └── smoke.spec.ts              # Playwright E2E smoke tests
 ├── .env.example                     # Environment variable template
 ├── next.config.mjs                  # Next.js config (CSP, HSTS, standalone output)
 ├── tailwind.config.ts               # Tailwind CSS configuration
@@ -212,7 +221,9 @@ Create a `.env.local` file in the project root (use `.env.example` as a template
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
 | `ADMIN_PASSWORD` | No | — | Password to access the admin panel at `/admin`. Only needed if you use the admin panel. The public app works without it. |
-| `GOOGLE_SHEETS_WEBHOOK_URL` | No | — | Google Apps Script webhook URL for capturing leads and feedback. If not set, data capture is silently skipped and the app still works normally. |
+| `GOOGLE_SERVICE_ACCOUNT_EMAIL` | No | — | Google Cloud service account email for Sheets API. If not set, lead/feedback capture is silently skipped. |
+| `GOOGLE_PRIVATE_KEY` | No | — | Private key for the service account (PEM format, in double quotes). |
+| `GOOGLE_SHEET_ID` | No | — | ID of the Google Sheet to write leads and feedback to. |
 | `STRICT_VALIDATION` | No | `false` | Set to `"true"` to enable stricter plan validation rules during roadmap generation. |
 
 > **Note:** Never commit `.env.local` to version control. It is already listed in `.gitignore`.
@@ -273,7 +284,7 @@ All API routes live under `/api/`. Authentication is required only for write ope
 | `PUT` | `/api/syllabus` | **Yes** | — | Update the syllabus (admin only). Body is validated with Zod. |
 | `POST` | `/api/admin/auth` | No | 5 req/15 min | Admin login (`{ password }`) or logout (`{ action: "logout" }`) |
 | `GET` | `/api/admin/check` | No | — | Check current admin authentication status |
-| `POST` | `/api/leads` | No | 10 req/15 min | Capture lead data (name, email, goal) to Google Sheets |
+| `POST` | `/api/leads` | No | 10 req/15 min | Capture lead data (name, email, target role) to Google Sheets |
 | `POST` | `/api/feedback` | No | 10 req/15 min | Capture star rating and feedback comment to Google Sheets |
 | `GET` | `/api/health` | No | — | Health check — returns `{ status: "ok" }` or `503` if degraded |
 
@@ -342,7 +353,9 @@ docker build -t career-navigator .
 # Run the container
 docker run -p 3000:3000 \
   -e ADMIN_PASSWORD=your-strong-password \
-  -e GOOGLE_SHEETS_WEBHOOK_URL=https://script.google.com/... \
+  -e GOOGLE_SERVICE_ACCOUNT_EMAIL=your-sa@project.iam.gserviceaccount.com \
+  -e GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n" \
+  -e GOOGLE_SHEET_ID=your-sheet-id \
   career-navigator
 ```
 
@@ -414,7 +427,7 @@ On every admin save, a backup is automatically created (e.g., `data/syllabus_v3.
 | Port 3000 already in use | Stop the other process or run `npm run dev -- -p 3001` to use a different port. |
 | Admin login not working | Verify `ADMIN_PASSWORD` is set in `.env.local`. Restart the dev server after changing env vars. |
 | PDF download fails | Check the browser console for errors. The PDF generator loads ~100 KB of code on first download — slow connections may hit the 30-second timeout. |
-| Lead capture not working | This is expected if `GOOGLE_SHEETS_WEBHOOK_URL` is not set. The app works without it. |
+| Lead capture not working | This is expected if the Google Sheets API env vars are not set. Ensure `GOOGLE_SERVICE_ACCOUNT_EMAIL`, `GOOGLE_PRIVATE_KEY`, and `GOOGLE_SHEET_ID` are all configured in `.env.local`. |
 | `npm run lint` prompts for config | Ensure `.eslintrc.json` exists with `{ "extends": "next/core-web-vitals" }`. |
 | Health check returns 503 | The data file `data/syllabus_v3.json` is missing or unreadable. Ensure it exists and has correct permissions. |
 | TypeScript errors after pulling | Run `npm install` to ensure dependencies match `package-lock.json`. |
@@ -465,5 +478,5 @@ This project is proprietary software owned by [Codebasics](https://codebasics.io
 
 For technical deep-dives into the architecture and internal logic:
 
-- [Project Architecture & Data Flow](./PROJECT_OVERVIEW.md)
-- [The Roadmap Generation Math & Logic](./roadmap_generation_logic.md)
+- [API Reference](./docs/api.md)
+- [Architecture & Data Flow](./docs/architecture.md)
