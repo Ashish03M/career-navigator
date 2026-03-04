@@ -3,7 +3,6 @@
 import { cn } from "@/lib/utils";
 import { type StepOption } from "@/lib/types";
 import { type ReactNode, useRef, useCallback, useEffect } from "react";
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
 type SelectionStepProps = {
@@ -41,12 +40,7 @@ export default function SelectionStep({
     }, []);
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-        >
+        <div>
             <h2 className="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-3 text-slate-900 tracking-tight font-[family-name:var(--font-outfit)]">
                 {icon} {title}
             </h2>
@@ -54,22 +48,17 @@ export default function SelectionStep({
                 {options.map((opt, idx) => {
                     const isSelected = selected === opt.id;
                     return (
-                        <motion.button
+                        <button
                             key={opt.id}
                             data-testid={`option-${opt.id}`}
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: idx * 0.05 + 0.1, type: "spring", stiffness: 300, damping: 20 }}
                             onClick={() => handleSelect(opt.id)}
                             className={cn(
-                                "relative p-6 rounded-xl border-2 transition-all duration-300 text-left flex flex-col gap-3 group overflow-hidden",
+                                "relative p-6 rounded-xl border-2 transition-all duration-300 text-left flex flex-col gap-3 group overflow-hidden hover:-translate-y-1 active:scale-[0.98]",
                                 columns === 2 && options.length % 2 !== 0 && idx === options.length - 1 ? "md:col-span-2" : "",
                                 isSelected
                                     ? "scale-[1.02] border-blue-600 bg-blue-50/50 shadow-xl shadow-blue-500/10 ring-1 ring-blue-600 offset-2"
                                     : "border-slate-200 hover:border-blue-400 bg-white hover:bg-slate-50 hover:shadow-lg hover:scale-[1.01]"
                             )}
-                            whileHover={{ y: -4 }}
-                            whileTap={{ scale: 0.98 }}
                         >
                             <div className={cn(
                                 "w-12 h-12 rounded-lg flex items-center justify-center text-2xl transition-all duration-300",
@@ -94,19 +83,15 @@ export default function SelectionStep({
 
                             {/* Selection Checkmark */}
                             {isSelected && (
-                                <motion.div
-                                    initial={{ scale: 0 }}
-                                    animate={{ scale: 1 }}
-                                    className="absolute top-4 right-4 text-blue-600"
-                                >
+                                <div className="absolute top-4 right-4 text-blue-600">
                                     <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center p-1">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                                             <polyline points="20 6 9 17 4 12" />
                                         </svg>
                                     </div>
-                                </motion.div>
+                                </div>
                             )}
-                        </motion.button>
+                        </button>
                     );
                 })}
             </div>
@@ -139,6 +124,6 @@ export default function SelectionStep({
                     {nextLabel}
                 </Button>
             </div>
-        </motion.div>
+        </div>
     );
 }

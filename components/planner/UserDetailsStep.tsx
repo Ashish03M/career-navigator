@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -22,13 +21,7 @@ export default function UserDetailsStep({
     const isValid = name.trim().length > 0 && email.trim().length > 0 && email.includes("@");
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="w-full max-w-lg mx-auto"
-        >
+        <div className="w-full max-w-lg mx-auto">
             <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center text-slate-900 tracking-tight font-[family-name:var(--font-outfit)]">
                 Final Step
             </h2>
@@ -94,6 +87,6 @@ export default function UserDetailsStep({
                     Generate Roadmap →
                 </Button>
             </div>
-        </motion.div>
+        </div>
     );
 }

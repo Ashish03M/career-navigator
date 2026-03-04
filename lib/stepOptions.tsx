@@ -23,16 +23,26 @@ export const BACKGROUND_OPTIONS: StepOption[] = [
     { id: 'career-gap', name: 'Career Break / Returning to Workforce', desc: 'Restarting career after a break', icon: <Undo2 className={`${I} text-purple-500`} /> },
 ];
 
-// 2. PRIOR KNOWLEDGE (Multi-Select)
+// 2. PRIOR KNOWLEDGE (Multi-Select) — grouped by category for chip UI
+export const EXPERIENCE_CATEGORIES = [
+    { id: 'foundations', label: 'Foundations' },
+    { id: 'ai-ml', label: 'AI & Machine Learning' },
+    { id: 'tools', label: 'Tools & Infrastructure' },
+    { id: 'data-eng', label: 'Data Engineering' },
+] as const;
+
 export const EXPERIENCE_OPTIONS = [
-    { key: 'python', label: 'Python Fundamentals', desc: 'Variables, loops, functions, OOP' },
-    { key: 'sql', label: 'SQL Basics', desc: 'Queries, joins, database fundamentals' },
-    { key: 'statistics', label: 'Math & Statistics', desc: 'Probability, distributions, hypothesis testing' },
-    { key: 'ml', label: 'Machine Learning Basics', desc: 'Regression, classification, core algorithms' },
-    { key: 'dl', label: 'Deep Learning', desc: 'Neural networks, CNNs, RNNs, transformers' },
-    { key: 'nlp', label: 'NLP', desc: 'Text processing, embeddings, transformers' },
-    { key: 'genai', label: 'GenAI Basics', desc: 'LLMs, RAG, prompt engineering' },
-    { key: 'mlops', label: 'MLOps & Cloud', desc: 'Deployment, MLflow, AWS/Azure' },
+    { key: 'python', label: 'Python', desc: 'Variables, loops, functions, OOP', group: 'foundations' },
+    { key: 'sql', label: 'SQL', desc: 'Queries, joins, database fundamentals', group: 'foundations' },
+    { key: 'statistics', label: 'Math & Stats', desc: 'Probability, distributions, hypothesis testing', group: 'foundations' },
+    { key: 'ml', label: 'ML Basics', desc: 'Regression, classification, core algorithms', group: 'ai-ml' },
+    { key: 'dl', label: 'Deep Learning', desc: 'Neural networks, CNNs, RNNs, transformers', group: 'ai-ml' },
+    { key: 'nlp', label: 'NLP', desc: 'Text processing, embeddings, transformers', group: 'ai-ml' },
+    { key: 'genai', label: 'GenAI', desc: 'LLMs, RAG, prompt engineering', group: 'ai-ml' },
+    { key: 'mlops', label: 'MLOps & Cloud', desc: 'Deployment, MLflow, AWS/Azure', group: 'tools' },
+    { key: 'excel_bi', label: 'Excel & BI Tools', desc: 'Excel, Power BI, Tableau, dashboards', group: 'tools' },
+    { key: 'data_engineering', label: 'DE Basics', desc: 'ETL pipelines, data modeling, warehousing', group: 'data-eng' },
+    { key: 'big_data', label: 'Big Data & Cloud', desc: 'Spark, Databricks, Snowflake, Airflow, Kafka', group: 'data-eng' },
 ];
 
 // 3. TARGET GOAL (Single Select)

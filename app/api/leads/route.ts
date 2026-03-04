@@ -7,11 +7,7 @@ const leadSchema = z.object({
     fullName: z.string().min(2, "Name is required"),
     email: z.string().email("Invalid email address"),
     targetRoleLabel: z.string(),
-    weeklyHours: z.string(),
-    timelineLabel: z.string(),
-    learnerType: z.string().optional(),
-    selectedSkips: z.array(z.string()).optional(),
-    appVersion: z.string().optional(),
+    sessionId: z.string().max(100).optional().default(""),
     honeypot: z.string().optional(), // Hidden field for bot protection
 });
 
@@ -48,9 +44,7 @@ export async function POST(request: Request) {
             fullName: data.fullName,
             email: data.email,
             targetRoleLabel: data.targetRoleLabel,
-            weeklyHours: data.weeklyHours,
-            timelineLabel: data.timelineLabel,
-            learnerType: data.learnerType,
+            sessionId: data.sessionId,
         });
 
         if (!success) {

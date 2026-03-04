@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { type PlanResult } from "@/lib/types";
 import { BookOpen, CheckCircle2, ChevronDown, ChevronUp, Rocket, Sparkles, Star, Briefcase, Repeat, ExternalLink, Download, Zap } from "lucide-react";
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { type PdfMeta } from "@/lib/pdf/generateBrandedPdf";
 
@@ -49,6 +48,7 @@ const getAccentClasses = (colorClass: string) => {
 export default function RoadmapResult({ plan, goalLabel, goalId, learnerType, onReset }: RoadmapResultProps) {
     const [expandedModule, setExpandedModule] = useState<string | null>(null);
     const [pdfModalOpen, setPdfModalOpen] = useState(false);
+    const sessionId = useMemo(() => crypto.randomUUID(), []);
 
     const pdfMeta: PdfMeta = {
         targetRoleLabel: goalLabel,
@@ -65,13 +65,7 @@ export default function RoadmapResult({ plan, goalLabel, goalId, learnerType, on
     const { projectCount, internshipCount, warnings } = plan;
 
     return (
-        <motion.div
-            className="space-y-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-        >
+        <div className="space-y-8">
             <div>
                 {/* HEADER */}
                 <div className="bg-white text-slate-900 border-b border-gray-100 pb-8">
@@ -99,12 +93,7 @@ export default function RoadmapResult({ plan, goalLabel, goalId, learnerType, on
 
                 {/* PERSONALIZATION DELTA */}
                 {plan.diagnostics?.appliedSkips && plan.diagnostics.appliedSkips.length > 0 && (
-                    <motion.div
-                        className="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-2xl p-6 mt-8"
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3, duration: 0.4 }}
-                    >
+                    <div className="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-2xl p-6 mt-8">
                         <div className="flex items-start gap-3">
                             <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center shrink-0">
                                 <Zap className="w-5 h-5 text-emerald-600" />
@@ -120,7 +109,7 @@ export default function RoadmapResult({ plan, goalLabel, goalId, learnerType, on
                                 </p>
                             </div>
                         </div>
-                    </motion.div>
+                    </div>
                 )}
 
                 {/* WARNINGS */}
@@ -352,7 +341,7 @@ export default function RoadmapResult({ plan, goalLabel, goalId, learnerType, on
             </div>
 
             {/* FEEDBACK CAPTURE */}
-            <FeedbackWidget />
+            <FeedbackWidget sessionId={sessionId} />
 
             {/* FOOTER CTA */}
             <div className="bg-gradient-to-br from-slate-800 via-indigo-900 to-slate-900 text-white p-8 rounded-2xl text-center border border-white/10 shadow-3xl relative overflow-hidden">
@@ -391,9 +380,10 @@ export default function RoadmapResult({ plan, goalLabel, goalId, learnerType, on
                     meta={pdfMeta}
                     learnerType={learnerType}
                     bootcampUrl={getBootcampUrl(goalId)}
+                    sessionId={sessionId}
                 />
             </PdfErrorBoundary>
-        </motion.div>
+        </div>
     );
 }
 const SimpleTooltip = ({ children, content, id }: { children: React.ReactNode; content: string; id?: string }) => {
@@ -420,7 +410,7 @@ const SimpleTooltip = ({ children, content, id }: { children: React.ReactNode; c
     );
 };
 
-function FeedbackWidget() {
+function FeedbackWidget({ sessionId }: { sessionId?: string }) {
     const [rating, setRating] = useState<number | null>(null);
     const [comment, setComment] = useState("");
     const [submitted, setSubmitted] = useState(false);
@@ -439,6 +429,7 @@ function FeedbackWidget() {
                 body: JSON.stringify({
                     rating,
                     comment: comment.trim() || "",
+                    sessionId: sessionId || "",
                 }),
             });
 

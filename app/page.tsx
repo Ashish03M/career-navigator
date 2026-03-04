@@ -14,7 +14,6 @@ import {
     AVAILABILITY_OPTIONS,
     LEARNING_PREFERENCES,
 } from "@/lib/stepOptions";
-import { AnimatePresence, motion } from "framer-motion";
 import ProgressBar from "@/components/planner/ProgressBar";
 import SelectionStep from "@/components/planner/SelectionStep";
 import ExperienceStep from "@/components/planner/ExperienceStep";
@@ -286,7 +285,7 @@ export default function BootcampPlanner() {
                 </div>
 
                 <div className="flex-1 p-6 md:p-12 lg:p-20 flex flex-col justify-center max-w-4xl mx-auto w-full">
-                    <AnimatePresence mode="wait">
+                    <>
                         {showPlan && plan ? (
                             <RoadmapResult
                                 key="roadmap"
@@ -333,7 +332,7 @@ export default function BootcampPlanner() {
                                 {renderStep()}
                             </div>
                         )}
-                    </AnimatePresence>
+                    </>
                 </div>
                 <footer className="py-4 px-6 text-center text-xs text-slate-400 border-t border-slate-100">
                     <a href="/privacy" className="hover:text-slate-600 underline">Privacy Policy</a>

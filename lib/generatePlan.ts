@@ -17,6 +17,9 @@ const EXPERIENCE_TO_CATEGORY: Record<string, string> = {
     nlp: 'nlp',
     genai: 'genai',
     mlops: 'mlops',
+    excel_bi: 'analytics',
+    data_engineering: 'data-engineering',
+    big_data: 'big-data',
 };
 
 /**
@@ -81,6 +84,17 @@ const SUBJECT_ID_TO_EXPERIENCE_CATEGORY: Record<string, string> = {
     'free-genai': 'genai',
     'free-genai-projects': 'genai',
     'free-devops': 'mlops',
+    // Data Analyst subjects
+    'free-excel': 'analytics',
+    'free-powerbi': 'analytics',
+    'free-ai-tools-da': 'analytics',
+    // Data Engineer subjects
+    'free-de-foundations': 'data-engineering',
+    'free-data-modeling': 'data-engineering',
+    'free-cloud-etl': 'data-engineering',
+    'free-spark-databricks': 'big-data',
+    'free-snowflake-airflow': 'big-data',
+    'free-streaming-analytics': 'big-data',
 };
 
 /** Phase names that indicate career/support phases (not learning modules) */
@@ -199,6 +213,16 @@ export function generatePlan(input: PlanInput): PlanResult {
             shouldSkip = true;
             reason = `User marked ${tags.category} as known`;
             reasonCode = `SKIP_EXPERIENCE_${tags.category.toUpperCase()}`;
+            flagUsed = `experience.${tags.category}`;
+        }
+
+        // Tool-based skip: big-data and analytics are standalone tools, not progressive depth
+        // Skip all levels when user claims knowledge (e.g. knows Spark → skip all Spark modules)
+        const toolCategories = ['big-data', 'analytics', 'data-engineering'];
+        if (!shouldSkip && knownCategories.has(tags.category) && toolCategories.includes(tags.category)) {
+            shouldSkip = true;
+            reason = `User marked ${tags.category} as known`;
+            reasonCode = `SKIP_TOOL_${tags.category.toUpperCase()}`;
             flagUsed = `experience.${tags.category}`;
         }
 

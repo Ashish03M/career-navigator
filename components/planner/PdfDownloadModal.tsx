@@ -23,6 +23,7 @@ type PdfDownloadModalProps = {
     meta: PdfMeta;
     learnerType?: string;
     bootcampUrl?: string;
+    sessionId?: string;
 };
 
 type ModalState = "form" | "loading" | "success" | "error";
@@ -38,6 +39,7 @@ export default function PdfDownloadModal({
     meta,
     learnerType,
     bootcampUrl = "https://codebasics.io/bootcamps/gen-ai-data-science-bootcamp-with-virtual-internship",
+    sessionId,
 }: PdfDownloadModalProps) {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -64,10 +66,8 @@ export default function PdfDownloadModal({
                         fullName: name.trim(),
                         email: email.trim(),
                         targetRoleLabel: meta.targetRoleLabel,
-                        weeklyHours: meta.weeklyHoursLabel,
-                        timelineLabel: meta.durationLabel,
-                        learnerType: learnerType || "",
                         honeypot: honeypot,
+                        sessionId: sessionId || "",
                     }),
                 });
             } catch (apiError) {
@@ -112,7 +112,7 @@ export default function PdfDownloadModal({
             );
             setState("error");
         }
-    }, [isValid, name, email, plan, meta, honeypot, learnerType]);
+    }, [isValid, name, email, plan, meta, honeypot, sessionId]);
 
     const handleReset = () => {
         setState("form");

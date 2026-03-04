@@ -6,6 +6,7 @@ import { logger } from "@/lib/logger";
 const feedbackSchema = z.object({
     rating: z.number().int().min(1).max(5),
     comment: z.string().max(2000).optional().default(""),
+    sessionId: z.string().max(100).optional().default(""),
 });
 
 export async function POST(request: Request) {
@@ -34,6 +35,7 @@ export async function POST(request: Request) {
         const success = await captureFeedback({
             rating: data.rating,
             comment: data.comment,
+            sessionId: data.sessionId,
         });
 
         if (!success) {

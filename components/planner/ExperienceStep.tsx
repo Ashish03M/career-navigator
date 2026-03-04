@@ -2,9 +2,8 @@
 
 import { cn } from "@/lib/utils";
 import { type ExperienceState } from "@/lib/types";
-import { EXPERIENCE_OPTIONS } from "@/lib/stepOptions";
-import { CheckCircle2, Code, Rocket } from "lucide-react";
-import { motion } from "framer-motion";
+import { EXPERIENCE_OPTIONS, EXPERIENCE_CATEGORIES } from "@/lib/stepOptions";
+import { Check, CheckCircle2, Code } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 type ExperienceStepProps = {
@@ -20,79 +19,90 @@ export default function ExperienceStep({ experience, onChange, onBack, onGenerat
         onChange({ ...experience, [key]: !experience[key as keyof ExperienceState] });
     };
 
+    const selectedCount = Object.values(experience).filter(Boolean).length;
+
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-        >
+        <div>
             <h2 className="text-2xl md:text-3xl font-bold mb-2 flex items-center gap-3 text-slate-900 tracking-tight font-[family-name:var(--font-outfit)]">
                 <Code className="text-blue-600" /> Prior Knowledge
             </h2>
-            <p className="mb-6 text-slate-500">Select what you already know well enough to skip or fast-track.</p>
+            <p className="mb-6 text-slate-500">Select what you already know — we&apos;ll skip those topics.</p>
 
-            <div className="space-y-3">
-                {EXPERIENCE_OPTIONS.map((item, idx) => {
-                    const isChecked = experience[item.key as keyof ExperienceState];
+            <div className="space-y-5">
+                {EXPERIENCE_CATEGORIES.map((cat) => {
+                    const items = EXPERIENCE_OPTIONS.filter((o) => o.group === cat.id);
+                    if (items.length === 0) return null;
 
                     return (
-                        <motion.button
-                            key={item.key}
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: idx * 0.05 }}
-                            onClick={() => toggle(item.key)}
-                            whileHover={{ scale: 1.01 }}
-                            whileTap={{ scale: 0.99 }}
-                            className={cn(
-                                "w-full p-5 rounded-xl border-2 transition-all text-left flex items-start gap-4 group",
-                                isChecked
-                                    ? "bg-gradient-to-r from-blue-500 to-[#6F53C1] text-white shadow-lg shadow-[#6F53C1]/20"
-                                    : "border-gray-200 hover:border-blue-300 bg-white hover:bg-gray-50/50"
-                            )}
-                            suppressHydrationWarning
-                        >
-                            <div className={cn(
-                                "mt-0.5 w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all shrink-0",
-                                isChecked
-                                    ? "bg-white border-white"
-                                    : "border-gray-300 group-hover:border-blue-300"
-                            )}>
-                                {isChecked && <CheckCircle2 className="w-4 h-4 text-[#6F53C1]" />}
+                        <div key={cat.id}>
+                            <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2.5">
+                                {cat.label}
+                            </p>
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-2.5">
+                                {items.map((item) => {
+                                    const isChecked = experience[item.key as keyof ExperienceState];
+                                    return (
+                                        <button
+                                            key={item.key}
+                                            onClick={() => toggle(item.key)}
+                                            className={cn(
+                                                "relative rounded-xl p-3.5 text-left border-2 transition-all active:scale-[0.98] group",
+                                                isChecked
+                                                    ? "bg-gradient-to-br from-blue-500 to-[#6F53C1] text-white border-transparent shadow-lg shadow-[#6F53C1]/15"
+                                                    : "border-slate-200 bg-white text-slate-700 hover:border-blue-300 hover:bg-blue-50/30 hover:shadow-sm"
+                                            )}
+                                        >
+                                            <div className="flex items-center gap-2 mb-1">
+                                                <div className={cn(
+                                                    "w-4.5 h-4.5 rounded-md border flex items-center justify-center shrink-0 transition-all",
+                                                    isChecked
+                                                        ? "bg-white/90 border-white/60"
+                                                        : "border-slate-300 group-hover:border-blue-300"
+                                                )}>
+                                                    {isChecked && <Check className="w-3 h-3 text-[#6F53C1]" strokeWidth={3} />}
+                                                </div>
+                                                <span className="font-semibold text-sm leading-tight">{item.label}</span>
+                                            </div>
+                                            <p className={cn(
+                                                "text-[11px] leading-snug pl-6",
+                                                isChecked ? "text-white/75" : "text-slate-400"
+                                            )}>
+                                                {item.desc}
+                                            </p>
+                                        </button>
+                                    );
+                                })}
                             </div>
-                            <div>
-                                <h4 className={cn("font-semibold", isChecked ? "text-white" : "text-gray-800")}>
-                                    {item.label}
-                                </h4>
-                                <p className={cn("text-sm", isChecked ? "text-white/90" : "text-gray-500")}>{item.desc}</p>
-                            </div>
-                        </motion.button>
+                        </div>
                     );
                 })}
             </div>
 
-            {Object.values(experience).filter(Boolean).length > 0 && (
-                <p className="text-sm text-emerald-600 font-medium mt-4 flex items-center gap-1.5">
+            {selectedCount > 0 && (
+                <p className="text-sm text-emerald-600 font-medium mt-5 flex items-center gap-1.5">
                     <CheckCircle2 className="w-4 h-4" />
-                    {Object.values(experience).filter(Boolean).length} skill{Object.values(experience).filter(Boolean).length !== 1 ? 's' : ''} selected — we&apos;ll skip these topics to save you time
+                    {selectedCount} skill{selectedCount !== 1 ? 's' : ''} selected — we&apos;ll skip these topics to save you time
                 </p>
             )}
 
-            <div className="flex gap-3 mt-4">
-                <Button variant="outline" size="lg" onClick={onBack} className="rounded-xl px-6">
+            <div className="flex items-center gap-4 mt-6">
+                <Button
+                    variant="ghost"
+                    onClick={onBack}
+                    className="text-slate-400 hover:text-slate-600 hover:bg-slate-50 pl-0 hover:pl-2 transition-all"
+                >
                     ← Back
                 </Button>
+                <div className="flex-1" />
                 <Button
-                    variant="premium"
-                    size="lg"
                     data-testid="step-next"
                     onClick={onGenerate}
-                    className="flex-1 rounded-xl py-4 h-auto text-lg font-bold"
+                    size="lg"
+                    className="rounded-full px-8 py-6 text-lg font-bold shadow-lg transition-all transform bg-blue-600 text-white hover:bg-blue-700 hover:shadow-xl hover:-translate-y-0.5"
                 >
-                    <Rocket className="w-5 h-5 mr-2" /> {nextLabel || "Continue →"}
+                    {nextLabel || "Continue →"}
                 </Button>
             </div>
-        </motion.div>
+        </div>
     );
 }

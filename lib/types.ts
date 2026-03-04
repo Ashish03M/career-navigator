@@ -21,6 +21,9 @@ export type ExperienceState = {
     nlp: boolean;
     genai: boolean;
     mlops: boolean;
+    excel_bi: boolean;
+    data_engineering: boolean;
+    big_data: boolean;
 };
 
 export type Phase = {
@@ -96,4 +99,7 @@ export const INITIAL_EXPERIENCE: ExperienceState = {
     nlp: false,
     genai: false,
     mlops: false,
+    excel_bi: false,
+    data_engineering: false,
+    big_data: false,
 };
