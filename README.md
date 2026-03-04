@@ -11,8 +11,6 @@ A free **Data & AI career roadmap generator** by [Codebasics](https://codebasics
 
 Covers 7 career paths: Data Analyst, Data Engineer, Data Scientist, AI Engineer, ML Engineer, GenAI Engineer, and NLP Engineer.
 
-**Live at**: [navigator.codebasics.io](https://navigator.codebasics.io)
-
 ---
 
 ## Table of Contents
@@ -99,6 +97,7 @@ career-navigator/
 │   │   ├── leads/                  # Lead capture → Google Sheets
 │   │   └── syllabus/               # Syllabus CRUD (GET / PUT)
 │   ├── admin/
+│   │   ├── layout.tsx              # Admin layout wrapper
 │   │   ├── login/page.tsx          # Admin login page
 │   │   └── page.tsx                # Admin syllabus editor
 │   ├── privacy/page.tsx            # Privacy policy
@@ -106,7 +105,10 @@ career-navigator/
 │   ├── error.tsx                   # Page-level error boundary
 │   ├── global-error.tsx            # Root-level error boundary
 │   ├── layout.tsx                  # Root layout with metadata & fonts
+│   ├── loading.tsx                 # Global loading UI
+│   ├── not-found.tsx               # Custom 404 page
 │   ├── page.tsx                    # Main 6-question roadmap flow
+│   ├── providers.tsx               # Client-side providers wrapper
 │   ├── robots.ts                   # SEO robots.txt generation
 │   └── sitemap.ts                  # SEO sitemap generation
 │
@@ -119,7 +121,7 @@ career-navigator/
 │   │   ├── RoadmapResult.tsx       # Generated roadmap viewer + feedback widget
 │   │   ├── SelectionStep.tsx       # Single-select question step wrapper
 │   │   └── UserDetailsStep.tsx     # Name & email collection form
-│   └── ui/                         # Reusable shadcn/ui components
+│   └── ui/                         # Reusable shadcn/ui primitives (button, dialog, input, etc.)
 │
 ├── data/
 │   ├── free_syllabus.json          # Free learner syllabus (used by the public app)
@@ -133,15 +135,19 @@ career-navigator/
 │   │       └── CareerRoadmapPdf.tsx # Branded PDF React component
 │   ├── leads/
 │   │   └── sheets.ts               # Google Sheets webhook integration
+│   ├── schemas/
+│   │   └── planInputSchema.ts      # Zod schema for plan input validation
 │   ├── auth.ts                     # HMAC-SHA256 cookie-based admin auth
 │   ├── bootcampData.ts             # Chapter type definition & bootcamp roadmap data
 │   ├── generatePlan.ts             # Core roadmap engine (skip logic, scaling, filtering)
 │   ├── logger.ts                   # Structured JSON logger
+│   ├── normalizeTitle.ts           # Title string normalization utility
 │   ├── rateLimit.ts                # In-memory rate limiter (configurable)
 │   ├── stepOptions.tsx             # All 6 question step options (backgrounds, goals, etc.)
 │   ├── syllabusStore.ts            # Atomic JSON read/write with backup-on-write
 │   ├── syllabusTypes.ts            # Syllabus TypeScript type definitions
 │   ├── types.ts                    # Shared application types (PlanResult, PlanInput, etc.)
+│   ├── utils.ts                    # General utility functions (cn, formatWeeks, etc.)
 │   └── validatePlan.ts             # Plan quality & consistency validation
 │
 ├── middleware.ts                    # Edge middleware (admin route protection)
@@ -187,7 +193,7 @@ career-navigator/
    cp .env.example .env.local
    ```
 
-   Open `.env.local` and set your `ADMIN_PASSWORD`. See [Environment Variables](#environment-variables) for all options.
+   Open `.env.local` and configure any variables you need. See [Environment Variables](#environment-variables) for details. The app works out of the box without any env vars — they're only needed for the admin panel and lead capture.
 
 4. **Start the development server:**
 
@@ -205,7 +211,7 @@ Create a `.env.local` file in the project root (use `.env.example` as a template
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `ADMIN_PASSWORD` | **Yes** | — | Password to access the admin panel at `/admin`. Choose a strong, unique value. |
+| `ADMIN_PASSWORD` | No | — | Password to access the admin panel at `/admin`. Only needed if you use the admin panel. The public app works without it. |
 | `GOOGLE_SHEETS_WEBHOOK_URL` | No | — | Google Apps Script webhook URL for capturing leads and feedback. If not set, data capture is silently skipped and the app still works normally. |
 | `STRICT_VALIDATION` | No | `false` | Set to `"true"` to enable stricter plan validation rules during roadmap generation. |
 
@@ -264,7 +270,7 @@ All API routes live under `/api/`. Authentication is required only for write ope
 |--------|----------|------|------------|-------------|
 | `GET` | `/api/syllabus` | No | — | Fetch the bootcamp syllabus |
 | `GET` | `/api/syllabus?type=free` | No | — | Fetch the free learner syllabus (used by the public app) |
-| `PUT` | `/api/syllabus` | **Yes** | 5 req/15 min | Update the syllabus (admin only). Body is validated with Zod. |
+| `PUT` | `/api/syllabus` | **Yes** | — | Update the syllabus (admin only). Body is validated with Zod. |
 | `POST` | `/api/admin/auth` | No | 5 req/15 min | Admin login (`{ password }`) or logout (`{ action: "logout" }`) |
 | `GET` | `/api/admin/check` | No | — | Check current admin authentication status |
 | `POST` | `/api/leads` | No | 10 req/15 min | Capture lead data (name, email, goal) to Google Sheets |
@@ -379,6 +385,7 @@ All security headers are configured in `next.config.mjs`:
 - **CSP** — Restricts scripts, styles, fonts, images, and connections to trusted origins
 - **X-Frame-Options** — `DENY` (prevents clickjacking)
 - **X-Content-Type-Options** — `nosniff`
+- **Referrer-Policy** — `strict-origin-when-cross-origin`
 - **Permissions-Policy** — Disables camera, microphone, and geolocation
 
 ### Rate Limiting
