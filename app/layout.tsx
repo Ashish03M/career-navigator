@@ -1,0 +1,64 @@
+import type { Metadata } from "next";
+import { Inter, Outfit } from "next/font/google";
+import { Providers } from "./providers";
+import "./globals.css";
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
+
+export const metadata: Metadata = {
+    title: "Data & AI Career Roadmap Generator — Codebasics",
+    description:
+        "Answer 6 questions and get a personalized, week-by-week learning roadmap for Data Analyst, Data Engineer, Data Scientist, ML Engineer, or AI Engineer careers. Free PDF plan tailored to your background, goals, and schedule.",
+    icons: {
+        icon: "/favicon.png",
+        shortcut: "/favicon.png",
+        apple: "/favicon.png",
+    },
+    openGraph: {
+        title: "Data & AI Career Roadmap Generator — Codebasics",
+        description:
+            "Get a personalized, week-by-week learning plan for Data & AI careers. Free PDF download in under 2 minutes.",
+        url: "https://navigator.codebasics.io",
+        siteName: "Codebasics Career Navigator",
+        type: "website",
+        images: [
+            {
+                url: "/og-image.png",
+                width: 1200,
+                height: 630,
+                alt: "Codebasics Data & AI Career Roadmap Generator",
+            },
+        ],
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "Data & AI Career Roadmap Generator — Codebasics",
+        description:
+            "Personalized week-by-week plan for Data & AI careers. Free PDF in 2 minutes.",
+        images: ["/og-image.png"],
+    },
+};
+
+export default function RootLayout({
+    children,
+}: Readonly<{
+    children: React.ReactNode;
+}>) {
+    return (
+        <html lang="en" suppressHydrationWarning>
+            <body
+                className={`${inter.variable} ${outfit.variable} font-sans antialiased bg-background text-foreground min-h-screen selection:bg-blue-500/30`}
+                suppressHydrationWarning
+            >
+                <a
+                    href="#main-content"
+                    className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded-lg focus:font-medium"
+                >
+                    Skip to main content
+                </a>
+                <Providers>{children}</Providers>
+            </body>
+        </html>
+    );
+}

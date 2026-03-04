@@ -1,0 +1,1407 @@
+{
+  "subjects": [
+    {
+      "id": "sub-python",
+      "name": "Python",
+      "displayName": "Module 1: Python",
+      "color": "bg-blue-50 border-blue-200",
+      "category": "foundation",
+      "chapterIds": [
+        "py-03",
+        "py-04",
+        "py-05",
+        "py-06",
+        "py-07",
+        "py-08",
+        "py-09",
+        "py-10",
+        "py-11",
+        "py-12",
+        "py-13",
+        "py-14",
+        "py-15",
+        "py-16"
+      ]
+    },
+    {
+      "id": "sub-online-cred-1",
+      "name": "Online Credibility",
+      "displayName": "Online Credibility & Github",
+      "color": "bg-slate-50 border-slate-200",
+      "category": "career",
+      "chapterIds": [
+        "oc-02",
+        "oc-03",
+        "oc-04"
+      ]
+    },
+    {
+      "id": "sub-sql",
+      "name": "SQL",
+      "displayName": "Module 2: SQL (Basics)",
+      "color": "bg-cyan-50 border-cyan-200",
+      "category": "foundation",
+      "chapterIds": [
+        "sql-02",
+        "sql-03",
+        "sql-04"
+      ]
+    },
+    {
+      "id": "sub-math",
+      "name": "Math & Statistics",
+      "displayName": "Module 3: Math & Statistics",
+      "color": "bg-indigo-50 border-indigo-200",
+      "category": "foundation",
+      "chapterIds": [
+        "math-02",
+        "math-03",
+        "math-04",
+        "math-05",
+        "math-06",
+        "math-07",
+        "math-08",
+        "math-09",
+        "math-10",
+        "math-11",
+        "math-12"
+      ]
+    },
+    {
+      "id": "sub-online-cred-2",
+      "name": "Domain Knowledge",
+      "displayName": "Online Credibility & Domain Knowledge",
+      "color": "bg-slate-50 border-slate-200",
+      "category": "career",
+      "chapterIds": [
+        "dk-02",
+        "dk-03",
+        "dk-04"
+      ]
+    },
+    {
+      "id": "sub-ml",
+      "name": "Machine Learning",
+      "displayName": "Module 4: Machine Learning",
+      "color": "bg-green-50 border-green-200",
+      "category": "core-ai",
+      "chapterIds": [
+        "ml-02",
+        "ml-03",
+        "ml-05",
+        "ml-06",
+        "ml-07",
+        "ml-08",
+        "ml-09",
+        "ml-10",
+        "ml-11",
+        "ml-12",
+        "ml-13"
+      ]
+    },
+    {
+      "id": "sub-job-assist",
+      "name": "Job Assistance",
+      "displayName": "Job Assistance Portal & Resume",
+      "color": "bg-slate-50 border-slate-200",
+      "category": "career",
+      "chapterIds": [
+        "car-01"
+      ]
+    },
+    {
+      "id": "sub-dl",
+      "name": "Deep Learning",
+      "displayName": "Module 5: Deep Learning",
+      "color": "bg-purple-50 border-purple-200",
+      "category": "core-ai",
+      "chapterIds": [
+        "dl-02",
+        "dl-03",
+        "dl-04",
+        "dl-05",
+        "dl-06",
+        "dl-07",
+        "dl-08",
+        "dl-09",
+        "dl-10",
+        "dl-11",
+        "dl-12",
+        "dl-13",
+        "dl-14"
+      ]
+    },
+    {
+      "id": "sub-nlp",
+      "name": "NLP",
+      "displayName": "Module 6: NLP",
+      "color": "bg-pink-50 border-pink-200",
+      "category": "core-ai",
+      "chapterIds": [
+        "nlp-01",
+        "nlp-02",
+        "nlp-03",
+        "nlp-04",
+        "nlp-05"
+      ]
+    },
+    {
+      "id": "sub-genai",
+      "name": "GenAI & Agentic AI",
+      "displayName": "Module 7: GenAI & Agentic AI",
+      "color": "bg-amber-50 border-amber-200",
+      "category": "specialization",
+      "chapterIds": [
+        "gen-02",
+        "gen-03",
+        "gen-04",
+        "gen-05",
+        "gen-06",
+        "gen-07",
+        "gen-08",
+        "gen-09",
+        "gen-10",
+        "gen-11",
+        "gen-12",
+        "gen-13",
+        "gen-14",
+        "gen-17",
+        "gen-18",
+        "gen-19",
+        "gen-15"
+      ]
+    },
+    {
+      "id": "sub-interview",
+      "name": "Interview Prep",
+      "displayName": "Interview Preparation & Job Application",
+      "color": "bg-slate-50 border-slate-200",
+      "category": "career",
+      "chapterIds": [
+        "car-02",
+        "car-03"
+      ]
+    },
+    {
+      "id": "sub-sql-adv",
+      "name": "SQL Advanced",
+      "displayName": "SQL (Advanced)",
+      "color": "bg-cyan-100 border-cyan-300",
+      "category": "foundation",
+      "chapterIds": [
+        "sqladv-01",
+        "sqladv-02",
+        "sqladv-03",
+        "sqladv-04",
+        "sqladv-05",
+        "sqladv-06"
+      ]
+    },
+    {
+      "id": "sub-branding",
+      "name": "Personal Branding",
+      "displayName": "Personal Branding",
+      "color": "bg-slate-100 border-slate-300",
+      "category": "career",
+      "chapterIds": [
+        "car-04",
+        "car-05",
+        "car-06",
+        "car-07"
+      ]
+    },
+    {
+      "id": "sub-virtual-internship",
+      "name": "Virtual Internship",
+      "displayName": "Virtual Internship",
+      "color": "bg-rose-50 border-rose-200",
+      "category": "specialization",
+      "chapterIds": [
+        "vi-01",
+        "vi-02"
+      ]
+    }
+  ],
+  "chapters": [
+    {
+      "id": "py-03",
+      "title": "1: Python Installation & Setup",
+      "durationWeeks": 0.5,
+      "isProject": false,
+      "subjectId": "sub-python",
+      "topics": [
+        "Python Installation (Windows/Linux/Mac)",
+        "How to download code and get help"
+      ]
+    },
+    {
+      "id": "py-04",
+      "title": "2: Python Basics: Variables, Numbers and Strings",
+      "durationWeeks": 0.5,
+      "isProject": false,
+      "subjectId": "sub-python",
+      "topics": [
+        "Variables",
+        "Numbers",
+        "Strings",
+        "Strings - Exercise",
+        "Quiz"
+      ]
+    },
+    {
+      "id": "py-05",
+      "title": "3: Lists, Conditionals & Loops",
+      "durationWeeks": 1,
+      "isProject": false,
+      "subjectId": "sub-python",
+      "topics": [
+        "Lists",
+        "Install Pycharm",
+        "If Condition",
+        "For Loop",
+        "Quiz & Exercise"
+      ]
+    },
+    {
+      "id": "py-06",
+      "title": "4: Data Structures & Functions",
+      "durationWeeks": 1,
+      "isProject": false,
+      "subjectId": "sub-python",
+      "topics": [
+        "Functions",
+        "Dictionary and Tuples",
+        "Modules and Pip",
+        "File Handling",
+        "Quiz & Exercise"
+      ]
+    },
+    {
+      "id": "py-07",
+      "title": "5: OOP & Exception Handling",
+      "durationWeeks": 1,
+      "isProject": false,
+      "subjectId": "sub-python",
+      "topics": [
+        "Classes and Objects",
+        "Operator Overloading",
+        "Inheritance",
+        "Exception Handling",
+        "main Function"
+      ]
+    },
+    {
+      "id": "py-08",
+      "title": "6: NumPy for Data Science",
+      "durationWeeks": 0.8,
+      "isProject": false,
+      "subjectId": "sub-python",
+      "topics": [
+        "Basic Operations",
+        "Matrix Operations",
+        "Slicing, Stacking",
+        "Quiz & Exercise"
+      ]
+    },
+    {
+      "id": "py-09",
+      "title": "7: EDA Using Pandas, Matplotlib and Seaborn",
+      "durationWeeks": 1.2,
+      "isProject": false,
+      "subjectId": "sub-python",
+      "topics": [
+        "Pandas Intro",
+        "Dataframe Basics",
+        "Read/Write Excel/CSV",
+        "Handle NA values",
+        "Group by, Concat, Merge",
+        "Visualization"
+      ]
+    },
+    {
+      "id": "py-10",
+      "title": "8: Project 1: EDA in Hospitality Domain",
+      "durationWeeks": 1.5,
+      "isProject": true,
+      "subjectId": "sub-python",
+      "topics": [
+        "OLTP vs OLAP",
+        "ETL",
+        "Fact vs Dim table",
+        "Data Exploration",
+        "Cleaning & Insights"
+      ]
+    },
+    {
+      "id": "py-11",
+      "title": "9: Advanced Python: Comprehensions",
+      "durationWeeks": 0.5,
+      "isProject": false,
+      "subjectId": "sub-python",
+      "topics": [
+        "Set and Frozenset",
+        "Comprehensions",
+        "PEP8 Naming",
+        "Debugging",
+        "Quiz"
+      ]
+    },
+    {
+      "id": "py-12",
+      "title": "10: JSON, Generators and Decorators",
+      "durationWeeks": 0.5,
+      "isProject": false,
+      "subjectId": "sub-python",
+      "topics": [
+        "Working with JSON",
+        "Generators and Iterators",
+        "Decorators",
+        "Quiz"
+      ]
+    },
+    {
+      "id": "py-13",
+      "title": "11: API Development & Consumption",
+      "durationWeeks": 0.8,
+      "isProject": false,
+      "subjectId": "sub-python",
+      "topics": [
+        "What is API?",
+        "Calling APIs With requests",
+        "Building APIs With FastAPI",
+        "Quiz"
+      ]
+    },
+    {
+      "id": "py-14",
+      "title": "12: Logging, Pytest, Pydantic and Databases",
+      "durationWeeks": 0.8,
+      "isProject": false,
+      "subjectId": "sub-python",
+      "topics": [
+        "Logging",
+        "Pytest",
+        "MySQL Setup",
+        "Data Validation with Pydantic"
+      ]
+    },
+    {
+      "id": "py-15",
+      "title": "13: Project 2: Expense Tracking System",
+      "durationWeeks": 1.5,
+      "isProject": true,
+      "subjectId": "sub-python",
+      "topics": [
+        "Architecture",
+        "Database CRUD",
+        "Backend (FastAPI)",
+        "Frontend (Streamlit)",
+        "Analytics"
+      ]
+    },
+    {
+      "id": "oc-02",
+      "title": "1: Intro to online credibility",
+      "durationWeeks": 0.2,
+      "isProject": false,
+      "subjectId": "sub-online-cred-1",
+      "topics": [
+        "Online credibility",
+        "Open-source contribution"
+      ]
+    },
+    {
+      "id": "oc-03",
+      "title": "2: Get Your LinkedIn Profile Right",
+      "durationWeeks": 0.3,
+      "isProject": false,
+      "subjectId": "sub-online-cred-1",
+      "topics": [
+        "Profile Setup",
+        "Banners"
+      ]
+    },
+    {
+      "id": "oc-04",
+      "title": "3: Python Projects for Your Portfolio!",
+      "durationWeeks": 0,
+      "isProject": false,
+      "subjectId": "sub-online-cred-1",
+      "topics": [
+        "GitHub Upload",
+        "Sharing Skills"
+      ]
+    },
+    {
+      "id": "sql-02",
+      "title": "1: Basic Data Retrieval (SELECT/WHERE)",
+      "durationWeeks": 1,
+      "isProject": false,
+      "subjectId": "sub-sql",
+      "topics": [
+        "Install MySQL",
+        "Retrieve Data (SELECT, WHERE, LIKE)",
+        "Numeric Query (BETWEEN, IN, ORDER BY)",
+        "Summary (MIN, MAX, GROUP BY)",
+        "HAVING",
+        "Calculated Columns"
+      ]
+    },
+    {
+      "id": "sql-03",
+      "title": "2: Joins & Multi-Table Queries",
+      "durationWeeks": 1,
+      "isProject": false,
+      "subjectId": "sub-sql",
+      "topics": [
+        "Joins (INNER, LEFT, RIGHT, FULL)",
+        "Cross Join",
+        "Analytics on Tables",
+        "Join More Than Two Tables"
+      ]
+    },
+    {
+      "id": "sql-04",
+      "title": "3: Assessment",
+      "durationWeeks": 0.2,
+      "isProject": false,
+      "subjectId": "sub-sql",
+      "topics": [
+        "Assessment"
+      ]
+    },
+    {
+      "id": "math-02",
+      "title": "1: Data Types & Visualization",
+      "durationWeeks": 0.5,
+      "isProject": false,
+      "subjectId": "sub-math",
+      "topics": [
+        "Types of Data",
+        "Charts (Pie, Bar, Histograms, Scatter)",
+        "Univariate vs Bivariate"
+      ]
+    },
+    {
+      "id": "math-03",
+      "title": "2: Statistics: Central Tendency & Spread",
+      "durationWeeks": 1,
+      "isProject": false,
+      "subjectId": "sub-math",
+      "topics": [
+        "Mean, Median, Mode",
+        "Percentile",
+        "Range, IQR, Box Plot",
+        "Variance, Std Dev",
+        "Correlation vs Causation"
+      ]
+    },
+    {
+      "id": "math-04",
+      "title": "3: Probability Theory",
+      "durationWeeks": 0.5,
+      "isProject": false,
+      "subjectId": "sub-math",
+      "topics": [
+        "Probability Basics",
+        "Addition/Multiplication Rule",
+        "Bayes Theorem"
+      ]
+    },
+    {
+      "id": "math-05",
+      "title": "4: Distributions",
+      "durationWeeks": 0.8,
+      "isProject": false,
+      "subjectId": "sub-math",
+      "topics": [
+        "Skewness",
+        "Normal Distribution",
+        "Z Score",
+        "Standard Normal Distribution"
+      ]
+    },
+    {
+      "id": "math-06",
+      "title": "5: Project: AtliQo Bank Project",
+      "durationWeeks": 0.5,
+      "isProject": true,
+      "subjectId": "sub-math",
+      "topics": [
+        "Problem Statement",
+        "Project Management (Kanban)",
+        "JIRA Setup"
+      ]
+    },
+    {
+      "id": "math-07",
+      "title": "6: Phase 1: Find Target Market",
+      "durationWeeks": 1.2,
+      "isProject": false,
+      "subjectId": "sub-math",
+      "topics": [
+        "Data Cleaning (NULLs, Outliers)",
+        "Visualization",
+        "Target Group Finalization",
+        "Feedback Meeting"
+      ]
+    },
+    {
+      "id": "math-08",
+      "title": "7: Central Limit Theorem",
+      "durationWeeks": 0.5,
+      "isProject": false,
+      "subjectId": "sub-math",
+      "topics": [
+        "Sampling",
+        "CLT",
+        "Standard Error",
+        "Confidence Interval"
+      ]
+    },
+    {
+      "id": "math-09",
+      "title": "8: Hypothesis Testing",
+      "durationWeeks": 1,
+      "isProject": false,
+      "subjectId": "sub-math",
+      "topics": [
+        "Null vs Alternate",
+        "Z Test",
+        "p-Value",
+        "Type 1/2 Errors",
+        "A/B Testing"
+      ]
+    },
+    {
+      "id": "math-10",
+      "title": "9: Phase 2: A/B Testing For New Credit Card",
+      "durationWeeks": 0.8,
+      "isProject": false,
+      "subjectId": "sub-math",
+      "topics": [
+        "Campaign Planning",
+        "Hypothesis Testing",
+        "Final Meeting"
+      ]
+    },
+    {
+      "id": "math-11",
+      "title": "10: Advanced Hypothesis Testing",
+      "durationWeeks": 0.5,
+      "isProject": false,
+      "subjectId": "sub-math",
+      "topics": [
+        "T-test",
+        "Chi-squared Distribution",
+        "Goodness of Fit",
+        "Test of Independence"
+      ]
+    },
+    {
+      "id": "math-12",
+      "title": "11: Assessment",
+      "durationWeeks": 0.2,
+      "isProject": false,
+      "subjectId": "sub-math",
+      "topics": [
+        "Assessment"
+      ]
+    },
+    {
+      "id": "dk-02",
+      "title": "1: Online Credibility",
+      "durationWeeks": 0.3,
+      "isProject": false,
+      "subjectId": "sub-online-cred-2",
+      "topics": [
+        "LinkedIn Headline",
+        "Engagement",
+        "Approaching people"
+      ]
+    },
+    {
+      "id": "dk-03",
+      "title": "2: Build Your Domain Knowledge",
+      "durationWeeks": 0.3,
+      "isProject": false,
+      "subjectId": "sub-online-cred-2",
+      "topics": [
+        "Resources"
+      ]
+    },
+    {
+      "id": "dk-04",
+      "title": "3: Knowledge Check",
+      "durationWeeks": 0.1,
+      "isProject": false,
+      "subjectId": "sub-online-cred-2",
+      "topics": [
+        "Check"
+      ]
+    },
+    {
+      "id": "ml-02",
+      "title": "1: Intro to ML: Classification vs Regression",
+      "durationWeeks": 0.3,
+      "isProject": false,
+      "subjectId": "sub-ml",
+      "topics": [
+        "Classification vs Regression",
+        "Supervised vs Unsupervised"
+      ]
+    },
+    {
+      "id": "ml-03",
+      "title": "2: Linear Regression & Gradient Descent",
+      "durationWeeks": 1.5,
+      "isProject": false,
+      "subjectId": "sub-ml",
+      "topics": [
+        "Linear Regression",
+        "Cost Function",
+        "Gradient Descent",
+        "Model Evaluation",
+        "Regularization (L1, L2)",
+        "Bias Variance Trade Off"
+      ]
+    },
+    {
+      "id": "ml-05",
+      "title": "3: Ensemble Learning",
+      "durationWeeks": 1.5,
+      "isProject": false,
+      "subjectId": "sub-ml",
+      "topics": [
+        "Bagging (Random Forest)",
+        "Boosting (AdaBoost, Gradient Boosting)",
+        "XGBoost"
+      ]
+    },
+    {
+      "id": "ml-06",
+      "title": "4: Model Evaluation & Fine Tuning",
+      "durationWeeks": 0.8,
+      "isProject": false,
+      "subjectId": "sub-ml",
+      "topics": [
+        "ROC Curve & AUC",
+        "K Fold Cross Validation",
+        "Hyperparameter Tuning (GridSearch, RandomizedSearch)"
+      ]
+    },
+    {
+      "id": "ml-07",
+      "title": "5: ML Project Life Cycle",
+      "durationWeeks": 0.5,
+      "isProject": false,
+      "subjectId": "sub-ml",
+      "topics": [
+        "10 Stages",
+        "Scope of Work",
+        "MLOps Intro"
+      ]
+    },
+    {
+      "id": "ml-08",
+      "title": "6: Feature Engineering",
+      "durationWeeks": 0.5,
+      "isProject": false,
+      "subjectId": "sub-ml",
+      "topics": [
+        "Correlation",
+        "VIF"
+      ]
+    },
+    {
+      "id": "ml-09",
+      "title": "7: Unsupervised Learning",
+      "durationWeeks": 1,
+      "isProject": false,
+      "subjectId": "sub-ml",
+      "topics": [
+        "K Means Clustering",
+        "Hierarchical Clustering",
+        "DBSCAN"
+      ]
+    },
+    {
+      "id": "ml-10",
+      "title": "8: Project 1: Healthcare Premium Prediction",
+      "durationWeeks": 1.5,
+      "isProject": true,
+      "subjectId": "sub-ml",
+      "topics": [
+        "Charter",
+        "EDA",
+        "Feature Engineering",
+        "Model Training",
+        "Streamlit Deployment"
+      ]
+    },
+    {
+      "id": "ml-11",
+      "title": "9: Project 2: Credit Risk Modelling",
+      "durationWeeks": 1.5,
+      "isProject": true,
+      "subjectId": "sub-ml",
+      "topics": [
+        "NBFC Domain",
+        "Data Leakage",
+        "WoE, IV",
+        "KS Statistic",
+        "Optuna",
+        "Business Presentation"
+      ]
+    },
+    {
+      "id": "ml-12",
+      "title": "10: MLOps & Cloud Tools",
+      "durationWeeks": 1.5,
+      "isProject": false,
+      "subjectId": "sub-ml",
+      "topics": [
+        "ML Flow",
+        "Dagshub",
+        "FastAPI Server",
+        "AWS SageMaker",
+        "Data Drift (PSI & CSI)"
+      ]
+    },
+    {
+      "id": "dl-02",
+      "title": "1: Neural Network Foundations",
+      "durationWeeks": 0.3,
+      "isProject": false,
+      "subjectId": "sub-dl",
+      "topics": [
+        "NN Foundation",
+        "DL vs ML",
+        "PyTorch vs TensorFlow"
+      ]
+    },
+    {
+      "id": "dl-03",
+      "title": "2: Neural Networks: Fundamentals",
+      "durationWeeks": 0.5,
+      "isProject": false,
+      "subjectId": "sub-dl",
+      "topics": [
+        "Perceptron",
+        "MLP",
+        "Activation Functions"
+      ]
+    },
+    {
+      "id": "dl-04",
+      "title": "3: PyTorch Basics: Tensors & Autograd",
+      "durationWeeks": 0.8,
+      "isProject": false,
+      "subjectId": "sub-dl",
+      "topics": [
+        "Installation",
+        "Tensors",
+        "Autograd"
+      ]
+    },
+    {
+      "id": "dl-05",
+      "title": "4: Neural Networks: Training",
+      "durationWeeks": 0.8,
+      "isProject": false,
+      "subjectId": "sub-dl",
+      "topics": [
+        "Backpropagation",
+        "Gradient Descent",
+        "Batch/Stochastic GD"
+      ]
+    },
+    {
+      "id": "dl-06",
+      "title": "5: Neural Networks in PyTorch",
+      "durationWeeks": 1,
+      "isProject": false,
+      "subjectId": "sub-dl",
+      "topics": [
+        "DataLoaders",
+        "Classification",
+        "Cost Functions"
+      ]
+    },
+    {
+      "id": "dl-07",
+      "title": "6: Model Optimization: Training Algorithms",
+      "durationWeeks": 0.5,
+      "isProject": false,
+      "subjectId": "sub-dl",
+      "topics": [
+        "Momentum",
+        "RMSprop",
+        "Adam"
+      ]
+    },
+    {
+      "id": "dl-08",
+      "title": "7: Model Optimization: Regularization",
+      "durationWeeks": 0.5,
+      "isProject": false,
+      "subjectId": "sub-dl",
+      "topics": [
+        "Dropout",
+        "Batch Normalization",
+        "Early Stopping"
+      ]
+    },
+    {
+      "id": "dl-09",
+      "title": "8: Hyperparameter Tuning",
+      "durationWeeks": 0.5,
+      "isProject": false,
+      "subjectId": "sub-dl",
+      "topics": [
+        "GridSearch",
+        "RandomSearch",
+        "Optuna"
+      ]
+    },
+    {
+      "id": "dl-10",
+      "title": "9: Convolutional Neural Networks (CNN)",
+      "durationWeeks": 1.5,
+      "isProject": false,
+      "subjectId": "sub-dl",
+      "topics": [
+        "Kernels",
+        "Pooling",
+        "Data Augmentation",
+        "Transfer Learning (ResNet)"
+      ]
+    },
+    {
+      "id": "dl-11",
+      "title": "10: Sequence Models",
+      "durationWeeks": 1,
+      "isProject": false,
+      "subjectId": "sub-dl",
+      "topics": [
+        "RNN",
+        "LSTM",
+        "GRU",
+        "Vanishing Gradient"
+      ]
+    },
+    {
+      "id": "dl-12",
+      "title": "11: Transformers",
+      "durationWeeks": 1.5,
+      "isProject": false,
+      "subjectId": "sub-dl",
+      "topics": [
+        "Encoder-Decoder",
+        "Attention Mechanism",
+        "BERT",
+        "GPT2",
+        "Hugging Face"
+      ]
+    },
+    {
+      "id": "dl-13",
+      "title": "12: Project: Car Damage Detection",
+      "durationWeeks": 1.5,
+      "isProject": true,
+      "subjectId": "sub-dl",
+      "topics": [
+        "CNN",
+        "Transfer Learning",
+        "Optuna",
+        "Streamlit",
+        "FastAPI"
+      ]
+    },
+    {
+      "id": "nlp-01",
+      "title": "1: NLP Pipeline & Tasks",
+      "durationWeeks": 0.5,
+      "isProject": false,
+      "subjectId": "sub-nlp",
+      "topics": [
+        "NLP Tasks",
+        "Pipeline"
+      ]
+    },
+    {
+      "id": "nlp-02",
+      "title": "2: Text Preprocessing",
+      "durationWeeks": 1,
+      "isProject": false,
+      "subjectId": "sub-nlp",
+      "topics": [
+        "Tokenization (Spacy)",
+        "Stemming & Lemmatization",
+        "POS Tagging",
+        "NER",
+        "Regex"
+      ]
+    },
+    {
+      "id": "nlp-03",
+      "title": "3: Text Representation",
+      "durationWeeks": 1,
+      "isProject": false,
+      "subjectId": "sub-nlp",
+      "topics": [
+        "One Hot Encoding",
+        "Bag of Words",
+        "TF-IDF",
+        "Word Embeddings"
+      ]
+    },
+    {
+      "id": "nlp-04",
+      "title": "4: Practical NLP Using Hugging Face",
+      "durationWeeks": 1,
+      "isProject": false,
+      "subjectId": "sub-nlp",
+      "topics": [
+        "Pipelines",
+        "BERT/RoBERTa",
+        "Tokenizers",
+        "Fine Tuning"
+      ]
+    },
+    {
+      "id": "nlp-05",
+      "title": "5: Assessment",
+      "durationWeeks": 0.2,
+      "isProject": false,
+      "subjectId": "sub-nlp",
+      "topics": [
+        "Assessment"
+      ]
+    },
+    {
+      "id": "gen-02",
+      "title": "1: Introduction to GenAI and Agentic AI",
+      "durationWeeks": 0.5,
+      "isProject": false,
+      "subjectId": "sub-genai",
+      "topics": [
+        "GenAI vs Traditional",
+        "Agentic AI",
+        "Applications"
+      ]
+    },
+    {
+      "id": "gen-03",
+      "title": "2: Key Concepts and Foundations",
+      "durationWeeks": 0.8,
+      "isProject": false,
+      "subjectId": "sub-genai",
+      "topics": [
+        "LLMs",
+        "Context Window",
+        "Hallucinations",
+        "Vector DB",
+        "RAG"
+      ]
+    },
+    {
+      "id": "gen-04",
+      "title": "3: Gen AI: LangChain and Prompting",
+      "durationWeeks": 1,
+      "isProject": false,
+      "subjectId": "sub-genai",
+      "topics": [
+        "Prompt Engineering",
+        "LangChain Setup",
+        "Groq/Ollama",
+        "Chains & Parsers"
+      ]
+    },
+    {
+      "id": "gen-05",
+      "title": "4: Gen AI: Vector Database",
+      "durationWeeks": 0.5,
+      "isProject": false,
+      "subjectId": "sub-genai",
+      "topics": [
+        "ChromaDB Operations",
+        "Distance Metrics"
+      ]
+    },
+    {
+      "id": "gen-06",
+      "title": "5: Project 1: Real Estate Assistant (RAG)",
+      "durationWeeks": 1.5,
+      "isProject": true,
+      "subjectId": "sub-genai",
+      "topics": [
+        "Loaders & Splitters",
+        "Vector Store",
+        "Retrieval",
+        "Streamlit UI"
+      ]
+    },
+    {
+      "id": "gen-07",
+      "title": "6: Project 2: E-Commerce Chatbot",
+      "durationWeeks": 1.5,
+      "isProject": true,
+      "subjectId": "sub-genai",
+      "topics": [
+        "FAQ Handling",
+        "Semantic Router",
+        "SQL Generation",
+        "Data Comprehension"
+      ]
+    },
+    {
+      "id": "gen-08",
+      "title": "7: Agentic AI: Hands-on",
+      "durationWeeks": 1,
+      "isProject": false,
+      "subjectId": "sub-genai",
+      "topics": [
+        "Agno Agents",
+        "Custom Tools",
+        "Reasoning Models",
+        "Multimodal"
+      ]
+    },
+    {
+      "id": "gen-09",
+      "title": "8: Architecture and Protocols",
+      "durationWeeks": 0.5,
+      "isProject": false,
+      "subjectId": "sub-genai",
+      "topics": [
+        "MCP",
+        "A2A"
+      ]
+    },
+    {
+      "id": "gen-10",
+      "title": "9: Multi-Agent Systems",
+      "durationWeeks": 0.8,
+      "isProject": false,
+      "subjectId": "sub-genai",
+      "topics": [
+        "Design Patterns",
+        "Route Agent"
+      ]
+    },
+    {
+      "id": "gen-11",
+      "title": "10: Evaluation for Safety",
+      "durationWeeks": 0.5,
+      "isProject": false,
+      "subjectId": "sub-genai",
+      "topics": [
+        "Functional Eval",
+        "Safety & Guardrails"
+      ]
+    },
+    {
+      "id": "gen-12",
+      "title": "11: Project 3: Agentic AI (HRMS)",
+      "durationWeeks": 1.5,
+      "isProject": true,
+      "subjectId": "sub-genai",
+      "topics": [
+        "HRMS APIs",
+        "MCP Tools (Email, Tickets)",
+        "Onboarding Agent"
+      ]
+    },
+    {
+      "id": "gen-13",
+      "title": "12: Fine-Tuning",
+      "durationWeeks": 1,
+      "isProject": false,
+      "subjectId": "sub-genai",
+      "topics": [
+        "LoRA",
+        "Quantization",
+        "QLoRA",
+        "Unsloth"
+      ]
+    },
+    {
+      "id": "gen-14",
+      "title": "13: Ethics in Gen AI",
+      "durationWeeks": 0.5,
+      "isProject": false,
+      "subjectId": "sub-genai",
+      "topics": [
+        "Bias",
+        "Privacy",
+        "Copyright"
+      ]
+    },
+    {
+      "id": "gen-17",
+      "title": "14: Amazon Bedrock AgentCore",
+      "durationWeeks": 1,
+      "isProject": false,
+      "subjectId": "sub-genai",
+      "topics": [
+        "AWS Bedrock",
+        "Observability"
+      ]
+    },
+    {
+      "id": "gen-18",
+      "title": "15: Stateful Agents with LangGraph",
+      "durationWeeks": 1,
+      "isProject": false,
+      "subjectId": "sub-genai",
+      "topics": [
+        "LangGraph",
+        "Conditional Logic",
+        "Memory",
+        "Human-in-the-loop"
+      ]
+    },
+    {
+      "id": "gen-19",
+      "title": "16: Autonomous Multi-Agent Systems: CrewAI",
+      "durationWeeks": 1,
+      "isProject": false,
+      "subjectId": "sub-genai",
+      "topics": [
+        "CrewAI Setup",
+        "Building The Crew",
+        "Tool Integration"
+      ]
+    },
+    {
+      "id": "sqladv-01",
+      "title": "1: Complex Queries: Subqueries & CTEs",
+      "durationWeeks": 0.8,
+      "isProject": false,
+      "subjectId": "sub-sql-adv",
+      "topics": [
+        "Subqueries",
+        "ANY/ALL",
+        "CTE"
+      ]
+    },
+    {
+      "id": "sqladv-02",
+      "title": "2: Database Creation & Updates",
+      "durationWeeks": 1.2,
+      "isProject": false,
+      "subjectId": "sub-sql-adv",
+      "topics": [
+        "Normalization",
+        "ERD",
+        "Data Types",
+        "Primary/Foreign Keys",
+        "Insert/Update/Delete"
+      ]
+    },
+    {
+      "id": "sqladv-03",
+      "title": "3: AtliQ Hardware & Problem Statement",
+      "durationWeeks": 0.5,
+      "isProject": false,
+      "subjectId": "sub-sql-adv",
+      "topics": [
+        "Business Model",
+        "P&L",
+        "Data Warehouse concepts"
+      ]
+    },
+    {
+      "id": "sqladv-04",
+      "title": "4: Finance Analytics Project",
+      "durationWeeks": 1,
+      "isProject": false,
+      "subjectId": "sub-sql-adv",
+      "topics": [
+        "User-Defined Functions",
+        "Stored Procedures",
+        "Gross Sales Report"
+      ]
+    },
+    {
+      "id": "sqladv-05",
+      "title": "5: Top Customers, Products, Markets",
+      "durationWeeks": 1.5,
+      "isProject": false,
+      "subjectId": "sub-sql-adv",
+      "topics": [
+        "Views",
+        "Window Functions (OVER, ROW_NUMBER, RANK)"
+      ]
+    },
+    {
+      "id": "sqladv-06",
+      "title": "6: Supply Chain Analytics",
+      "durationWeeks": 0.2,
+      "isProject": false,
+      "subjectId": "sub-sql-adv",
+      "topics": [
+        "Basics"
+      ]
+    },
+    {
+      "id": "vi-01",
+      "title": "1: Virtual Internship 1: Automated Freshness Inspection (Computer Vision)",
+      "durationWeeks": 2,
+      "isProject": false,
+      "isInternship": true,
+      "subjectId": "sub-virtual-internship",
+      "topics": [
+        "Problem Scope",
+        "Data Collection",
+        "CNN Model Building",
+        "Validation",
+        "Dashboard Creation"
+      ]
+    },
+    {
+      "id": "vi-02",
+      "title": "2: Virtual Internship 2: Healthcare Q&A Tool (GenAI RAG)",
+      "durationWeeks": 2,
+      "isProject": false,
+      "isInternship": true,
+      "subjectId": "sub-virtual-internship",
+      "topics": [
+        "RAG Architecture",
+        "Vector DB Setup",
+        "LLM Integration",
+        "Streamlit Interface",
+        "Deployment"
+      ]
+    },
+    {
+      "id": "car-01",
+      "title": "1: Career Assets: Resume & Portfolio",
+      "durationWeeks": 0,
+      "isProject": false,
+      "subjectId": "sub-job-assist",
+      "topics": [
+        "ATS Resume Builder",
+        "Portfolio Website",
+        "Online Credibility Hacks"
+      ]
+    },
+    {
+      "id": "car-02",
+      "title": "1: Interview Strategy & Playbooks",
+      "durationWeeks": 0,
+      "isProject": false,
+      "subjectId": "sub-interview",
+      "topics": [
+        "Job Application Playbook",
+        "Interview Preparation Strategy",
+        "Behavioral Interviews"
+      ]
+    },
+    {
+      "id": "car-03",
+      "title": "2: Mock Interviews & Technical Q&A",
+      "durationWeeks": 0,
+      "isProject": false,
+      "subjectId": "sub-interview",
+      "topics": [
+        "Mock Interview Sessions",
+        "Technical Question Bank",
+        "System Design Basics"
+      ]
+    },
+    {
+      "id": "car-04",
+      "title": "1: LinkedIn Optimization",
+      "durationWeeks": 0,
+      "isProject": false,
+      "subjectId": "sub-branding",
+      "topics": [
+        "Profile Picture & Banner",
+        "Headline & About Section",
+        "Featured Section"
+      ]
+    },
+    {
+      "id": "car-05",
+      "title": "2: Content Strategy & Networking",
+      "durationWeeks": 0,
+      "isProject": false,
+      "subjectId": "sub-branding",
+      "topics": [
+        "Content Creation Templates",
+        "Engagement Strategy",
+        "Networking with Influencers"
+      ]
+    },
+    {
+      "id": "car-06",
+      "title": "3: Building a Personal Brand",
+      "durationWeeks": 0,
+      "isProject": false,
+      "subjectId": "sub-branding",
+      "topics": [
+        "Beyond LinkedIn",
+        "Kaggle/GitHub Presence",
+        "Public Speaking"
+      ]
+    },
+    {
+      "id": "car-07",
+      "title": "4: Branding Action Plan",
+      "durationWeeks": 0,
+      "isProject": false,
+      "subjectId": "sub-branding",
+      "topics": [
+        "30-Day Execution Plan",
+        "Consistency Hacks",
+        "Final Review"
+      ]
+    },
+    {
+      "id": "py-16",
+      "title": "14: Assessment & Interview Prep",
+      "durationWeeks": 0.4,
+      "isProject": false,
+      "subjectId": "sub-python",
+      "topics": [
+        "Assessment",
+        "Interview Questions"
+      ]
+    },
+    {
+      "id": "ml-13",
+      "title": "11: Assessment & Interview Prep",
+      "durationWeeks": 0.4,
+      "isProject": false,
+      "subjectId": "sub-ml",
+      "topics": [
+        "Assessment",
+        "Question Bank"
+      ]
+    },
+    {
+      "id": "dl-14",
+      "title": "13: Assessment & Interview Prep",
+      "durationWeeks": 0.4,
+      "isProject": false,
+      "subjectId": "sub-dl",
+      "topics": [
+        "Assessment",
+        "Questions"
+      ]
+    },
+    {
+      "id": "gen-15",
+      "title": "17: Assessment & Interview Prep",
+      "durationWeeks": 0.4,
+      "isProject": false,
+      "subjectId": "sub-genai",
+      "topics": [
+        "Assessment",
+        "Interview Questions"
+      ]
+    }
+  ]
+}

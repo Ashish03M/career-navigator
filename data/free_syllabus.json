@@ -1,0 +1,1104 @@
+{
+    "subjects": [
+        {
+            "id": "free-python",
+            "name": "Python & AI Basics",
+            "displayName": "Week 1: AI Basics + Python",
+            "color": "bg-blue-50 border-blue-200",
+            "category": "foundation",
+            "chapterIds": [
+                "fp-01"
+            ],
+            "tags": {
+                "level": "intro",
+                "category": "python"
+            }
+        },
+        {
+            "id": "free-dsa",
+            "name": "Data Structures & Algorithms",
+            "displayName": "Week 2: DSA in Python",
+            "color": "bg-indigo-50 border-indigo-200",
+            "category": "foundation",
+            "chapterIds": [
+                "fp-02"
+            ],
+            "tags": {
+                "level": "intro",
+                "category": "dsa"
+            }
+        },
+        {
+            "id": "free-adv-python",
+            "name": "Advanced Python",
+            "displayName": "Week 3: Advanced Python",
+            "color": "bg-purple-50 border-purple-200",
+            "category": "foundation",
+            "chapterIds": [
+                "fp-03"
+            ],
+            "tags": {
+                "level": "intermediate",
+                "category": "python"
+            }
+        },
+        {
+            "id": "free-git",
+            "name": "Version Control",
+            "displayName": "Week 4: Git & GitHub",
+            "color": "bg-gray-50 border-gray-200",
+            "category": "career",
+            "chapterIds": [
+                "fp-04"
+            ],
+            "tags": {
+                "level": "intro",
+                "category": "git"
+            }
+        },
+        {
+            "id": "free-data-libs",
+            "name": "Data Libraries & SQL",
+            "displayName": "Week 5: Numpy, Pandas, SQL",
+            "color": "bg-cyan-50 border-cyan-200",
+            "category": "foundation",
+            "chapterIds": [
+                "fp-05"
+            ]
+        },
+        {
+            "id": "free-excel",
+            "name": "Excel & Business Math",
+            "displayName": "Excel & Business Math",
+            "color": "bg-green-50 border-green-200",
+            "category": "specialization",
+            "chapterIds": [
+                "fp-da-01"
+            ],
+            "tags": {
+                "level": "intro",
+                "category": "analytics"
+            }
+        },
+        {
+            "id": "free-powerbi",
+            "name": "Power BI & Tableau",
+            "displayName": "Power BI & Tableau",
+            "color": "bg-amber-50 border-amber-200",
+            "category": "specialization",
+            "chapterIds": [
+                "fp-da-02"
+            ],
+            "tags": {
+                "level": "intro",
+                "category": "analytics"
+            }
+        },
+        {
+            "id": "free-domain-knowledge",
+            "name": "Business & Domain Knowledge",
+            "displayName": "Business & Domain Knowledge",
+            "color": "bg-stone-50 border-stone-200",
+            "category": "specialization",
+            "chapterIds": [
+                "fp-da-03"
+            ],
+            "tags": {
+                "level": "intro",
+                "category": "business"
+            }
+        },
+        {
+            "id": "free-stakeholder-comm",
+            "name": "Stakeholder Management",
+            "displayName": "Stakeholder Management & Communication",
+            "color": "bg-zinc-50 border-zinc-200",
+            "category": "specialization",
+            "chapterIds": [
+                "fp-da-04"
+            ],
+            "tags": {
+                "level": "intermediate",
+                "category": "soft-skills"
+            }
+        },
+        {
+            "id": "free-ai-tools-da",
+            "name": "AI Tools & Automation",
+            "displayName": "AI Tools & Automation",
+            "color": "bg-neutral-50 border-neutral-200",
+            "category": "specialization",
+            "chapterIds": [
+                "fp-da-05"
+            ],
+            "tags": {
+                "level": "intermediate",
+                "category": "analytics"
+            }
+        },
+        {
+            "id": "free-math",
+            "name": "Math & Statistics",
+            "displayName": "Week 6-8: Math & Stats for AI",
+            "color": "bg-emerald-50 border-emerald-200",
+            "category": "foundation",
+            "chapterIds": [
+                "fp-06"
+            ]
+        },
+        {
+            "id": "free-ml",
+            "name": "Machine Learning",
+            "displayName": "Week 9-11: Machine Learning",
+            "color": "bg-yellow-50 border-yellow-200",
+            "category": "core-ai",
+            "chapterIds": [
+                "fp-07",
+                "fp-08"
+            ]
+        },
+        {
+            "id": "free-devops",
+            "name": "MLOps & DevOps",
+            "displayName": "Week 12-13: DevOps & MLOps",
+            "color": "bg-orange-50 border-orange-200",
+            "category": "specialization",
+            "chapterIds": [
+                "fp-09"
+            ]
+        },
+        {
+            "id": "free-de-foundations",
+            "name": "DE Foundations",
+            "displayName": "DE Foundations & Git",
+            "color": "bg-green-50 border-green-200",
+            "category": "specialization",
+            "chapterIds": [
+                "fp-de-01"
+            ],
+            "tags": {
+                "level": "intro",
+                "category": "data-engineering"
+            }
+        },
+        {
+            "id": "free-data-modeling",
+            "name": "Data Modeling & Warehousing",
+            "displayName": "Data Modeling & Warehousing",
+            "color": "bg-amber-50 border-amber-200",
+            "category": "specialization",
+            "chapterIds": [
+                "fp-de-02"
+            ],
+            "tags": {
+                "level": "intermediate",
+                "category": "data-engineering"
+            }
+        },
+        {
+            "id": "free-cloud-etl",
+            "name": "Cloud ETL (Batch Pipelines)",
+            "displayName": "Cloud ETL (Batch Pipelines)",
+            "color": "bg-sky-50 border-sky-200",
+            "category": "specialization",
+            "chapterIds": [
+                "fp-de-03"
+            ],
+            "tags": {
+                "level": "intermediate",
+                "category": "data-engineering"
+            }
+        },
+        {
+            "id": "free-spark-databricks",
+            "name": "Spark & Databricks",
+            "displayName": "Spark & Databricks",
+            "color": "bg-rose-50 border-rose-200",
+            "category": "specialization",
+            "chapterIds": [
+                "fp-de-04"
+            ],
+            "tags": {
+                "level": "intermediate",
+                "category": "data-engineering"
+            }
+        },
+        {
+            "id": "free-de-projects",
+            "name": "E2E DE Projects",
+            "displayName": "End-to-End DE Projects",
+            "color": "bg-red-50 border-red-200",
+            "category": "specialization",
+            "chapterIds": [
+                "fp-de-05"
+            ],
+            "tags": {
+                "level": "advanced",
+                "category": "data-engineering"
+            }
+        },
+        {
+            "id": "free-snowflake-airflow",
+            "name": "Snowflake & Airflow",
+            "displayName": "Snowflake & Airflow",
+            "color": "bg-cyan-50 border-cyan-200",
+            "category": "specialization",
+            "chapterIds": [
+                "fp-de-06"
+            ],
+            "tags": {
+                "level": "advanced",
+                "category": "data-engineering"
+            }
+        },
+        {
+            "id": "free-streaming-analytics",
+            "name": "Streaming (Kafka/Flink) + dbt",
+            "displayName": "Streaming & Analytics Engineering",
+            "color": "bg-violet-50 border-violet-200",
+            "category": "specialization",
+            "chapterIds": [
+                "fp-de-07"
+            ],
+            "tags": {
+                "level": "advanced",
+                "category": "data-engineering"
+            }
+        },
+        {
+            "id": "free-ml-projects",
+            "name": "ML Projects",
+            "displayName": "Week 14: ML Projects",
+            "color": "bg-red-50 border-red-200",
+            "category": "core-ai",
+            "chapterIds": [
+                "fp-10"
+            ]
+        },
+        {
+            "id": "free-dl",
+            "name": "Deep Learning",
+            "displayName": "Week 15-18: Deep Learning",
+            "color": "bg-violet-50 border-violet-200",
+            "category": "core-ai",
+            "chapterIds": [
+                "fp-11",
+                "fp-12"
+            ]
+        },
+        {
+            "id": "free-nlp",
+            "name": "NLP Track",
+            "displayName": "Week 19-21: NLP Specialization",
+            "color": "bg-pink-50 border-pink-200",
+            "category": "specialization",
+            "chapterIds": [
+                "fp-13"
+            ]
+        },
+        {
+            "id": "free-cv",
+            "name": "CV Track",
+            "displayName": "Week 19-21: Computer Vision Specialization",
+            "color": "bg-fuchsia-50 border-fuchsia-200",
+            "category": "specialization",
+            "chapterIds": [
+                "fp-14"
+            ]
+        },
+        {
+            "id": "free-genai",
+            "name": "GenAI & Agents",
+            "displayName": "Week 22-24: GenAI & Agentic AI",
+            "color": "bg-rose-50 border-rose-200",
+            "category": "specialization",
+            "chapterIds": [
+                "fp-15"
+            ]
+        },
+        {
+            "id": "free-genai-projects",
+            "name": "GenAI Projects",
+            "displayName": "Week 25-27: GenAI Projects",
+            "color": "bg-teal-50 border-teal-200",
+            "category": "specialization",
+            "chapterIds": [
+                "fp-16"
+            ]
+        },
+        {
+            "id": "free-unguided",
+            "name": "Unguided Projects",
+            "displayName": "Week 28-29: Unguided Projects",
+            "color": "bg-slate-50 border-slate-200",
+            "category": "career",
+            "chapterIds": [
+                "fp-17"
+            ]
+        },
+        {
+            "id": "free-cloud",
+            "name": "Cloud (AWS/Azure)",
+            "displayName": "Week 30-32: Cloud Skills",
+            "color": "bg-sky-50 border-sky-200",
+            "category": "specialization",
+            "chapterIds": [
+                "fp-18"
+            ]
+        },
+        {
+            "id": "free-interview-prep-da",
+            "name": "DA Interview Prep & Portfolio",
+            "displayName": "DA Interview Prep & Portfolio",
+            "color": "bg-teal-50 border-teal-200",
+            "category": "specialization",
+            "chapterIds": [
+                "fp-da-06"
+            ],
+            "tags": {
+                "level": "intermediate",
+                "category": "career"
+            }
+        },
+        {
+            "id": "free-career",
+            "name": "Career & Branding",
+            "displayName": "Week 33+: Career & Branding",
+            "color": "bg-lime-50 border-lime-200",
+            "category": "career",
+            "chapterIds": [
+                "fp-19"
+            ]
+        }
+    ],
+    "chapters": [
+        {
+            "id": "fp-01",
+            "title": "AI Basics & Python Fundamentals",
+            "durationWeeks": 1,
+            "subjectId": "free-python",
+            "topics": [
+                "AI Landscape (ML, DL, GenAI)",
+                "Variables, Lists, Loops",
+                "Functions & Modules",
+                "File Handling & OOP"
+            ],
+            "resources": [
+                {
+                    "label": "AI Basics Video",
+                    "url": "https://www.youtube.com/watch?v=VGFpV3Qj4as"
+                },
+                {
+                    "label": "Codebasics Python Playlist (First 16)",
+                    "url": "https://www.youtube.com/playlist?list=PLeo1K3hjS3uv5U-Lmlnucd7gqF-3ehIh0"
+                }
+            ]
+        },
+        {
+            "id": "fp-02",
+            "title": "Data Structures & Algorithms",
+            "durationWeeks": 1,
+            "subjectId": "free-dsa",
+            "topics": [
+                "Big O Notation",
+                "Arrays, Hash Tables",
+                "Binary Search, Recursion",
+                "Trees & Graphs"
+            ],
+            "resources": [
+                {
+                    "label": "DSA Playlist",
+                    "url": "https://www.youtube.com/playlist?list=PLeo1K3hjS3uu_n_a__MI_KktGTLYopZ12"
+                }
+            ]
+        },
+        {
+            "id": "fp-03",
+            "title": "Advanced Python",
+            "durationWeeks": 1,
+            "subjectId": "free-adv-python",
+            "topics": [
+                "Generators & Iterators",
+                "Decorators",
+                "Multithreading/Processing"
+            ],
+            "resources": [
+                {
+                    "label": "Advanced Python (Videos 17-27)",
+                    "url": "https://www.youtube.com/playlist?list=PLeo1K3hjS3uv5U-Lmlnucd7gqF-3ehIh0"
+                }
+            ]
+        },
+        {
+            "id": "fp-04",
+            "title": "Git & GitHub",
+            "durationWeeks": 1,
+            "subjectId": "free-git",
+            "topics": [
+                "Version Control Systems",
+                "Commit, Push, Pull",
+                "Branching & Merging",
+                "Pull Requests"
+            ],
+            "resources": [
+                {
+                    "label": "Git Playlist",
+                    "url": "https://www.youtube.com/playlist?list=PLeo1K3hjS3usJuxZZUBdjAcilgfQHkRzW"
+                }
+            ]
+        },
+        {
+            "id": "fp-05",
+            "title": "Numpy, Pandas & SQL",
+            "durationWeeks": 1,
+            "subjectId": "free-data-libs",
+            "topics": [
+                "Numpy Matrix Ops",
+                "Pandas Dataframes",
+                "Matplotlib/Seaborn basics",
+                "SQL Basics (Joins, Group By)"
+            ],
+            "resources": [
+                {
+                    "label": "Math & Stats Course (Ch 4-5 Free)",
+                    "url": "https://codebasics.io/courses/math-and-statistics-for-data-science"
+                },
+                {
+                    "label": "SQL Tutorial",
+                    "url": "https://www.youtube.com/watch?v=Rm0xH2Vpfi0"
+                }
+            ]
+        },
+        {
+            "id": "fp-06",
+            "title": "Math & Stats for AI",
+            "durationWeeks": 3,
+            "subjectId": "free-math",
+            "topics": [
+                "Descriptive & Inferential Stats",
+                "Linear Algebra (Vectors/Matrices)",
+                "Calculus (Derivatives)",
+                "Probability & Distributions",
+                "Hypothesis Testing"
+            ],
+            "resources": [
+                {
+                    "label": "Codebasics Math & Stats for Data Science",
+                    "url": "https://codebasics.io/courses/math-and-statistics-for-data-science"
+                },
+                {
+                    "label": "Khan Academy Stats",
+                    "url": "https://www.khanacademy.org/math/statistics-probability"
+                },
+                {
+                    "label": "StatQuest Channel",
+                    "url": "https://www.youtube.com/@statquest"
+                },
+                {
+                    "label": "3Blue1Brown",
+                    "url": "https://www.youtube.com/@3blue1brown"
+                }
+            ]
+        },
+        {
+            "id": "fp-07",
+            "title": "ML: Preprocessing & Algorithms",
+            "durationWeeks": 2,
+            "subjectId": "free-ml",
+            "topics": [
+                "Data Cleaning & Preprocessing",
+                "Linear/Logistic Regression",
+                "Decision Trees & Random Forest",
+                "XGBoost",
+                "Model Evaluation"
+            ],
+            "resources": [
+                {
+                    "label": "ML Playlist (Codebasics)",
+                    "url": "https://www.youtube.com/playlist?list=PLeo1K3hjS3uvCeTYTeyfe0-rN5r8zn9rw"
+                }
+            ]
+        },
+        {
+            "id": "fp-08",
+            "title": "ML: Unsupervised & Feature Eng",
+            "durationWeeks": 1,
+            "subjectId": "free-ml",
+            "topics": [
+                "K-Means Clustering",
+                "PCA",
+                "Feature Engineering",
+                "Hyperparameter Tuning"
+            ],
+            "resources": [
+                {
+                    "label": "Feature Engineering Playlist",
+                    "url": "https://www.youtube.com/playlist?list=PLeo1K3hjS3ut5olrDIeVXk9N3Q7mKhDxO"
+                }
+            ]
+        },
+        {
+            "id": "fp-09",
+            "title": "DevOps, MLOps & FastAPI",
+            "durationWeeks": 2,
+            "subjectId": "free-devops",
+            "topics": [
+                "FastAPI Development",
+                "MLFlow Experiment Tracking",
+                "Docker Containers",
+                "CI/CD Basics"
+            ],
+            "resources": [
+                {
+                    "label": "FastAPI Tutorial",
+                    "url": "https://www.youtube.com/watch?v=Wr1JjhTt1Xg"
+                },
+                {
+                    "label": "MLOps Overview",
+                    "url": "https://www.youtube.com/watch?v=e1rl1DYfPy4"
+                },
+                {
+                    "label": "Docker Tutorial",
+                    "url": "https://www.youtube.com/watch?v=pTFZFxd4hOI"
+                }
+            ]
+        },
+        {
+            "id": "fp-10",
+            "title": "End-to-End ML Projects",
+            "durationWeeks": 1,
+            "isProject": true,
+            "subjectId": "free-ml-projects",
+            "topics": [
+                "Bangalore House Price Prediction",
+                "End-to-end Pipeline",
+                "Deployment to AWS"
+            ],
+            "resources": [
+                {
+                    "label": "Project Playlist",
+                    "url": "https://www.youtube.com/playlist?list=PLeo1K3hjS3uu7clOTtwsp94PcHbzqpAdg"
+                }
+            ]
+        },
+        {
+            "id": "fp-11",
+            "title": "Neural Networks & PyTorch",
+            "durationWeeks": 2,
+            "subjectId": "free-dl",
+            "topics": [
+                "Forward/Back Propagation",
+                "MLP",
+                "Activation Functions",
+                "PyTorch Basics"
+            ],
+            "resources": [
+                {
+                    "label": "Deep Learning Playlist",
+                    "url": "https://www.youtube.com/playlist?list=PLeo1K3hjS3uu7CxAacxVndI4bE_o3BDtO"
+                },
+                {
+                    "label": "CampusX PyTorch",
+                    "url": "https://www.youtube.com/playlist?list=PLKnIA16_Rmvboy8bmDCjwNHgTaYH2puK7"
+                }
+            ]
+        },
+        {
+            "id": "fp-12",
+            "title": "CNNs & Transformers",
+            "durationWeeks": 2,
+            "subjectId": "free-dl",
+            "topics": [
+                "Convolutional Neural Networks",
+                "RNN & LSTM",
+                "Transformers Architecture",
+                "Potato Disease Classification Project"
+            ],
+            "resources": [
+                {
+                    "label": "Potato Disease Project",
+                    "url": "https://www.youtube.com/playlist?list=PLeo1K3hjS3utJFNGyBpIvjWgSDY0eOE8S"
+                }
+            ]
+        },
+        {
+            "id": "fp-13",
+            "title": "NLP Specialization",
+            "durationWeeks": 3,
+            "subjectId": "free-nlp",
+            "topics": [
+                "Regex & Text Preprocessing",
+                "TF-IDF, Word2Vec, Embeddings",
+                "Spacy & NLTK",
+                "Log Classification Project"
+            ],
+            "resources": [
+                {
+                    "label": "NLP Playlist",
+                    "url": "https://www.youtube.com/playlist?list=PLeo1K3hjS3uuvuAXhYjV2lMEShq2UYSwX"
+                },
+                {
+                    "label": "Log Classification Project",
+                    "url": "https://www.youtube.com/watch?v=Ji3_VX80YJg"
+                }
+            ]
+        },
+        {
+            "id": "fp-14",
+            "title": "Computer Vision Specialization",
+            "durationWeeks": 3,
+            "subjectId": "free-cv",
+            "topics": [
+                "Image Processing (OpenCV)",
+                "YOLO Object Detection",
+                "Data Augmentation",
+                "Advanced CNN Architectures"
+            ],
+            "resources": [
+                {
+                    "label": "Computer Vision Resources",
+                    "url": "https://www.youtube.com/playlist?list=PLeo1K3hjS3uu7CxAacxVndI4bE_o3BDtO"
+                }
+            ]
+        },
+        {
+            "id": "fp-15",
+            "title": "GenAI & Agentic AI",
+            "durationWeeks": 3,
+            "subjectId": "free-genai",
+            "topics": [
+                "LLMs & Vector DBs",
+                "RAG Pipeline",
+                "LangChain & LangGraph",
+                "CrewAI Multi-Agent Systems"
+            ],
+            "resources": [
+                {
+                    "label": "GenAI Crash Course",
+                    "url": "https://www.youtube.com/watch?v=d4yCWBGFCEs"
+                },
+                {
+                    "label": "LangGraph Tutorial",
+                    "url": "https://www.youtube.com/watch?v=CnXdddeZ4tQ"
+                },
+                {
+                    "label": "CrewAI Video",
+                    "url": "https://www.youtube.com/watch?v=G42J2MSKyc8"
+                }
+            ]
+        },
+        {
+            "id": "fp-16",
+            "title": "GenAI Capstone Projects",
+            "durationWeeks": 3,
+            "isProject": true,
+            "subjectId": "free-genai-projects",
+            "topics": [
+                "RAG Chatbot with RBAC",
+                "Adverse Drug Event Detection",
+                "Real-world Problem Solving"
+            ],
+            "resources": [
+                {
+                    "label": "GenAI Project Playlist",
+                    "url": "https://www.youtube.com/playlist?list=PLeo1K3hjS3uvLuF4Tq1i1KqNM2QvIyzFK"
+                }
+            ]
+        },
+        {
+            "id": "fp-17",
+            "title": "Unguided Portfolio Projects",
+            "durationWeeks": 2,
+            "isProject": true,
+            "subjectId": "free-unguided",
+            "topics": [
+                "Independent Research",
+                "Full-stack AI Implementation",
+                "Documentation & Portfolio Building"
+            ],
+            "resources": [
+                {
+                    "label": "RAG Chatbot (RBAC)",
+                    "url": "https://codebasics.io/challenges/codebasics-gen-ai-data-science-resume-project-challenge/19"
+                },
+                {
+                    "label": "Drug Event Detection (NLP)",
+                    "url": "https://codebasics.io/challenges/codebasics-gen-ai-data-science-resume-project-challenge/22"
+                }
+            ]
+        },
+        {
+            "id": "fp-18",
+            "title": "Cloud Skills (AWS/Azure)",
+            "durationWeeks": 3,
+            "subjectId": "free-cloud",
+            "topics": [
+                "Cloud Fundamentals (IAM, Storage)",
+                "Serverless (Lambda/Functions)",
+                "Sagemaker/Azure ML",
+                "Model Deployment"
+            ],
+            "resources": [
+                {
+                    "label": "AWS Cloud Practitioner Essentials (Free)",
+                    "url": "https://www.youtube.com/watch?v=SOTamWNgDKc"
+                },
+                {
+                    "label": "Azure Fundamentals Learning Path",
+                    "url": "https://learn.microsoft.com/en-us/training/paths/az-900-describe-cloud-concepts/"
+                },
+                {
+                    "label": "Codebasics Cloud Basics",
+                    "url": "https://www.youtube.com/watch?v=k1RI5locZE4"
+                }
+            ]
+        },
+        {
+            "id": "fp-19",
+            "title": "Career & Personal Branding",
+            "durationWeeks": 1,
+            "subjectId": "free-career",
+            "topics": [
+                "LinkedIn Optimization",
+                "Resume Building (ATS)",
+                "Kaggle & Open Source",
+                "Job Application Strategy"
+            ],
+            "resources": [
+                {
+                    "label": "Resume Tips",
+                    "url": "https://www.youtube.com/watch?v=buQSI8NLOMw"
+                },
+                {
+                    "label": "LinkedIn Checklist",
+                    "url": "https://codebasics.io/"
+                }
+            ]
+        },
+        {
+            "id": "fp-da-01",
+            "title": "Excel & Business Math/Statistics",
+            "durationWeeks": 2,
+            "subjectId": "free-excel",
+            "topics": [
+                "Basic Formulas (SUM, VLOOKUP, INDEX-MATCH)",
+                "Pivot Tables & Charts",
+                "Power Query",
+                "Business Math (Percentages, YoY Growth)",
+                "Basic Statistics (Mean, Median, Std Deviation)"
+            ],
+            "resources": [
+                {
+                    "label": "Business Math using Excel",
+                    "url": "https://youtu.be/npgbI8KYvN8"
+                },
+                {
+                    "label": "Chandoo Excel YouTube Channel",
+                    "url": "https://www.youtube.com/@chandoo_"
+                },
+                {
+                    "label": "Khan Academy Math",
+                    "url": "https://www.khanacademy.org/"
+                }
+            ]
+        },
+        {
+            "id": "fp-da-02",
+            "title": "Power BI & Tableau",
+            "durationWeeks": 3,
+            "subjectId": "free-powerbi",
+            "topics": [
+                "Connecting to Data Sources",
+                "Data Transformation in Power Query",
+                "DAX & Data Modelling",
+                "Creating Visuals & Dashboards",
+                "Publishing to Power BI Service"
+            ],
+            "resources": [
+                {
+                    "label": "Sales Insights Power BI Project",
+                    "url": "https://bit.ly/3C1WKgA"
+                },
+                {
+                    "label": "Hospitality Insights Project",
+                    "url": "https://bit.ly/3DPBcoj"
+                },
+                {
+                    "label": "Cricket T20 Analysis Project",
+                    "url": "https://bit.ly/3j5I7ID"
+                },
+                {
+                    "label": "HR Data Analytics Project",
+                    "url": "https://bit.ly/41vxcUz"
+                }
+            ]
+        },
+        {
+            "id": "fp-da-03",
+            "title": "Business Fundamentals & Domain Knowledge",
+            "durationWeeks": 1,
+            "subjectId": "free-domain-knowledge",
+            "topics": [
+                "Understanding Domains & Functions",
+                "P&L Fundamentals",
+                "Business Case Studies",
+                "Revenue, Profit, Market Share Metrics"
+            ],
+            "resources": [
+                {
+                    "label": "How Amul Beat Competition Using Analytics",
+                    "url": "https://youtu.be/nnwqtZiYMxQ"
+                },
+                {
+                    "label": "Career Roles in Data Analytics",
+                    "url": "https://codebasics.io/resources/data-analytics-and-beyond-career-paths-you-should-know"
+                }
+            ]
+        },
+        {
+            "id": "fp-da-04",
+            "title": "Stakeholder Management & Communication",
+            "durationWeeks": 1,
+            "subjectId": "free-stakeholder-comm",
+            "topics": [
+                "Managing Stakeholder Expectations",
+                "Asking Clarifying Questions",
+                "Translating Business Requests to Analytics",
+                "Presenting Insights Effectively"
+            ],
+            "resources": [
+                {
+                    "label": "Communicating with Stakeholders (Project)",
+                    "url": "https://youtu.be/tT4V7zguCnc?si=C4qlEzMprBExYkFW&t=355"
+                },
+                {
+                    "label": "Presentation Skills: Death by PowerPoint",
+                    "url": "https://www.youtube.com/watch?v=Iwpi1Lm6dFo"
+                }
+            ]
+        },
+        {
+            "id": "fp-da-05",
+            "title": "AI Tools & Automation for Analysts",
+            "durationWeeks": 2,
+            "subjectId": "free-ai-tools-da",
+            "topics": [
+                "Using ChatGPT/Claude for SQL & Data Cleaning",
+                "LLM Basics (Tokens, Context, Embeddings)",
+                "No-Code vs Code Automation",
+                "Power Automate, Zapier, n8n",
+                "Automating Reports & Dashboards"
+            ],
+            "resources": [
+                {
+                    "label": "AI Basics for Beginners",
+                    "url": "https://www.youtube.com/watch?v=VGFpV3Qj4as"
+                },
+                {
+                    "label": "Data Analysis using AI Tools (Quadratic)",
+                    "url": "https://youtu.be/d8U2G2_7dnM"
+                }
+            ]
+        },
+        {
+            "id": "fp-da-06",
+            "title": "DA Interview Prep & Portfolio",
+            "durationWeeks": 2,
+            "subjectId": "free-interview-prep-da",
+            "topics": [
+                "SQL Interview Preparation",
+                "Power BI Technical Interviews",
+                "DA Projects for Interview (6 solid projects)",
+                "Portfolio Website & Resume"
+            ],
+            "resources": [
+                {
+                    "label": "DA Projects for Interview",
+                    "url": "https://youtu.be/prPBBS6wbYA?si=weY6-Gy-XHKBU_nM"
+                },
+                {
+                    "label": "SQL Interview Practice (DataLemur)",
+                    "url": "https://datalemur.com/"
+                },
+                {
+                    "label": "TechTFQ YouTube (SQL Interviews)",
+                    "url": "https://www.youtube.com/@techTFQ"
+                }
+            ]
+        },
+        {
+            "id": "fp-de-01",
+            "title": "DE Foundations & Git",
+            "durationWeeks": 1,
+            "subjectId": "free-de-foundations",
+            "topics": [
+                "What is Data Engineering?",
+                "OLTP vs OLAP, Data Life Cycle",
+                "ETL vs ELT",
+                "Batch vs Streaming",
+                "Data Warehouse vs Data Lake vs Lakehouse"
+            ],
+            "resources": [
+                {
+                    "label": "Data Warehouse vs Data Lake vs Lakehouse",
+                    "url": "https://www.youtube.com/watch?v=lHuWqvQkBBo"
+                },
+                {
+                    "label": "Codebasics Git/GitHub Tutorial",
+                    "url": "https://www.youtube.com/playlist?list=PLeo1K3hjS3usJuxZZUBdjAcilgfQHkRzW"
+                }
+            ]
+        },
+        {
+            "id": "fp-de-02",
+            "title": "Data Modeling & Warehousing + Linux",
+            "durationWeeks": 2,
+            "subjectId": "free-data-modeling",
+            "topics": [
+                "Fact vs Dimension Tables",
+                "Star Schema vs Snowflake Schema",
+                "SCD Type 1 and 2",
+                "Medallion Architecture (Bronze/Silver/Gold)",
+                "Basic Data Governance",
+                "Linux Fundamentals"
+            ],
+            "resources": [
+                {
+                    "label": "Star vs Snowflake Schema | Fact, Dimension Tables",
+                    "url": "https://www.youtube.com/watch?v=hQvCBz4GFKM"
+                },
+                {
+                    "label": "SQL Data Warehouse from Scratch | Full DE Project",
+                    "url": "https://www.youtube.com/watch?v=JMSTr_WINXU"
+                }
+            ]
+        },
+        {
+            "id": "fp-de-03",
+            "title": "Cloud ETL (Batch Pipelines)",
+            "durationWeeks": 2,
+            "subjectId": "free-cloud-etl",
+            "topics": [
+                "File Formats (Parquet, Avro, JSON)",
+                "Batch ETL Pipeline Architecture",
+                "Incremental vs Full Loads",
+                "Cloud Storage (S3/ADLS/GCS)",
+                "Logging & Error Handling",
+                "Cost Awareness in Batch Pipelines"
+            ],
+            "resources": [
+                {
+                    "label": "Azure for Data Engineers",
+                    "url": "https://www.youtube.com/watch?v=IaA9YNlg5hM"
+                },
+                {
+                    "label": "AWS Cloud Practitioner Essentials",
+                    "url": "https://www.youtube.com/watch?v=SOTamWNgDKc"
+                }
+            ]
+        },
+        {
+            "id": "fp-de-04",
+            "title": "Spark & Databricks",
+            "durationWeeks": 2,
+            "subjectId": "free-spark-databricks",
+            "topics": [
+                "Spark & Distributed Computing",
+                "Databricks as a Managed Platform",
+                "Spark DataFrames & Transformations",
+                "Unity Catalog & Medallion Architecture",
+                "Partitioning, Shuffles & Performance",
+                "Caching and Persistence"
+            ],
+            "resources": [
+                {
+                    "label": "Databricks Free Crash Course",
+                    "url": "https://www.youtube.com/watch?v=FTYmtOmY9pI"
+                },
+                {
+                    "label": "End-to-End DE Project (E-Commerce on Databricks)",
+                    "url": "https://www.youtube.com/watch?v=eZfe2sOVST8"
+                }
+            ]
+        },
+        {
+            "id": "fp-de-05",
+            "title": "End-to-End DE Projects on Databricks",
+            "durationWeeks": 2,
+            "isProject": true,
+            "subjectId": "free-de-projects",
+            "topics": [
+                "Data Ingestion from OLTP to OLAP",
+                "Medallion Processing (Bronze/Silver/Gold)",
+                "Spark Declarative Pipelines",
+                "Full vs Incremental Load",
+                "Schema Evolution"
+            ],
+            "resources": [
+                {
+                    "label": "E2E DE Project (Transportation Domain)",
+                    "url": "https://www.youtube.com/watch?v=LScOFJNaqgM"
+                },
+                {
+                    "label": "IPL Data Analysis | Apache Spark E2E Project",
+                    "url": "https://www.youtube.com/watch?v=o-WNLwnkELM"
+                }
+            ]
+        },
+        {
+            "id": "fp-de-06",
+            "title": "Snowflake & Airflow",
+            "durationWeeks": 2,
+            "subjectId": "free-snowflake-airflow",
+            "topics": [
+                "Snowflake Cloud Data Warehouse",
+                "Staging, Core & Analytics Layers",
+                "Airflow Architecture (DAG, Task, Operator)",
+                "Scheduling & Orchestration",
+                "Project Management (Scrum, Kanban)"
+            ],
+            "resources": [
+                {
+                    "label": "Snowflake DE Academy Tutorial",
+                    "url": "https://www.youtube.com/watch?v=KDGaKbhfpuE"
+                },
+                {
+                    "label": "Airflow for Beginners",
+                    "url": "https://www.youtube.com/watch?v=K9AnJ9_ZAXE"
+                },
+                {
+                    "label": "Scrum Training Series",
+                    "url": "https://scrumtrainingseries.com/"
+                }
+            ]
+        },
+        {
+            "id": "fp-de-07",
+            "title": "Streaming (Kafka/Flink) + dbt & Analytics Engineering",
+            "durationWeeks": 3,
+            "subjectId": "free-streaming-analytics",
+            "topics": [
+                "Streaming Fundamentals (Batch vs Stream)",
+                "Kafka Architecture (Broker, Topic, Partition)",
+                "Flink (Watermarks, Checkpoints, Flink SQL)",
+                "dbt Fundamentals (Models, Sources, Tests)",
+                "Analytics Engineering & Cloud Scaling",
+                "Data Quality & Reliability"
+            ],
+            "resources": [
+                {
+                    "label": "Kafka Crash Course",
+                    "url": "https://www.youtube.com/watch?v=ZJJHm_bd9Zo"
+                },
+                {
+                    "label": "Flink Tutorial Playlist",
+                    "url": "https://www.youtube.com/watch?v=RCP9-HdId9w"
+                },
+                {
+                    "label": "dbt Official Tutorials",
+                    "url": "https://docs.getdbt.com/docs/introduction"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,46 @@
+# Development Scripts
+scripts/
+**/scripts/
+
+# Dependencies
+**/node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+
+# Next.js
+.next/
+out/
+
+# Production
+build/
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# System
+.DS_Store
+Thumbs.db
+*.tsbuildinfo
+
+# Claude Code
+.claude/
+
+# Test output
+.test-pdf-output/
+test-results/
+e2e/
+
+# Reports
+production_readiness_report.md

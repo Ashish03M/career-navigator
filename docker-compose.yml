@@ -1,0 +1,27 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    # Set ADMIN_PASSWORD and GOOGLE_SHEETS_WEBHOOK_URL in Coolify's
+    # Environment Variables UI (or via .env.local for local dev)
+    env_file:
+      - path: .env.local
+        required: false
+    volumes:
+      - syllabus_data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "1.0"
+
+volumes:
+  syllabus_data:

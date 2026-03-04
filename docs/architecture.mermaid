@@ -1,0 +1,103 @@
+%% Codebasics Career Navigator - System Architecture
+%% Next.js 14 App Router | React 19 | Tailwind CSS
+
+graph TB
+    subgraph Client["Browser (Client)"]
+        HomePage["/ - BootcampPlanner<br/>(6-step wizard)"]
+        AdminLogin["/admin/login<br/>AdminLoginPage"]
+        AdminPanel["/admin<br/>AdminDashboard<br/>(Syllabus Manager)"]
+        PrivacyPage["/privacy<br/>PrivacyPolicyPage"]
+        TermsPage["/terms<br/>TermsOfServicePage"]
+        PdfModal["PdfDownloadModal<br/>(client-side PDF gen)"]
+    end
+
+    subgraph AppRouter["Next.js 14 App Router (Server)"]
+        subgraph APIRoutes["API Routes"]
+            SyllabusAPI["GET /api/syllabus<br/>GET /api/syllabus?type=free<br/>PUT /api/syllabus (auth)"]
+            LeadsAPI["POST /api/leads"]
+            FeedbackAPI["POST /api/feedback"]
+            AdminAuthAPI["POST /api/admin/auth<br/>(login / logout)"]
+            AdminCheckAPI["GET /api/admin/check"]
+            HealthAPI["GET /api/health"]
+        end
+
+        subgraph ServerLibs["Server-Side Libraries"]
+            Auth["lib/auth.ts<br/>HMAC cookie auth<br/>timing-safe compare"]
+            RateLimit["lib/rateLimit.ts<br/>In-memory rate limiter<br/>(5 attempts / 15 min)"]
+            SyllabusStore["lib/syllabusStore.ts<br/>Atomic JSON read/write<br/>with write lock"]
+            SheetsLib["lib/leads/sheets.ts<br/>Google Sheets webhook"]
+            Logger["lib/logger.ts<br/>Structured JSON logger"]
+        end
+
+        subgraph ClientLibs["Client-Side Libraries"]
+            GeneratePlan["lib/generatePlan.ts<br/>Roadmap generation engine"]
+            Types["lib/types.ts<br/>PlanInput, PlanResult, Phase"]
+            SyllabusTypes["lib/syllabusTypes.ts<br/>Subject, SyllabusData"]
+            StepOptions["lib/stepOptions<br/>BACKGROUND_OPTIONS, GOALS,<br/>CAREER_OUTCOMES, etc."]
+            PdfGen["lib/pdf/generateBrandedPdf.ts<br/>@react-pdf/renderer"]
+            Validation["lib/schemas/planInputSchema.ts<br/>Zod runtime validation"]
+        end
+    end
+
+    subgraph DataLayer["Data Storage"]
+        SyllabusV3["data/syllabus_v3.json<br/>(bootcamp syllabus)"]
+        FreeSyllabus["data/free_syllabus.json<br/>(free-tier syllabus)"]
+    end
+
+    subgraph External["External Services"]
+        GoogleSheets["Google Sheets<br/>(via Apps Script Webhook)"]
+    end
+
+    subgraph Infra["Infrastructure"]
+        Docker["Docker<br/>node:20-alpine<br/>standalone output"]
+        Coolify["Coolify<br/>(deployment platform)"]
+    end
+
+    %% Client interactions
+    HomePage -->|"fetch /api/syllabus?type=free"| SyllabusAPI
+    HomePage -->|"user completes wizard"| GeneratePlan
+    GeneratePlan -->|"returns PlanResult"| HomePage
+    HomePage -->|"opens modal"| PdfModal
+    PdfModal -->|"POST /api/leads"| LeadsAPI
+    PdfModal -->|"client-side @react-pdf"| PdfGen
+
+    AdminLogin -->|"POST /api/admin/auth"| AdminAuthAPI
+    AdminPanel -->|"GET /api/admin/check"| AdminCheckAPI
+    AdminPanel -->|"GET /api/syllabus"| SyllabusAPI
+    AdminPanel -->|"PUT /api/syllabus"| SyllabusAPI
+
+    HomePage -->|"POST /api/feedback"| FeedbackAPI
+
+    %% Server internals
+    AdminAuthAPI --> Auth
+    AdminAuthAPI --> RateLimit
+    AdminCheckAPI --> Auth
+    SyllabusAPI --> SyllabusStore
+    SyllabusAPI -->|"auth required for PUT"| Auth
+    LeadsAPI --> SheetsLib
+    FeedbackAPI --> SheetsLib
+
+    %% Data access
+    SyllabusStore --> SyllabusV3
+    SyllabusAPI -->|"type=free"| FreeSyllabus
+
+    %% External
+    SheetsLib -->|"POST webhook"| GoogleSheets
+
+    %% Infrastructure
+    Docker --> Coolify
+
+    %% Styling
+    classDef client fill:#dbeafe,stroke:#3b82f6,color:#1e3a5f
+    classDef api fill:#fef3c7,stroke:#f59e0b,color:#78350f
+    classDef lib fill:#d1fae5,stroke:#10b981,color:#064e3b
+    classDef data fill:#fce7f3,stroke:#ec4899,color:#831843
+    classDef external fill:#e0e7ff,stroke:#6366f1,color:#3730a3
+    classDef infra fill:#f3e8ff,stroke:#a855f7,color:#581c87
+
+    class HomePage,AdminLogin,AdminPanel,PrivacyPage,TermsPage,PdfModal client
+    class SyllabusAPI,LeadsAPI,FeedbackAPI,AdminAuthAPI,AdminCheckAPI,HealthAPI api
+    class Auth,RateLimit,SyllabusStore,SheetsLib,Logger,GeneratePlan,Types,SyllabusTypes,StepOptions,PdfGen,Validation lib
+    class SyllabusV3,FreeSyllabus data
+    class GoogleSheets external
+    class Docker,Coolify infra
