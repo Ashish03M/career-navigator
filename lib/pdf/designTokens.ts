@@ -46,6 +46,12 @@ export const COLORS = {
     // Semantic
     success: "#22C55E",        // Green-500
     successDark: "#15803D",    // Green-700
+
+    // Module type tints
+    amberTint: "#FFFBEB",      // Amber-50 (project cards)
+    amberBorder: "#F59E0B",    // Amber-500 (project left border)
+    internshipTint: "#ECFDF5", // Emerald-50 (internship cards)
+    internshipBorder: "#10B981", // Emerald-500 (internship left border)
 } as const;
 
 /**

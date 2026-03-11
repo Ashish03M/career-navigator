@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import dynamic from "next/dynamic";
-import { type PlanResult } from "@/lib/types";
-import { BookOpen, CheckCircle2, ChevronDown, ChevronUp, Rocket, Sparkles, Star, Briefcase, Repeat, ExternalLink, Download, Zap } from "lucide-react";
+import { type PlanResult, type ExperienceState } from "@/lib/types";
+import { BookOpen, CheckCircle2, ChevronDown, ChevronUp, Rocket, Sparkles, Star, Briefcase, Repeat, ExternalLink, Download, Zap, Clock, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { type PdfMeta } from "@/lib/pdf/generateBrandedPdf";
+import { type PdfMeta, type PdfPersonalization } from "@/lib/pdf/generateBrandedPdf";
+import { BACKGROUND_OPTIONS, CAREER_OUTCOMES, AVAILABILITY_OPTIONS, LEARNING_PREFERENCES, EXPERIENCE_OPTIONS } from "@/lib/stepOptions";
 
 import { PdfErrorBoundary } from "./PdfErrorBoundary";
 
@@ -17,6 +18,14 @@ type RoadmapResultProps = {
     goalId: string;
     learnerType: string;
     onReset: () => void;
+    userName?: string;
+    userEmail?: string;
+    sessionId: string;
+    background?: string;
+    careerOutcome?: string;
+    availability?: string;
+    learningPreference?: string;
+    experience?: ExperienceState;
 };
 
 function getBootcampUrl(goalId: string): string {
@@ -45,10 +54,9 @@ const getAccentClasses = (colorClass: string) => {
     return { border: 'border-l-slate-400', icon: 'bg-slate-100 text-slate-700', bullet: 'bg-slate-400' };
 };
 
-export default function RoadmapResult({ plan, goalLabel, goalId, learnerType, onReset }: RoadmapResultProps) {
+export default function RoadmapResult({ plan, goalLabel, goalId, learnerType, onReset, userName, userEmail, sessionId, background, careerOutcome, availability, learningPreference, experience }: RoadmapResultProps) {
     const [expandedModule, setExpandedModule] = useState<string | null>(null);
     const [pdfModalOpen, setPdfModalOpen] = useState(false);
-    const sessionId = useMemo(() => crypto.randomUUID(), []);
 
     const pdfMeta: PdfMeta = {
         targetRoleLabel: goalLabel,
@@ -56,6 +64,14 @@ export default function RoadmapResult({ plan, goalLabel, goalId, learnerType, on
         weeklyHoursLabel: `${plan.hoursPerWeek}h/week`,
         sourceLabel: learnerType === "free" ? "100% Free Resources" : "Codebasics Bootcamp",
     };
+
+    const pdfPersonalization: PdfPersonalization | undefined = background ? {
+        backgroundLabel: BACKGROUND_OPTIONS.find(o => o.id === background)?.name ?? background,
+        careerOutcomeLabel: CAREER_OUTCOMES.find(o => o.id === careerOutcome)?.name ?? careerOutcome ?? "",
+        availabilityLabel: AVAILABILITY_OPTIONS.find(o => o.id === availability)?.name ?? availability ?? "",
+        learningPreferenceLabel: LEARNING_PREFERENCES.find(o => o.id === learningPreference)?.name ?? learningPreference ?? "",
+        knownSkills: EXPERIENCE_OPTIONS.filter(o => experience?.[o.key as keyof ExperienceState]).map(o => o.label),
+    } : undefined;
 
     const toggleModule = (id: string) => {
         setExpandedModule(expandedModule === id ? null : id);
@@ -68,26 +84,45 @@ export default function RoadmapResult({ plan, goalLabel, goalId, learnerType, on
         <div className="space-y-8">
             <div>
                 {/* HEADER */}
-                <div className="bg-white text-slate-900 border-b border-gray-100 pb-8">
-                    <div className="flex justify-between items-start">
-                        <h2 data-testid="roadmap-heading" className="text-3xl md:text-5xl font-extrabold mb-4 font-[family-name:var(--font-outfit)] tracking-tight">Your Career Roadmap</h2>
+                <div className="rounded-2xl overflow-hidden border border-slate-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+                    {/* Top section — dark hero */}
+                    <div className="bg-[#181830] text-white px-8 pt-10 pb-8 md:px-10 md:pt-12 md:pb-10 relative">
+                        {/* Subtle gradient mesh */}
+                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(99,102,241,0.12),transparent_60%)]" />
+                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(59,130,246,0.08),transparent_50%)]" />
+
+                        <div className="relative z-10">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                                <div>
+                                    {userName ? (
+                                        <p className="text-sm md:text-base font-medium text-slate-400 mb-2">
+                                            <span className="text-lg md:text-xl font-bold text-[#20C997] capitalize">{userName.trim().split(" ")[0]}&apos;s</span> Roadmap to
+                                        </p>
+                                    ) : (
+                                        <p className="text-sm md:text-base font-medium text-slate-400 mb-2">Your Roadmap to</p>
+                                    )}
+                                    <h2 data-testid="roadmap-heading" className="text-3xl md:text-4xl font-extrabold font-[family-name:var(--font-outfit)] tracking-tight leading-none">{goalLabel}</h2>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <span className="inline-flex items-center gap-1.5 bg-white/[0.07] text-slate-300 pl-2.5 pr-3 py-1.5 rounded-lg text-xs font-medium border border-white/[0.06]">
+                                        <Clock className="w-3 h-3 text-slate-500" />
+                                        {plan.estimatedMonths} months
+                                    </span>
+                                    <span className="inline-flex items-center gap-1.5 bg-white/[0.07] text-slate-300 pl-2.5 pr-3 py-1.5 rounded-lg text-xs font-medium border border-white/[0.06]">
+                                        <Layers className="w-3 h-3 text-slate-500" />
+                                        {plan.hoursPerWeek}h / week
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div className="flex flex-wrap gap-4 items-center text-slate-500 mb-8">
-                        <span className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm font-bold border border-blue-100 font-sans">
-                            {goalLabel}
-                        </span>
-                        <span>•</span>
-                        <span>{plan.estimatedMonths} Months</span>
-                        <span>•</span>
-                        <span>{plan.hoursPerWeek}h / week</span>
-                    </div>
-
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <StatCard label="Modules" value={`${plan.totalModules}`} />
-                        <StatCard label="Projects" value={`${projectCount}`} />
-                        <StatCard label="Internships" value={`${internshipCount}`} />
-                        <StatCard label="Timeline" value={`${plan.estimatedMonths} Mo`} />
+                    {/* Stats grid — light glass cards */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 bg-slate-50/80">
+                        <StatCard label="Modules" value={plan.totalModules} icon={<BookOpen className="w-4 h-4" />} accent="blue" />
+                        <StatCard label="Projects" value={projectCount} icon={<Star className="w-4 h-4" />} accent="amber" />
+                        <StatCard label="Internships" value={internshipCount} icon={<Briefcase className="w-4 h-4" />} accent="emerald" />
+                        <StatCard label="Timeline" value={`${plan.estimatedMonths} Mo`} icon={<Rocket className="w-4 h-4" />} accent="violet" />
                     </div>
                 </div>
 
@@ -105,7 +140,7 @@ export default function RoadmapResult({ plan, goalLabel, goalId, learnerType, on
                                 <p className="text-sm text-emerald-700">
                                     Based on your existing skills, we removed{" "}
                                     <span className="font-bold">{plan.diagnostics.appliedSkips.length} module{plan.diagnostics.appliedSkips.length !== 1 ? "s" : ""}</span>{" "}
-                                    you already know — saving you weeks of redundant learning.
+                                    you already know, saving you weeks of redundant learning.
                                 </p>
                             </div>
                         </div>
@@ -159,12 +194,12 @@ export default function RoadmapResult({ plan, goalLabel, goalId, learnerType, on
                 <div className="space-y-6 mt-4">
                     {plan.phases.map((phase, phaseIdx) => {
                         const milestones: Record<string, string> = {
-                            'free-math': 'Foundation Complete — You now have the math and coding basics for AI',
-                            'free-ml-projects': 'ML Milestone — You can now build and deploy ML models',
-                            'free-genai-projects': 'GenAI Milestone — You can build production AI applications',
-                            'free-powerbi': 'Analytics Ready — You can build dashboards and analyze business data',
-                            'free-data-modeling': 'DE Foundations Complete — You understand data modeling and warehousing',
-                            'free-de-projects': 'DE Milestone — You can build end-to-end data pipelines',
+                            'free-math': 'Foundation Complete: You now have the math and coding basics for AI',
+                            'free-ml-projects': 'ML Milestone: You can now build and deploy ML models',
+                            'free-genai-projects': 'GenAI Milestone: You can build production AI applications',
+                            'free-powerbi': 'Analytics Ready: You can build dashboards and analyze business data',
+                            'free-data-modeling': 'DE Foundations Complete: You understand data modeling and warehousing',
+                            'free-de-projects': 'DE Milestone: You can build end-to-end data pipelines',
                         };
                         const milestone = milestones[phase.id];
 
@@ -314,29 +349,26 @@ export default function RoadmapResult({ plan, goalLabel, goalId, learnerType, on
             <div className="bg-gradient-to-r from-blue-600 to-[#6F53C1] text-white p-8 rounded-2xl relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
                 <div className="relative z-10">
-                    <h3 className="text-2xl font-bold mb-2">Want structured learning with job support?</h3>
-                    <p className="text-blue-100 mb-6 max-w-lg">
-                        The Codebasics Bootcamp includes everything in this roadmap plus
-                        virtual internships, live problem-solving sessions, and job assistance.
+                    <h3 className="text-2xl font-bold mb-2">Supercharge this roadmap with expert guidance</h3>
+                    <p className="text-blue-100 mb-4 max-w-lg">
+                        The Codebasics Bootcamp turns this plan into a guided experience — you learn with accountability, build with feedback, and graduate job-ready.
                     </p>
-                    <div className="flex flex-wrap gap-3">
-                        <a
-                            href={getBootcampUrl(goalId)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="bg-white text-blue-700 font-bold px-6 py-3 rounded-xl hover:bg-blue-50 transition-all text-sm"
-                        >
-                            Explore Bootcamp
-                        </a>
-                        <a
-                            href="https://www.youtube.com/@codebasics"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="border border-white/30 text-white font-bold px-6 py-3 rounded-xl hover:bg-white/10 transition-all text-sm"
-                        >
-                            Free YouTube Course
-                        </a>
+                    <div className="flex flex-wrap gap-2 mb-6">
+                        {["Real Business Projects", "Guided Learning Path", "Live Sessions with Industry Experts", "Virtual Internships", "Job Assistance"].map((feature) => (
+                            <span key={feature} className="inline-flex items-center gap-1.5 bg-white/10 border border-white/15 text-white text-xs font-medium px-3 py-1.5 rounded-full">
+                                <CheckCircle2 className="w-3 h-3 text-green-300" />
+                                {feature}
+                            </span>
+                        ))}
                     </div>
+                    <a
+                        href={getBootcampUrl(goalId)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block bg-white text-blue-700 font-bold px-6 py-3 rounded-xl hover:bg-blue-50 transition-all text-sm"
+                    >
+                        Explore Bootcamp
+                    </a>
                 </div>
             </div>
 
@@ -381,6 +413,9 @@ export default function RoadmapResult({ plan, goalLabel, goalId, learnerType, on
                     learnerType={learnerType}
                     bootcampUrl={getBootcampUrl(goalId)}
                     sessionId={sessionId}
+                    initialName={userName}
+                    initialEmail={userEmail}
+                    personalization={pdfPersonalization}
                 />
             </PdfErrorBoundary>
         </div>
@@ -499,11 +534,22 @@ function FeedbackWidget({ sessionId }: { sessionId?: string }) {
     );
 }
 
-function StatCard({ label, value }: { label: string; value: string }) {
+const STAT_ACCENTS = {
+    blue:    { icon: 'bg-blue-50 text-blue-600', ring: 'group-hover:ring-blue-100' },
+    amber:   { icon: 'bg-amber-50 text-amber-600', ring: 'group-hover:ring-amber-100' },
+    emerald: { icon: 'bg-emerald-50 text-emerald-600', ring: 'group-hover:ring-emerald-100' },
+    violet:  { icon: 'bg-violet-50 text-violet-600', ring: 'group-hover:ring-violet-100' },
+} as const;
+
+function StatCard({ label, value, icon, accent = 'blue' }: { label: string; value: string | number; icon?: React.ReactNode; accent?: keyof typeof STAT_ACCENTS }) {
+    const a = STAT_ACCENTS[accent];
     return (
-        <div className="bg-white/10 p-4 rounded-xl backdrop-blur-sm">
-            <div className="text-xs text-blue-200 uppercase tracking-wider font-bold mb-1">{label}</div>
-            <div className="text-2xl font-bold">{value}</div>
+        <div className={`group relative bg-white p-5 md:p-6 border-r border-b border-slate-200/60 last:border-r-0 md:[&:nth-child(4)]:border-r-0 md:[&:nth-child(n+3)]:border-b-0 transition-all hover:bg-slate-50/50`}>
+            <div className={`inline-flex items-center justify-center w-8 h-8 rounded-lg ${a.icon} mb-3 ring-1 ring-transparent ${a.ring} transition-all`}>
+                {icon}
+            </div>
+            <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400 mb-1">{label}</div>
+            <div className="text-3xl md:text-[2.25rem] font-extrabold tracking-tight text-slate-900 leading-none tabular-nums">{value}</div>
         </div>
     );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import {
     Dialog,
     DialogContent,
@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Download, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { type PlanResult } from "@/lib/types";
-import { type PdfMeta } from "@/lib/pdf/generateBrandedPdf";
+import { type PdfMeta, type PdfPersonalization } from "@/lib/pdf/generateBrandedPdf";
 
 type PdfDownloadModalProps = {
     open: boolean;
@@ -24,6 +24,9 @@ type PdfDownloadModalProps = {
     learnerType?: string;
     bootcampUrl?: string;
     sessionId?: string;
+    initialName?: string;
+    initialEmail?: string;
+    personalization?: PdfPersonalization;
 };
 
 type ModalState = "form" | "loading" | "success" | "error";
@@ -40,9 +43,12 @@ export default function PdfDownloadModal({
     learnerType,
     bootcampUrl = "https://codebasics.io/bootcamps/gen-ai-data-science-bootcamp-with-virtual-internship",
     sessionId,
+    initialName,
+    initialEmail,
+    personalization,
 }: PdfDownloadModalProps) {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
+    const [name, setName] = useState(initialName ?? "");
+    const [email, setEmail] = useState(initialEmail ?? "");
     const [honeypot, setHoneypot] = useState("");
     const [state, setState] = useState<ModalState>("form");
     const [errorMsg, setErrorMsg] = useState("");
@@ -57,24 +63,7 @@ export default function PdfDownloadModal({
         setErrorMsg("");
 
         try {
-            // Capture lead data
-            try {
-                await fetch("/api/leads", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        fullName: name.trim(),
-                        email: email.trim(),
-                        targetRoleLabel: meta.targetRoleLabel,
-                        honeypot: honeypot,
-                        sessionId: sessionId || "",
-                    }),
-                });
-            } catch (apiError) {
-                console.warn("Lead capture failed:", apiError);
-                // Proceed with PDF generation anyway
-            }
-
+            // Lead data is already captured at roadmap generation time (page.tsx).
             // Dynamic import to code-split react-pdf (~100KB) — only loaded when user actually downloads
             const [{ generateBrandedPdf }, { pdfFilename }] = await Promise.all([
                 import("@/lib/pdf/generateBrandedPdf"),
@@ -85,6 +74,7 @@ export default function PdfDownloadModal({
                 user: { name: name.trim(), email: email.trim() },
                 plan,
                 meta,
+                personalization,
             });
             const timeoutPromise = new Promise<never>((_, reject) =>
                 setTimeout(() => reject(new Error("PDF generation timed out. Your plan may be too large. Try reducing scope.")), 30000)
@@ -113,6 +103,18 @@ export default function PdfDownloadModal({
             setState("error");
         }
     }, [isValid, name, email, plan, meta, honeypot, sessionId]);
+
+    // Auto-trigger download when modal opens with pre-filled valid data
+    const hasAutoTriggered = useRef(false);
+    useEffect(() => {
+        if (open && isValid && state === "form" && !hasAutoTriggered.current) {
+            hasAutoTriggered.current = true;
+            handleDownload();
+        }
+        if (!open) {
+            hasAutoTriggered.current = false;
+        }
+    }, [open, isValid, state, handleDownload]);
 
     const handleReset = () => {
         setState("form");

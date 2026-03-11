@@ -53,6 +53,28 @@ export function isAuthenticatedFromRequest(req: Request): boolean {
     return timingSafeEqual(a, b);
 }
 
+/** Verify request origin to prevent CSRF attacks.
+ *  Returns true if the request comes from the same origin. */
+export function verifyCsrfOrigin(req: Request): boolean {
+    const origin = req.headers.get("origin");
+    const referer = req.headers.get("referer");
+
+    if (!origin && !referer) return false;
+
+    const host = req.headers.get("host");
+    if (!host) return false;
+
+    const source = origin || referer;
+    if (!source) return false;
+
+    try {
+        const url = new URL(source);
+        return url.host === host;
+    } catch {
+        return false;
+    }
+}
+
 /** Check if the current cookies indicate authentication (for server components / route handlers) */
 export async function isAuthenticated(): Promise<boolean> {
     const store = await cookies();

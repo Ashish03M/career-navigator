@@ -103,8 +103,8 @@ const OPTIONAL_PHASE_KEYWORDS = ['sql (advanced)'];
 
 // Helper to derive defaults if flags are missing (Backward Compatibility + UX Simplicity)
 function deriveSkillFlags(background: string, input: PlanInput) {
-    const isTech = ['tech-pro', 'software-dev', 'data-analyst', 'academic'].includes(background);
-    const isDev = ['tech-pro', 'software-dev'].includes(background);
+    const isTech = ['working-pro', 'software-dev', 'data-analyst', 'academic'].includes(background);
+    const isDev = ['working-pro', 'software-dev'].includes(background);
 
     // Default: Assume Python/basics known for Tech roles, unless explicitly set to false
     // If input.hasPythonBasics is defined, use it. Otherwise derive.
@@ -121,7 +121,7 @@ function deriveSkillFlags(background: string, input: PlanInput) {
     // Actually, let's link it to Python Basics for simplicity in "Tech Pro" case, or strict false?
     // User request: "Prevent incorrect skipping". 
     // Let's assume 'tech-pro' knows AI basics (high level).
-    const hasAIIntro = input.hasAIIntro ?? (background === 'tech-pro');
+    const hasAIIntro = input.hasAIIntro ?? (background === 'working-pro');
 
     return { hasPythonBasics, hasDSABasics, hasGitBasics, hasAIIntro };
 }
@@ -227,7 +227,7 @@ export function generatePlan(input: PlanInput): PlanResult {
         }
 
         // Enhanced depth-aware skip: advanced backgrounds skip intermediate levels too
-        const advancedBackgrounds = ['software-dev', 'tech-pro', 'data-analyst'];
+        const advancedBackgrounds = ['software-dev', 'working-pro', 'data-analyst'];
         if (tags.level === 'intermediate' && knownCategories.has(tags.category)
             && advancedBackgrounds.includes(background) && !shouldSkip) {
             shouldSkip = true;
@@ -237,9 +237,9 @@ export function generatePlan(input: PlanInput): PlanResult {
         }
 
         // Legacy: Tech Pro skips intermediate Python specifically
-        if (tags.category === 'python' && tags.level === 'intermediate' && hasPythonBasics && background === 'tech-pro' && !shouldSkip) {
+        if (tags.category === 'python' && tags.level === 'intermediate' && hasPythonBasics && background === 'working-pro' && !shouldSkip) {
             shouldSkip = true;
-            reason = "Tech Pro skips intermediate Python";
+            reason = "Working Professional skips intermediate Python";
             reasonCode = "SKIP_PYTHON_INTERMEDIATE_TECH";
             flagUsed = "hasPythonBasics+background";
         }
@@ -257,7 +257,7 @@ export function generatePlan(input: PlanInput): PlanResult {
         chapters = chapters.filter(ch => !skippedSubjectIds.has(ch.subjectId));
         const savedWeeks = Math.round(skippedDuration);
         whyThisPlan.push(
-            `Skipped ${skippedSubjectIds.size} module${skippedSubjectIds.size !== 1 ? 's' : ''} you already know${savedWeeks > 0 ? ` — saving you ~${savedWeeks} week${savedWeeks !== 1 ? 's' : ''}` : ''}.`
+            `Skipped ${skippedSubjectIds.size} module${skippedSubjectIds.size !== 1 ? 's' : ''} you already know${savedWeeks > 0 ? `, saving you ~${savedWeeks} week${savedWeeks !== 1 ? 's' : ''}` : ''}.`
         );
     }
 
@@ -288,9 +288,9 @@ export function generatePlan(input: PlanInput): PlanResult {
 
     // 1. Profile Category (Multiplier Logic)
     let profileMultiplier = 1.0;
-    if (['beginner', 'student', 'non-tech', 'career-gap'].includes(background)) {
+    if (['beginner', 'career-gap'].includes(background)) {
         profileMultiplier = 1.2; // Reduced from 1.5 to align better with labels
-    } else if (['data-analyst', 'tech-pro', 'academic'].includes(background)) {
+    } else if (['data-analyst', 'working-pro', 'academic'].includes(background)) {
         profileMultiplier = 1.0; // Standard
     } else if (['software-dev', 'manager'].includes(background)) {
         profileMultiplier = 0.8; // Fast learners
@@ -300,7 +300,7 @@ export function generatePlan(input: PlanInput): PlanResult {
     if (learningPreference === 'fast-track') {
         // Legacy ID — kept for backward compat
         profileMultiplier *= 0.85;
-        whyThisPlan.push("Accelerated pacing — each module has tighter timelines for fast-track learning.");
+        whyThisPlan.push("Accelerated pacing with tighter timelines for fast-track learning.");
     } else if (learningPreference === 'theory') {
         profileMultiplier *= 1.1;
         whyThisPlan.push("Extra time allocated for deep theoretical understanding before moving to projects.");
@@ -309,7 +309,7 @@ export function generatePlan(input: PlanInput): PlanResult {
         profileMultiplier *= 1.1;
         whyThisPlan.push("Extra time allocated for comprehensive depth and theory.");
     } else if (learningPreference === 'practical') {
-        whyThisPlan.push("Practical-first approach — projects are interleaved earlier in your learning path.");
+        whyThisPlan.push("Practical-first approach with projects interleaved earlier in your learning path.");
     }
     // 'balanced' uses default multiplier and order (1.0 — no change)
 
@@ -331,10 +331,8 @@ export function generatePlan(input: PlanInput): PlanResult {
         // Career outcome curriculum restructuring
         const outcomeDurationBoost: Record<string, Record<string, number>> = {
             'job-search': { 'free-career': 1.5, 'free-unguided': 1.3 },
-            'startup': { 'free-devops': 1.3, 'free-cloud': 1.3 },
+            'build': { 'free-genai-projects': 1.2, 'free-unguided': 1.3, 'free-devops': 1.3, 'free-cloud': 1.3 },
             'upskill': { 'free-career': 0.5, 'free-unguided': 0.5 },
-            'freelance': { 'free-genai-projects': 1.2, 'free-unguided': 1.3 },
-            'career-transition': { 'free-career': 1.3 },
             'academic': { 'free-math': 1.3, 'free-dl': 1.2, 'free-career': 0.5 },
         };
         const outcomeBoosts = outcomeDurationBoost[careerOutcome];
@@ -351,10 +349,8 @@ export function generatePlan(input: PlanInput): PlanResult {
     // Career outcome whyThisPlan messages
     const outcomeMessages: Record<string, string> = {
         'job-search': 'Prioritized interview preparation, portfolio projects, and career branding for your job search.',
-        'startup': 'Emphasized deployment, cloud infrastructure, and end-to-end product building for entrepreneurship.',
+        'build': 'Emphasized project-building, deployment, and cloud infrastructure for freelancing or entrepreneurship.',
         'upskill': 'Reduced career/job-prep modules since you are focused on skill enhancement, not job switching.',
-        'freelance': 'Emphasized project-building and independent work for freelancing/consulting readiness.',
-        'career-transition': 'Added extra career transition support including branding and networking guidance.',
         'academic': 'Deepened mathematical foundations and theory for academic/research preparation.',
     };
     if (outcomeMessages[careerOutcome]) {
@@ -365,10 +361,9 @@ export function generatePlan(input: PlanInput): PlanResult {
     const backgroundMessages: Record<string, string> = {
         'software-dev': 'As a software developer, we streamlined foundations and focused on AI-specific content.',
         'beginner': 'Included all foundational modules with extra time for mastering each concept from scratch.',
-        'non-tech': 'Included comprehensive foundations to build your technical skills from the ground up.',
+        'working-pro': 'Built on your professional experience to fast-track through familiar concepts.',
         'career-gap': 'Built in extra review time to help you re-engage with technical concepts at a comfortable pace.',
         'data-analyst': 'Optimized your path by building on your existing data analysis skills.',
-        'student': 'Tailored for your academic background with a structured learning progression.',
     };
     if (backgroundMessages[background]) {
         whyThisPlan.push(backgroundMessages[background]);
@@ -376,9 +371,9 @@ export function generatePlan(input: PlanInput): PlanResult {
 
     // Goal-specific whyThisPlan messages
     const goalMessages: Record<string, string> = {
-        'data-analyst': 'Focused on Excel, BI tools, SQL, and business domain knowledge — the core skills employers look for in Data Analysts.',
-        'data-engineer': 'Covers Python, SQL, cloud ETL, Spark, and streaming — the full modern Data Engineering stack.',
-        'data-scientist': 'Heavy emphasis on statistics, ML, and deep learning — the core competencies for Data Scientists.',
+        'data-analyst': 'Focused on Excel, BI tools, SQL, and business domain knowledge. These are the core skills employers look for in Data Analysts.',
+        'data-engineer': 'Covers Python, SQL, cloud ETL, Spark, and streaming. This is the full modern Data Engineering stack.',
+        'data-scientist': 'Heavy emphasis on statistics, ML, and deep learning. These are the core competencies for Data Scientists.',
         'ml-engineer': 'Focused on ML fundamentals, deep learning, and MLOps for production model deployment.',
         'ai-engineer': 'Full-stack AI path covering ML, DL, GenAI, and cloud deployment.',
     };
@@ -439,7 +434,7 @@ export function generatePlan(input: PlanInput): PlanResult {
                 name: cleanName, // normalized — no "Week N:" / "Module N:" prefix
                 phaseIndex: phaseCounter,
                 displayLabel: `Week ${phaseCounter}`,
-                color: subject.color || "bg-gray-50 border-gray-200",
+                color: "bg-white border-gray-200",
                 chapters: subjectChapters,
                 isCareerPhase: CAREER_PHASE_KEYWORDS.some(kw => lowerName.includes(kw)),
                 isOptional: OPTIONAL_PHASE_KEYWORDS.some(kw => lowerName.includes(kw)),

@@ -138,7 +138,7 @@ async function run() {
     const minPlan = generatePlan({
         learnerType: "free",
         goal: "genai-specialist",
-        background: "tech-pro",
+        background: "working-pro",
         careerOutcome: "upskill",
         learningPreference: "fast-track",
         availability: "full-time",

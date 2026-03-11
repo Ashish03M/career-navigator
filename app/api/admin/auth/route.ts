@@ -1,8 +1,13 @@
-import { verifyPassword, setAuthCookie, clearAuthCookie } from "@/lib/auth";
+import { verifyPassword, setAuthCookie, clearAuthCookie, verifyCsrfOrigin } from "@/lib/auth";
 import { checkRateLimit, resetRateLimit } from "@/lib/rateLimit";
 
 export async function POST(req: Request) {
     try {
+        // CSRF protection: verify request comes from same origin
+        if (!verifyCsrfOrigin(req)) {
+            return Response.json({ error: "Forbidden" }, { status: 403 });
+        }
+
         const body = await req.json();
         const { password, action } = body;
 

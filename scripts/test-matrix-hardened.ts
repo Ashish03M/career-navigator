@@ -59,6 +59,7 @@ const BOOTCAMP_BASE: PlanInput = {
 const ALL_KNOWN: ExperienceState = {
     python: true, sql: true, statistics: true, ml: true,
     dl: true, nlp: true, genai: true, mlops: true,
+    excel_bi: true, data_engineering: true, big_data: true,
 };
 
 function deepEqual(a: any, b: any): boolean {
@@ -138,11 +139,10 @@ const PERSONAS: Persona[] = [
     { label: "BC/Beginner/NLPEngineer/10-20h", syllabus: "bootcamp", overrides: { goal: "nlp-engineer", background: "beginner", availability: "10-20" } },
 
     // === ALL BACKGROUNDS (Free, 10-20h) ===
-    { label: "Free/Student/10-20h", syllabus: "free", overrides: { background: "student" } },
+    { label: "Free/Beginner/10-20h", syllabus: "free", overrides: { background: "beginner" } },
     { label: "Free/SoftwareDev/10-20h", syllabus: "free", overrides: { background: "software-dev" } },
     { label: "Free/DataAnalyst/10-20h", syllabus: "free", overrides: { background: "data-analyst" } },
-    { label: "Free/TechPro/10-20h", syllabus: "free", overrides: { background: "tech-pro" } },
-    { label: "Free/NonTech/10-20h", syllabus: "free", overrides: { background: "non-tech" } },
+    { label: "Free/WorkingPro/10-20h", syllabus: "free", overrides: { background: "working-pro" } },
     { label: "Free/CareerGap/10-20h", syllabus: "free", overrides: { background: "career-gap" } },
     { label: "Free/Manager/10-20h", syllabus: "free", overrides: { background: "manager" } },
     { label: "Free/Academic/10-20h", syllabus: "free", overrides: { background: "academic" } },
@@ -161,26 +161,24 @@ const PERSONAS: Persona[] = [
 
     // === EXPERIENCE EXTREMES ===
     { label: "Free/Beginner/AllKnown", syllabus: "free", overrides: { experience: ALL_KNOWN } },
-    { label: "BC/TechPro/AllKnown", syllabus: "bootcamp", overrides: { background: "tech-pro", experience: ALL_KNOWN } },
-    { label: "Free/TechPro/AllKnown", syllabus: "free", overrides: { background: "tech-pro", experience: ALL_KNOWN }, expect: { minPhases: 1 } },
+    { label: "BC/WorkingPro/AllKnown", syllabus: "bootcamp", overrides: { background: "working-pro", experience: ALL_KNOWN } },
+    { label: "Free/WorkingPro/AllKnown", syllabus: "free", overrides: { background: "working-pro", experience: ALL_KNOWN }, expect: { minPhases: 1 } },
 
     // === CAREER OUTCOMES ===
-    { label: "Free/Beginner/CareerTransition", syllabus: "free", overrides: { careerOutcome: "career-transition" } },
-    { label: "Free/Beginner/Freelance", syllabus: "free", overrides: { careerOutcome: "freelance" } },
-    { label: "Free/Beginner/Startup", syllabus: "free", overrides: { careerOutcome: "startup" } },
+    { label: "Free/Beginner/Build", syllabus: "free", overrides: { careerOutcome: "build" } },
     { label: "Free/Beginner/Upskill", syllabus: "free", overrides: { careerOutcome: "upskill" } },
     { label: "Free/Beginner/Academic", syllabus: "free", overrides: { careerOutcome: "academic" } },
 
     // === EXTREME COMBOS ===
     { label: "BC/Manager/FullTime/FastTrack/AllKnown", syllabus: "bootcamp", overrides: { background: "manager", availability: "full-time", learningPreference: "fast-track", experience: ALL_KNOWN } },
-    { label: "Free/NonTech/3-5h/Theory/NoneKnown", syllabus: "free", overrides: { background: "non-tech", availability: "3-5", learningPreference: "theory" } },
-    { label: "BC/Student/FullTime/Comprehensive", syllabus: "bootcamp", overrides: { background: "student", availability: "full-time", learningPreference: "comprehensive" } },
+    { label: "Free/WorkingPro/3-5h/Theory/NoneKnown", syllabus: "free", overrides: { background: "working-pro", availability: "3-5", learningPreference: "theory" } },
+    { label: "BC/Beginner/FullTime/Comprehensive", syllabus: "bootcamp", overrides: { background: "beginner", availability: "full-time", learningPreference: "comprehensive" } },
     { label: "Free/CareerGap/5-10h/FastTrack", syllabus: "free", overrides: { background: "career-gap", availability: "5-10", learningPreference: "fast-track" } },
     { label: "Free/Academic/20-30h/GenAI/PythonKnown", syllabus: "free", overrides: { background: "academic", availability: "20-30", goal: "genai-specialist", experience: { ...INITIAL_EXPERIENCE, python: true } } },
 
     // === DA / DE GOALS ===
     { label: "Free/Beginner/DataAnalyst/10-20h", syllabus: "free", overrides: { goal: "data-analyst", background: "beginner", availability: "10-20" } },
-    { label: "Free/NonTech/DataAnalyst/10-20h", syllabus: "free", overrides: { goal: "data-analyst", background: "non-tech", availability: "10-20" } },
+    { label: "Free/WorkingPro/DataAnalyst/10-20h", syllabus: "free", overrides: { goal: "data-analyst", background: "working-pro", availability: "10-20" } },
     { label: "Free/Beginner/DataEngineer/10-20h", syllabus: "free", overrides: { goal: "data-engineer", background: "beginner", availability: "10-20" } },
     { label: "Free/SoftwareDev/DataEngineer/10-20h", syllabus: "free", overrides: { goal: "data-engineer", background: "software-dev", availability: "10-20" } },
 ];
@@ -235,7 +233,7 @@ function testDeterminism(base: PlanInput, label: string) {
 
 testDeterminism(FREE_BASE, "Free/Beginner");
 testDeterminism(BOOTCAMP_BASE, "Bootcamp/Beginner");
-testDeterminism({ ...FREE_BASE, background: "tech-pro", experience: ALL_KNOWN }, "Free/TechPro/AllKnown");
+testDeterminism({ ...FREE_BASE, background: "working-pro", experience: ALL_KNOWN }, "Free/WorkingPro/AllKnown");
 testDeterminism({ ...BOOTCAMP_BASE, availability: "full-time", learningPreference: "fast-track" }, "BC/FullTime/FastTrack");
 
 // ─── TEST 3: Availability Monotonicity ───
@@ -335,7 +333,7 @@ if (!bcSkipWorks) {
 // ─── TEST 7: careerOutcome differentiation ───
 section("CAREER OUTCOME DIFFERENTIATION");
 
-const outcomes = ["job-search", "career-transition", "freelance", "startup", "upskill", "academic", "internal-move"];
+const outcomes = ["job-search", "build", "upskill", "academic"];
 const outcomePlans = outcomes.map(co => ({
     outcome: co,
     plan: generatePlan({ ...FREE_BASE, careerOutcome: co }),
@@ -367,10 +365,10 @@ if (allAppsSame) {
 // ─── TEST 9: Extreme duration ranges ───
 section("EXTREME DURATION SANITY");
 
-// Slowest possible: beginner, non-tech, 3-5h, theory, free
+// Slowest possible: beginner, 3-5h, theory, free
 const slowest = generatePlan({
     ...FREE_BASE,
-    background: "non-tech",
+    background: "beginner",
     availability: "3-5",
     learningPreference: "theory",
 });

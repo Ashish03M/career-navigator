@@ -33,11 +33,13 @@ Thank you for your interest in contributing. This document explains how to set u
 
    ```env
    ADMIN_PASSWORD=your-local-admin-password
-   GOOGLE_SHEETS_WEBHOOK_URL=              # optional -- leave empty to skip lead capture
+   GOOGLE_SERVICE_ACCOUNT_EMAIL=           # optional -- Google Sheets API service account email
+   GOOGLE_PRIVATE_KEY=                     # optional -- Google Sheets API private key (PEM)
+   GOOGLE_SHEET_ID=                        # optional -- target Google Sheet ID
    ```
 
    - `ADMIN_PASSWORD` is required for the admin panel to function.
-   - `GOOGLE_SHEETS_WEBHOOK_URL` is optional. If unset, lead/feedback capture is silently skipped.
+   - The `GOOGLE_*` variables are optional. If unset, lead/feedback capture is silently skipped.
 
 4. **Start the dev server**
 
@@ -87,7 +89,7 @@ lib/
   auth.ts                   # Cookie-based HMAC auth
   rateLimit.ts              # In-memory rate limiter
   syllabusStore.ts          # Atomic JSON file read/write
-  leads/sheets.ts           # Google Sheets webhook integration
+  leads/sheets.ts           # Google Sheets API integration
   types.ts                  # Core TypeScript types
   syllabusTypes.ts          # Syllabus data types
   pdf/                      # PDF generation (react-pdf)
@@ -220,4 +222,6 @@ npx playwright test --headed
 | ----------------------------- | -------- | ---------------------------------------------------- |
 | `ADMIN_PASSWORD`              | Yes      | Admin panel password and HMAC key for session tokens |
 | `AUTH_SECRET`                 | No       | Optional separate HMAC key (falls back to ADMIN_PASSWORD) |
-| `GOOGLE_SHEETS_WEBHOOK_URL`  | No       | Google Apps Script webhook URL for lead/feedback data |
+| `GOOGLE_SERVICE_ACCOUNT_EMAIL` | No     | Google Sheets API service account email               |
+| `GOOGLE_PRIVATE_KEY`           | No     | Google Sheets API private key (PEM format)            |
+| `GOOGLE_SHEET_ID`              | No     | Target Google Sheet ID for lead/feedback data         |

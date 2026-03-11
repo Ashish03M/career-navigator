@@ -10,4 +10,5 @@ export {
     type PdfInput,
     type PdfMeta,
     type PdfUserInfo,
+    type PdfPersonalization,
 } from "./templates/CareerRoadmapPdf";

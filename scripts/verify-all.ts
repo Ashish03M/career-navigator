@@ -190,34 +190,34 @@ function testSkipLogic() {
     assert(beginnerSubjects.has("free-dsa"), "Beginner retains free-dsa");
     assert(beginnerSubjects.has("free-git"), "Beginner retains free-git");
 
-    // Tech-pro — skips python, dsa, git, adv-python
-    const techPro = generatePlan({ ...FREE_BASE, background: "tech-pro" });
+    // Working-pro — skips python, dsa, git, adv-python
+    const techPro = generatePlan({ ...FREE_BASE, background: "working-pro" });
     const techSubjects = new Set(techPro.phases.flatMap(p => p.chapters.map(c => c.subjectId)));
-    assert(!techSubjects.has("free-python"), "Tech-pro skips free-python");
-    assert(!techSubjects.has("free-dsa"), "Tech-pro skips free-dsa");
-    assert(!techSubjects.has("free-git"), "Tech-pro skips free-git (derived flag)");
-    assert(!techSubjects.has("free-adv-python"), "Tech-pro skips free-adv-python (intermediate)");
+    assert(!techSubjects.has("free-python"), "Working-pro skips free-python");
+    assert(!techSubjects.has("free-dsa"), "Working-pro skips free-dsa");
+    assert(!techSubjects.has("free-git"), "Working-pro skips free-git (derived flag)");
+    assert(!techSubjects.has("free-adv-python"), "Working-pro skips free-adv-python (intermediate)");
 
-    // Explicit override: hasPythonBasics=false on tech-pro should RETAIN python
-    const techNoSkip = generatePlan({ ...FREE_BASE, background: "tech-pro", hasPythonBasics: false });
+    // Explicit override: hasPythonBasics=false on working-pro should RETAIN python
+    const techNoSkip = generatePlan({ ...FREE_BASE, background: "working-pro", hasPythonBasics: false });
     const techNoSkipSubjects = new Set(techNoSkip.phases.flatMap(p => p.chapters.map(c => c.subjectId)));
-    assert(techNoSkipSubjects.has("free-python"), "Tech-pro with hasPythonBasics=false retains free-python");
+    assert(techNoSkipSubjects.has("free-python"), "Working-pro with hasPythonBasics=false retains free-python");
 
     // Duration reduction
-    assert(techPro.totalWeeks < beginner.totalWeeks, `Tech-pro weeks(${techPro.totalWeeks}) < Beginner weeks(${beginner.totalWeeks})`);
+    assert(techPro.totalWeeks < beginner.totalWeeks, `Working-pro weeks(${techPro.totalWeeks}) < Beginner weeks(${beginner.totalWeeks})`);
 
     section("Skip Logic (Bootcamp Syllabus — tags fallback)");
     const bcBeginner = generatePlan({ ...BOOTCAMP_BASE, background: "beginner" });
-    const bcTechPro = generatePlan({ ...BOOTCAMP_BASE, background: "tech-pro" });
+    const bcTechPro = generatePlan({ ...BOOTCAMP_BASE, background: "working-pro" });
     const bcBeginnerChapterCount = bcBeginner.phases.reduce((s, p) => s + p.chapters.length, 0);
     const bcTechProChapterCount = bcTechPro.phases.reduce((s, p) => s + p.chapters.length, 0);
-    // Tech-pro derives experience flags (hasPythonBasics, hasAIIntro) which trigger skip logic via tags fallback.
+    // Working-pro derives experience flags (hasPythonBasics, hasAIIntro) which trigger skip logic via tags fallback.
     // Beginner has no experience, so more chapters are included.
     assert(bcBeginnerChapterCount >= bcTechProChapterCount,
-        `Bootcamp: beginner chapters(${bcBeginnerChapterCount}) >= tech-pro chapters(${bcTechProChapterCount}) [skip logic active via fallback]`);
-    // But durations should differ (tech-pro profileMultiplier = 1.0, beginner = 1.2)
+        `Bootcamp: beginner chapters(${bcBeginnerChapterCount}) >= working-pro chapters(${bcTechProChapterCount}) [skip logic active via fallback]`);
+    // But durations should differ (working-pro profileMultiplier = 1.0, beginner = 1.2)
     assert(bcTechPro.totalWeeks < bcBeginner.totalWeeks,
-        `Bootcamp: tech-pro weeks(${bcTechPro.totalWeeks}) < beginner weeks(${bcBeginner.totalWeeks}) [profile multiplier]`);
+        `Bootcamp: working-pro weeks(${bcTechPro.totalWeeks}) < beginner weeks(${bcBeginner.totalWeeks}) [profile multiplier]`);
 }
 
 // =============================
@@ -477,7 +477,7 @@ console.log("╚═════════════════════�
 
 testInvariants(generatePlan(FREE_BASE), "Free Beginner", freeCatalogIds);
 testInvariants(generatePlan(BOOTCAMP_BASE), "Bootcamp Beginner", bootcampCatalogIds);
-testInvariants(generatePlan({ ...FREE_BASE, background: "tech-pro" }), "Free Tech-Pro", freeCatalogIds);
+testInvariants(generatePlan({ ...FREE_BASE, background: "working-pro" }), "Free Tech-Pro", freeCatalogIds);
 testDeterminism();
 testSkipLogic();
 testTotalModulesCount();

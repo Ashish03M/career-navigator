@@ -21,7 +21,7 @@ Codebasics Career Navigator is a bootcamp planning tool that generates personali
 | Containerization   | Docker (node:20-alpine, multi-stage)             |
 | Deployment         | Coolify (Docker Compose)                         |
 | Data Persistence   | JSON files on disk (`data/` directory)           |
-| External Services  | Google Sheets via Apps Script Webhook             |
+| External Services  | Google Sheets API (via `googleapis` service account) |
 
 ## System Components
 
@@ -66,7 +66,7 @@ Codebasics Career Navigator is a bootcamp planning tool that generates personali
 | `lib/auth.ts`              | HMAC-SHA256 cookie-based auth. Derives session token from `ADMIN_PASSWORD` env var. Uses `timingSafeEqual` for constant-time comparisons. Cookie: `admin_token`, httpOnly, 24h TTL. |
 | `lib/rateLimit.ts`         | In-memory rate limiter. 5 attempts per 15-minute window per IP. Suitable for single-instance deployments. |
 | `lib/syllabusStore.ts`     | Atomic read/write for `data/syllabus_v3.json`. Uses temp-file + rename pattern and an in-process write lock to prevent corruption. |
-| `lib/leads/sheets.ts`      | Sends lead and feedback payloads to `GOOGLE_SHEETS_WEBHOOK_URL` (Google Apps Script). Timestamps in IST. |
+| `lib/leads/sheets.ts`      | Sends lead and feedback data to Google Sheets via the Google Sheets API (service account JWT auth). Timestamps in IST. |
 | `lib/logger.ts`            | Structured JSON logger (info/warn/error) wrapping `console.*`.  |
 | `lib/generatePlan.ts`      | Core roadmap generation engine. Handles skip logic (experience-based, goal-based, flag-based), profile multipliers, availability scaling, phase construction, and practical-first reordering. |
 | `lib/schemas/planInputSchema.ts` | Zod schema for runtime validation of `PlanInput`.         |
@@ -95,7 +95,7 @@ In Docker, the `data/` directory is mounted as a named volume (`syllabus_data`) 
 
 | Service              | Integration Point                | Details                                                       |
 | -------------------- | -------------------------------- | ------------------------------------------------------------- |
-| Google Sheets        | `lib/leads/sheets.ts`           | Lead data and feedback are POSTed to a Google Apps Script webhook URL (`GOOGLE_SHEETS_WEBHOOK_URL` env var). The webhook writes rows to a Google Sheet. |
+| Google Sheets        | `lib/leads/sheets.ts`           | Lead data and feedback are written via the Google Sheets API using a service account (`GOOGLE_SERVICE_ACCOUNT_EMAIL`, `GOOGLE_PRIVATE_KEY`, `GOOGLE_SHEET_ID` env vars). |
 | Codebasics.io        | Bootcamp CTA links              | The roadmap result page links to relevant Codebasics bootcamp pages based on the selected goal. |
 
 ### Environment Variables
@@ -104,7 +104,9 @@ In Docker, the `data/` directory is mounted as a named volume (`syllabus_data`) 
 | ----------------------------- | -------- | ---------------------------------------------------- |
 | `ADMIN_PASSWORD`              | Yes      | Admin panel password. Also used to derive the HMAC session token. |
 | `AUTH_SECRET`                 | No       | Optional HMAC key for password verification. Falls back to `ADMIN_PASSWORD`. |
-| `GOOGLE_SHEETS_WEBHOOK_URL`  | No       | Google Apps Script webhook URL for lead/feedback capture. If unset, capture is silently skipped. |
+| `GOOGLE_SERVICE_ACCOUNT_EMAIL` | No     | Google Sheets API service account email. If unset, lead/feedback capture is silently skipped. |
+| `GOOGLE_PRIVATE_KEY`           | No     | Google Sheets API private key (PEM format). Must have `\n` escaped as `\\n` in env vars. |
+| `GOOGLE_SHEET_ID`              | No     | Target Google Sheet ID for lead/feedback data. |
 
 ## Data Flow
 
@@ -126,7 +128,7 @@ User opens / --> BootcampPlanner loads
   --> RoadmapResult renders phases with expandable chapter details
   --> User clicks "Download PDF"
   --> PdfDownloadModal opens: collects name + email
-  --> POST /api/leads sends lead data to Google Sheets webhook
+  --> POST /api/leads sends lead data to Google Sheets via API
   --> Client-side @react-pdf/renderer generates branded PDF
   --> PDF downloads to user's device
 ```
@@ -145,7 +147,7 @@ Admin navigates to /admin
   --> Admin edits subjects/chapters (CRUD operations in UI state)
   --> Admin clicks "Save Changes" --> PUT /api/syllabus
       --> Server: verifies admin_token cookie
-      --> Server: validates body has modules, phases, categories arrays
+      --> Server: validates body with Zod schema (subjects + chapters)
       --> Server: atomic write (temp file + rename) to syllabus_v3.json
 ```
 
@@ -155,7 +157,7 @@ Admin navigates to /admin
 User submits feedback (rating 1-5, optional comment)
   --> POST /api/feedback
   --> Server: Zod validation
-  --> Server: POST payload to Google Sheets webhook
+  --> Server: writes feedback to Google Sheets via API
   --> Response: { success: true }
 ```
 

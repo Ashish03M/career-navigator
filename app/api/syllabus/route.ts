@@ -1,5 +1,5 @@
 import { readSyllabus, writeSyllabus } from "@/lib/syllabusStore";
-import { isAuthenticatedFromRequest } from "@/lib/auth";
+import { isAuthenticatedFromRequest, verifyCsrfOrigin } from "@/lib/auth";
 import { logger } from "@/lib/logger";
 import { z } from "zod";
 import fs from "fs/promises";
@@ -52,6 +52,11 @@ export async function GET(req: Request) {
 }
 
 export async function PUT(req: Request) {
+    // CSRF protection: verify request comes from same origin
+    if (!verifyCsrfOrigin(req)) {
+        return Response.json({ error: "Forbidden" }, { status: 403 });
+    }
+
     if (!isAuthenticatedFromRequest(req)) {
         return Response.json({ error: "Unauthorized" }, { status: 401 });
     }

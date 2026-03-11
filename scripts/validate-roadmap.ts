@@ -23,7 +23,7 @@ console.log('=== VERIFICATION SUITE v2 ===');
 
 // TEST 1: Skip Logic (Beginner vs Tech Pro)
 const beginnerPlan = generatePlan({ ...BASE_INPUT, background: 'beginner' });
-const techPlan = generatePlan({ ...BASE_INPUT, background: 'tech-pro' });
+const techPlan = generatePlan({ ...BASE_INPUT, background: 'working-pro' });
 
 console.log(`\n1. SKIP LOGIC TEST`);
 console.log(`Beginner Total Weeks: ${beginnerPlan.totalWeeks}`);
@@ -221,7 +221,7 @@ if (allPhasesConsistent && totalConsistent && skippedInTech &&
 console.log(`\n7. GOLDEN SNAPSHOT TEST`);
 const snapshotInput: PlanInput = {
     ...BASE_INPUT,
-    background: 'tech-pro',
+    background: 'working-pro',
     hasPythonBasics: true,
     hasDSABasics: true,
     hasgitBasics: true,
@@ -241,7 +241,7 @@ const signature = {
 const signatureString = JSON.stringify(signature);
 // Expected signature for Tech Pro with all basics (skips python, dsa, git, adv-python)
 // Based on current syllabus:
-// Skips: free-python (intro), free-dsa (intro), free-git (intro), free-adv-python (intermediate+tech-pro)
+// Skips: free-python (intro), free-dsa (intro), free-git (intro), free-adv-python (intermediate+working-pro)
 // Remaining duration will be base minus these.
 // We print it first to verify, then hardcode it if it looks correct. 
 // For now, let's just log it and assert it's NOT empty.

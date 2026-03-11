@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { Target, TrendingUp, Award, Users, Youtube, Linkedin, Instagram, Facebook, Twitter, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -18,6 +18,7 @@ import ProgressBar from "@/components/planner/ProgressBar";
 import SelectionStep from "@/components/planner/SelectionStep";
 import ExperienceStep from "@/components/planner/ExperienceStep";
 import RoadmapResult from "@/components/planner/RoadmapResult";
+import UserDetailsStep from "@/components/planner/UserDetailsStep";
 import { Button } from "@/components/ui/button";
 
 // Steps:
@@ -28,7 +29,7 @@ import { Button } from "@/components/ui/button";
 // 5. Weekly Availability
 // 6. Learning Style
 
-const TOTAL_STEPS = 6;
+const TOTAL_STEPS = 7;
 
 // Learner type is fixed to 'free' — no longer a user-facing step
 const LEARNER_TYPE = "free";
@@ -43,6 +44,9 @@ export default function BootcampPlanner() {
     const [careerOutcome, setCareerOutcome] = useState("");
     const [availability, setAvailability] = useState("");
     const [learningPreference, setLearningPreference] = useState("");
+    const [userName, setUserName] = useState("");
+    const [userEmail, setUserEmail] = useState("");
+    const sessionIdRef = useRef(crypto.randomUUID());
 
     const [syllabus, setSyllabus] = useState<SyllabusData | null>(null);
     const [syllabusLoading, setSyllabusLoading] = useState(false);
@@ -118,15 +122,36 @@ export default function BootcampPlanner() {
         setCareerOutcome("");
         setAvailability("");
         setLearningPreference("");
+        setUserName("");
+        setUserEmail("");
+        sessionIdRef.current = crypto.randomUUID();
     };
 
+    const handleGenerate = useCallback(() => {
+        setShowPlan(true);
+
+        // Capture lead at roadmap generation time
+        const goalLabel = GOALS.find(g => g.id === goal)?.name ?? "";
+        fetch("/api/leads", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                fullName: userName.trim(),
+                email: userEmail.trim(),
+                targetRoleLabel: goalLabel,
+                sessionId: sessionIdRef.current,
+            }),
+        }).catch((err) => console.warn("Lead capture failed:", err));
+    }, [goal, userName, userEmail]);
+
     const stepConfig = [
-        { id: 1, title: "What best describes you right now?", icon: <Users className="text-blue-500" />, options: BACKGROUND_OPTIONS, value: background, setter: setBackground, columns: 1 as const },
+        { id: 1, title: "What best describes you right now?", icon: <Users className="text-blue-500" />, options: BACKGROUND_OPTIONS, value: background, setter: setBackground, columns: 2 as const },
         { id: 2, isSpecial: true, specialType: "experience" },
         { id: 3, title: "Target Goal", icon: <Target className="text-green-500" />, options: GOALS, value: goal, setter: setGoal, columns: 2 as const },
-        { id: 4, title: "Career Outcome", icon: <Award className="text-orange-500" />, options: CAREER_OUTCOMES, value: careerOutcome, setter: setCareerOutcome, columns: 1 as const },
-        { id: 5, title: "Weekly Availability", icon: <Clock className="text-purple-500" />, options: AVAILABILITY_OPTIONS, value: availability, setter: setAvailability, columns: 1 as const },
+        { id: 4, title: "Career Outcome", icon: <Award className="text-orange-500" />, options: CAREER_OUTCOMES, value: careerOutcome, setter: setCareerOutcome, columns: 2 as const },
+        { id: 5, title: "Weekly Availability", icon: <Clock className="text-purple-500" />, options: AVAILABILITY_OPTIONS, value: availability, setter: setAvailability, columns: 2 as const },
         { id: 6, title: "Learning Style", icon: <TrendingUp className="text-yellow-500" />, options: LEARNING_PREFERENCES, value: learningPreference, setter: setLearningPreference, columns: 1 as const },
+        { id: 7, isSpecial: true, specialType: "user-details" },
     ];
 
     const renderStep = () => {
@@ -147,10 +172,24 @@ export default function BootcampPlanner() {
             );
         }
 
+        // Step 7: User Details (name + email)
+        if (cfg.specialType === "user-details") {
+            return (
+                <UserDetailsStep
+                    key="step-7"
+                    name={userName}
+                    email={userEmail}
+                    onChangeName={setUserName}
+                    onChangeEmail={setUserEmail}
+                    onBack={goBack}
+                    onGenerate={handleGenerate}
+                />
+            );
+        }
+
         // Standard single-select steps
         if (!cfg.options || !cfg.setter) return null;
-        const isLastStep = step === TOTAL_STEPS;
-        const handleNext = isLastStep ? () => setShowPlan(true) : goNext(step + 1);
+        const handleNext = goNext(step + 1);
 
         return (
             <SelectionStep
@@ -163,7 +202,7 @@ export default function BootcampPlanner() {
                 columns={cfg.columns ?? 1}
                 onBack={goBack}
                 onNext={handleNext}
-                nextLabel={isLastStep ? "Generate Roadmap →" : "Continue →"}
+                nextLabel="Continue →"
             />
         );
     };
@@ -294,6 +333,14 @@ export default function BootcampPlanner() {
                                 goalId={goal}
                                 learnerType={LEARNER_TYPE}
                                 onReset={handleReset}
+                                userName={userName}
+                                userEmail={userEmail}
+                                sessionId={sessionIdRef.current}
+                                background={background}
+                                careerOutcome={careerOutcome}
+                                availability={availability}
+                                learningPreference={learningPreference}
+                                experience={experience}
                             />
                         ) : showPlan && syllabusLoading ? (
                             <div key="loading" className="flex flex-col items-center justify-center py-20 gap-4">
