@@ -3,6 +3,7 @@ const isDev = process.env.NODE_ENV !== "production";
 
 const nextConfig = {
     output: "standalone",
+    serverExternalPackages: ["@sentry/nextjs", "@sentry/node"],
     images: {
         remotePatterns: [],
     },
@@ -20,11 +21,11 @@ const nextConfig = {
                         key: "Content-Security-Policy",
                         value: [
                             "default-src 'self'",
-                            `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
+                            `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} https://www.clarity.ms`,
                             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
                             "font-src 'self' https://fonts.gstatic.com",
-                            "img-src 'self' data: blob:",
-                            "connect-src 'self' https://script.google.com",
+                            "img-src 'self' data: blob: https://www.clarity.ms",
+                            "connect-src 'self' https://script.google.com https://*.sentry.io https://www.clarity.ms",
                             "frame-ancestors 'none'",
                         ].join("; "),
                     },

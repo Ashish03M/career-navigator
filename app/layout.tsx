@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import { Providers } from "./providers";
+import ClarityScript from "@/components/ClarityScript";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -43,21 +44,12 @@ export const metadata: Metadata = {
         url: "https://navigator.codebasics.io",
         siteName: "Codebasics Career Navigator",
         type: "website",
-        images: [
-            {
-                url: "/og-image.png",
-                width: 1200,
-                height: 630,
-                alt: "Codebasics Data & AI Career Roadmap Generator",
-            },
-        ],
     },
     twitter: {
         card: "summary_large_image",
         title: "Data & AI Career Roadmap Generator — Codebasics",
         description:
             "Personalized week-by-week plan for Data & AI careers. Free PDF in 2 minutes.",
-        images: ["/og-image.png"],
     },
 };
 
@@ -84,6 +76,7 @@ export default function RootLayout({
                 >
                     Skip to main content
                 </a>
+                <ClarityScript />
                 <Providers>{children}</Providers>
             </body>
         </html>
