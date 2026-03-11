@@ -71,11 +71,11 @@ export default function SelectionStep({
                                 <h3 className={cn("text-xl font-bold mb-2 transition-colors", isSelected ? "text-blue-900" : "text-slate-700 group-hover:text-slate-900")}>
                                     {opt.name}
                                 </h3>
-                                <p className={cn("text-sm leading-relaxed", isSelected ? "text-blue-700/80" : "text-slate-400 group-hover:text-slate-500")}>
+                                <p className={cn("text-sm leading-relaxed", isSelected ? "text-blue-700/80" : "text-slate-500 group-hover:text-slate-600")}>
                                     {opt.desc || opt.duration}
                                 </p>
                                 {opt.subtext && (
-                                    <p className="text-[10px] uppercase tracking-wider text-slate-400 mt-3 font-semibold">
+                                    <p className="text-[10px] uppercase tracking-wider text-slate-500 mt-3 font-semibold">
                                         {opt.subtext}
                                     </p>
                                 )}

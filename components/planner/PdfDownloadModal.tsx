@@ -94,7 +94,7 @@ export default function PdfDownloadModal({
 
             setState("success");
         } catch (err) {
-            console.error("PDF generation failed:", err);
+            console.error(JSON.stringify({ event: "pdf_generation_failed", error: err instanceof Error ? err.message : String(err) }));
             setErrorMsg(
                 err instanceof Error
                     ? err.message

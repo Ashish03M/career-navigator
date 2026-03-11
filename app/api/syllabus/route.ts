@@ -1,5 +1,6 @@
 import { readSyllabus, writeSyllabus } from "@/lib/syllabusStore";
 import { isAuthenticatedFromRequest, verifyCsrfOrigin } from "@/lib/auth";
+import { checkRateLimit } from "@/lib/rateLimit";
 import { logger } from "@/lib/logger";
 import { z } from "zod";
 import fs from "fs/promises";
@@ -32,6 +33,15 @@ const syllabusSchema = z.object({
 });
 
 export async function GET(req: Request) {
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const rl = checkRateLimit(`syllabus:${ip}`, 30);
+    if (!rl.allowed) {
+        return Response.json(
+            { error: "Too many requests" },
+            { status: 429, headers: { "Retry-After": String(Math.ceil((rl.resetAt - Date.now()) / 1000)) } }
+        );
+    }
+
     try {
         const { searchParams } = new URL(req.url);
         const type = searchParams.get("type");

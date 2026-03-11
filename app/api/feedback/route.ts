@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { captureFeedback } from "@/lib/leads/sheets";
 import { checkRateLimit } from "@/lib/rateLimit";
+import { verifyCsrfOrigin } from "@/lib/auth";
 import { logger } from "@/lib/logger";
 
 const feedbackSchema = z.object({
@@ -10,6 +11,10 @@ const feedbackSchema = z.object({
 });
 
 export async function POST(request: Request) {
+    if (!verifyCsrfOrigin(request)) {
+        return Response.json({ error: "Forbidden" }, { status: 403 });
+    }
+
     const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
     const rl = checkRateLimit(`feedback:${ip}`, 10);
     if (!rl.allowed) {

@@ -379,7 +379,7 @@ export default function RoadmapResult({ plan, goalLabel, goalId, learnerType, on
             <div className="bg-gradient-to-br from-slate-800 via-indigo-900 to-slate-900 text-white p-8 rounded-2xl text-center border border-white/10 shadow-3xl relative overflow-hidden">
                 <Rocket className="w-12 h-12 mx-auto mb-4 text-indigo-400" />
                 <h3 className="text-2xl font-bold mb-2">Ready to Start?</h3>
-                <p className="text-slate-400 mb-6">Download your personalized, branded PDF roadmap or adjust your settings to create a new plan.</p>
+                <p className="text-slate-500 mb-6">Download your personalized, branded PDF roadmap or adjust your settings to create a new plan.</p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <Button
                         data-testid="download-pdf-btn"
@@ -471,7 +471,7 @@ function FeedbackWidget({ sessionId }: { sessionId?: string }) {
             if (!res.ok) throw new Error("Failed");
             setSubmitted(true);
         } catch {
-            console.error("Feedback submission failed");
+            console.error(JSON.stringify({ event: "feedback_submission_failed" }));
             setError(true);
         } finally {
             setSubmitting(false);

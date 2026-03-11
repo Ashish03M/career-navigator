@@ -143,18 +143,28 @@ const badInput: PlanInput = {
     syllabusSubjects: badSyllabus as any
 };
 
-// Generate a dummy plan (we just need the structure to pass to validatePlan)
-const badPlanResult = generatePlan(badInput);
+// The tightened Zod schema in generatePlan now rejects invalid subjects at parse time.
+// This is actually stronger validation — schema-level rejection is better than post-hoc checks.
+try {
+    const badPlanResult = generatePlan(badInput);
 
-// Validate
-const validation = validatePlan(badPlanResult, badInput);
-
-if (!validation.ok && validation.errors.some((e: string) => e.includes("missing 'chapterIds' tag") || e.includes("missing 'category' tag"))) {
-    console.log("PASS: validatePlan correctly caught missing category tag.");
-} else {
-    console.error("FAIL: validatePlan DID NOT catch missing category tag.");
-    console.log("Errors found:", validation.errors);
-    allPhasesConsistent = false; // Force fail
+    // If generatePlan didn't throw, fall back to validatePlan check
+    const validation = validatePlan(badPlanResult, badInput);
+    if (!validation.ok && validation.errors.some((e: string) => e.includes("missing 'chapterIds' tag") || e.includes("missing 'category' tag"))) {
+        console.log("PASS: validatePlan correctly caught missing category tag.");
+    } else {
+        console.error("FAIL: validatePlan DID NOT catch missing category tag.");
+        console.log("Errors found:", validation.errors);
+        allPhasesConsistent = false;
+    }
+} catch (err) {
+    // Schema-level rejection of invalid subject is the expected (and preferred) behavior
+    if (err instanceof Error && err.message.includes("Invalid plan input")) {
+        console.log("PASS: Zod schema correctly rejected subject with missing category tag.");
+    } else {
+        console.error("FAIL: Unexpected error:", err);
+        allPhasesConsistent = false;
+    }
 }
 
 // TEST 5: Diagnostics Check
@@ -175,12 +185,14 @@ const unknownCategorySubject = {
     id: "unknown-cat",
     name: "Mystery Module",
     displayName: "Mystery",
+    color: "#999999",
+    category: "foundation" as const,
     chapterIds: [],
     tags: { level: "intro", category: "mystery-lang" } // "mystery-lang" is not in KNOWN_FLAGS map
 };
 const strictInput: PlanInput = {
     ...BASE_INPUT,
-    syllabusSubjects: [...BASE_INPUT.syllabusSubjects, unknownCategorySubject] as any
+    syllabusSubjects: [...BASE_INPUT.syllabusSubjects, unknownCategorySubject]
 };
 const strictPlan = generatePlan(strictInput);
 

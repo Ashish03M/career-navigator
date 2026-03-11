@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { captureLead } from "@/lib/leads/sheets";
 import { checkRateLimit } from "@/lib/rateLimit";
+import { verifyCsrfOrigin } from "@/lib/auth";
 import { logger } from "@/lib/logger";
 
 const leadSchema = z.object({
@@ -12,6 +13,10 @@ const leadSchema = z.object({
 });
 
 export async function POST(request: Request) {
+    if (!verifyCsrfOrigin(request)) {
+        return Response.json({ error: "Forbidden" }, { status: 403 });
+    }
+
     const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
     const rl = checkRateLimit(`leads:${ip}`, 10);
     if (!rl.allowed) {

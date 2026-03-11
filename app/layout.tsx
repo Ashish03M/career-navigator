@@ -6,10 +6,31 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: "Data & AI Career Roadmap Generator",
+    url: "https://navigator.codebasics.io",
+    description:
+        "Answer 6 questions and get a personalized, week-by-week learning roadmap for Data & AI careers. Free PDF plan tailored to your background, goals, and schedule.",
+    applicationCategory: "EducationalApplication",
+    operatingSystem: "Any",
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    creator: {
+        "@type": "Organization",
+        name: "Codebasics",
+        url: "https://codebasics.io",
+    },
+};
+
 export const metadata: Metadata = {
+    metadataBase: new URL("https://navigator.codebasics.io"),
     title: "Data & AI Career Roadmap Generator — Codebasics",
     description:
         "Answer 6 questions and get a personalized, week-by-week learning roadmap for Data Analyst, Data Engineer, Data Scientist, ML Engineer, or AI Engineer careers. Free PDF plan tailored to your background, goals, and schedule.",
+    alternates: {
+        canonical: "/",
+    },
     icons: {
         icon: "/favicon.png",
         shortcut: "/favicon.png",
@@ -47,6 +68,12 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
+            <head>
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                />
+            </head>
             <body
                 className={`${inter.variable} ${outfit.variable} font-sans antialiased bg-background text-foreground min-h-screen selection:bg-blue-500/30`}
                 suppressHydrationWarning

@@ -67,7 +67,8 @@ export default function BootcampPlanner() {
             } catch (err) {
                 const msg = err instanceof Error ? err.message : "Failed to load syllabus";
                 setSyllabusError(msg);
-                console.error("[Telemetry] Syllabus fetch failed:", msg);
+                // Structured telemetry — will be captured by error tracking when available
+                console.error(JSON.stringify({ event: "syllabus_fetch_failed", message: msg }));
             } finally {
                 setSyllabusLoading(false);
             }
@@ -93,9 +94,10 @@ export default function BootcampPlanner() {
 
         const result = generatePlan(input);
 
-        // === Lightweight Telemetry ===
+        // Structured telemetry
         const expReduced = (result.diagnostics?.appliedSkips?.length ?? 0) > 0;
-        console.log("[Telemetry] Plan generated:", {
+        console.info(JSON.stringify({
+            event: "plan_generated",
             goal,
             totalWeeks: result.totalWeeks,
             totalModules: result.totalModules,
@@ -104,7 +106,7 @@ export default function BootcampPlanner() {
             skippedCount: result.diagnostics?.appliedSkips?.length ?? 0,
             background,
             availability,
-        });
+        }));
 
         return result;
     }, [showPlan, background, goal, careerOutcome, availability,
@@ -141,7 +143,7 @@ export default function BootcampPlanner() {
                 targetRoleLabel: goalLabel,
                 sessionId: sessionIdRef.current,
             }),
-        }).catch((err) => console.warn("Lead capture failed:", err));
+        }).catch((err) => console.warn(JSON.stringify({ event: "lead_capture_failed", error: String(err) })));
     }, [goal, userName, userEmail]);
 
     const stepConfig = [
@@ -346,7 +348,7 @@ export default function BootcampPlanner() {
                             <div key="loading" className="flex flex-col items-center justify-center py-20 gap-4">
                                 <div className="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
                                 <p className="text-lg font-semibold text-slate-600">Building your roadmap...</p>
-                                <p className="text-sm text-slate-400">Loading curriculum data</p>
+                                <p className="text-sm text-slate-500">Loading curriculum data</p>
                             </div>
                         ) : showPlan && syllabusError ? (
                             <div key="error" className="flex flex-col items-center justify-center py-20 gap-4 max-w-md mx-auto text-center">
@@ -381,7 +383,7 @@ export default function BootcampPlanner() {
                         )}
                     </>
                 </div>
-                <footer className="py-4 px-6 text-center text-xs text-slate-400 border-t border-slate-100">
+                <footer className="py-4 px-6 text-center text-xs text-slate-500 border-t border-slate-100">
                     <a href="/privacy" className="hover:text-slate-600 underline">Privacy Policy</a>
                     {" · "}
                     <a href="/terms" className="hover:text-slate-600 underline">Terms of Service</a>
