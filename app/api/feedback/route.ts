@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { captureFeedback } from "@/lib/leads/sheets";
+import { captureFeedback } from "@/lib/leads/db";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { verifyCsrfOrigin } from "@/lib/auth";
 import { logger } from "@/lib/logger";

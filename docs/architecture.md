@@ -21,7 +21,7 @@ Codebasics Career Navigator is a bootcamp planning tool that generates personali
 | Containerization   | Docker (node:20-alpine, multi-stage)             |
 | Deployment         | Coolify (Docker Compose)                         |
 | Data Persistence   | JSON files on disk (`data/` directory)           |
-| External Services  | Google Sheets API (via `googleapis` service account) |
+| External Services  | MySQL (via `mysql2` connection pool)                 |
 
 ## System Components
 
@@ -53,8 +53,8 @@ Codebasics Career Navigator is a bootcamp planning tool that generates personali
 | Route                 | Methods    | Auth     | Purpose                                               |
 | --------------------- | ---------- | -------- | ----------------------------------------------------- |
 | `/api/syllabus`       | GET, PUT   | PUT only | GET returns syllabus JSON (supports `?type=free`). PUT updates `syllabus_v3.json` (admin auth required). |
-| `/api/leads`          | POST       | No       | Validates lead data (Zod), sends to Google Sheets webhook. Includes honeypot bot protection. |
-| `/api/feedback`       | POST       | No       | Validates feedback (rating 1-5, optional comment), sends to Google Sheets webhook. |
+| `/api/leads`          | POST       | No       | Validates lead data (Zod), stores in MySQL. Includes honeypot bot protection. |
+| `/api/feedback`       | POST       | No       | Validates feedback (rating 1-5, optional comment), stores in MySQL. |
 | `/api/admin/auth`     | POST       | No       | Login (password verification with HMAC + timing-safe comparison) and logout. Rate limited: 5 attempts per 15 minutes per IP. |
 | `/api/admin/check`    | GET        | Cookie   | Returns `{ authenticated: true/false }` based on `admin_token` cookie. |
 | `/api/health`         | GET        | No       | Returns `{ status: "ok", timestamp }`. Used by Docker healthcheck. |
@@ -66,7 +66,7 @@ Codebasics Career Navigator is a bootcamp planning tool that generates personali
 | `lib/auth.ts`              | HMAC-SHA256 cookie-based auth. Derives session token from `ADMIN_PASSWORD` env var. Uses `timingSafeEqual` for constant-time comparisons. Cookie: `admin_token`, httpOnly, 24h TTL. |
 | `lib/rateLimit.ts`         | In-memory rate limiter. 5 attempts per 15-minute window per IP. Suitable for single-instance deployments. |
 | `lib/syllabusStore.ts`     | Atomic read/write for `data/syllabus_v3.json`. Uses temp-file + rename pattern and an in-process write lock to prevent corruption. |
-| `lib/leads/sheets.ts`      | Sends lead and feedback data to Google Sheets via the Google Sheets API (service account JWT auth). Timestamps in IST. |
+| `lib/leads/db.ts`          | Stores lead and feedback data in MySQL via `mysql2/promise` connection pool. Auto-creates `submissions` table on first request. |
 | `lib/logger.ts`            | Structured JSON logger (info/warn/error) wrapping `console.*`.  |
 | `lib/generatePlan.ts`      | Core roadmap generation engine. Handles skip logic (experience-based, goal-based, flag-based), profile multipliers, availability scaling, phase construction, and practical-first reordering. |
 | `lib/schemas/planInputSchema.ts` | Zod schema for runtime validation of `PlanInput`.         |
@@ -95,7 +95,7 @@ In Docker, the `data/` directory is mounted as a named volume (`syllabus_data`) 
 
 | Service              | Integration Point                | Details                                                       |
 | -------------------- | -------------------------------- | ------------------------------------------------------------- |
-| Google Sheets        | `lib/leads/sheets.ts`           | Lead data and feedback are written via the Google Sheets API using a service account (`GOOGLE_SERVICE_ACCOUNT_EMAIL`, `GOOGLE_PRIVATE_KEY`, `GOOGLE_SHEET_ID` env vars). |
+| MySQL                | `lib/leads/db.ts`               | Lead data and feedback are stored in a MySQL `submissions` table via `mysql2/promise`. Configured with a single `MYSQL_URL` env var. |
 | Codebasics.io        | Bootcamp CTA links              | The roadmap result page links to relevant Codebasics bootcamp pages based on the selected goal. |
 
 ### Environment Variables
@@ -104,9 +104,7 @@ In Docker, the `data/` directory is mounted as a named volume (`syllabus_data`) 
 | ----------------------------- | -------- | ---------------------------------------------------- |
 | `ADMIN_PASSWORD`              | Yes      | Admin panel password. Also used to derive the HMAC session token. |
 | `AUTH_SECRET`                 | No       | Optional HMAC key for password verification. Falls back to `ADMIN_PASSWORD`. |
-| `GOOGLE_SERVICE_ACCOUNT_EMAIL` | No     | Google Sheets API service account email. If unset, lead/feedback capture is silently skipped. |
-| `GOOGLE_PRIVATE_KEY`           | No     | Google Sheets API private key (PEM format). Must have `\n` escaped as `\\n` in env vars. |
-| `GOOGLE_SHEET_ID`              | No     | Target Google Sheet ID for lead/feedback data. |
+| `MYSQL_URL`                    | No     | MySQL connection URL (e.g. `mysql://user:pass@host:3306/db`). If unset, lead/feedback capture is silently skipped. |
 
 ## Data Flow
 
@@ -128,7 +126,7 @@ User opens / --> BootcampPlanner loads
   --> RoadmapResult renders phases with expandable chapter details
   --> User clicks "Download PDF"
   --> PdfDownloadModal opens: collects name + email
-  --> POST /api/leads sends lead data to Google Sheets via API
+  --> POST /api/leads stores lead data in MySQL
   --> Client-side @react-pdf/renderer generates branded PDF
   --> PDF downloads to user's device
 ```
@@ -157,7 +155,7 @@ Admin navigates to /admin
 User submits feedback (rating 1-5, optional comment)
   --> POST /api/feedback
   --> Server: Zod validation
-  --> Server: writes feedback to Google Sheets via API
+  --> Server: stores feedback in MySQL
   --> Response: { success: true }
 ```
 

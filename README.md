@@ -1,6 +1,6 @@
 # Career Navigator
 
-[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
 [![React PDF](https://img.shields.io/badge/React_PDF-4.3-red?style=for-the-badge)](https://react-pdf.org/)
@@ -43,10 +43,13 @@ Covers 7 career paths: Data Analyst, Data Engineer, Data Scientist, AI Engineer,
 | **Goal-Based Filtering** | The curriculum is filtered to include only subjects relevant to the selected career path (e.g., a Data Analyst path skips Deep Learning and NLP). |
 | **Dynamic Duration Scaling** | Module durations adjust based on experience level and weekly hours available — someone with 5 h/week gets a longer but lighter timeline than someone studying 20+ h/week. |
 | **Branded PDF Export** | Users enter their name and email, then download a professionally designed PDF with custom fonts (Kanit, Saira) and Codebasics branding. Built client-side with `@react-pdf/renderer`. |
-| **Lead Capture** | Name and email are optionally sent to Google Sheets via the Google Sheets API before PDF download. A honeypot field provides bot protection. |
-| **Feedback System** | After viewing their roadmap, users can rate the experience (1-5 stars) and leave a comment — captured to Google Sheets. |
+| **Lead Capture** | Name and email are optionally stored in MySQL before PDF download. A honeypot field provides bot protection. |
+| **Feedback System** | After viewing their roadmap, users can rate the experience (1-5 stars) and leave a comment — stored in MySQL. |
 | **Admin Control Center** | A password-protected panel for managing the master syllabus (subjects, chapters, topics, resources). Changes are reflected instantly in new roadmaps. |
 | **Security Hardening** | HMAC-SHA256 auth cookies, HSTS, CSP headers, in-memory rate limiting, Zod input validation, and Edge middleware for admin route protection. |
+| **Error Tracking** | Sentry integration across client, server, and edge runtimes with intelligent noise filtering and source maps. |
+| **Analytics** | Microsoft Clarity for session recordings and heatmaps — gated behind a GDPR-compliant cookie consent banner. |
+| **Cookie Consent** | Accept/Reject banner that blocks analytics scripts until the user gives explicit consent. Preference stored in localStorage for 365 days. |
 
 ---
 
@@ -70,18 +73,21 @@ The roadmap engine supports 7 career tracks, each with its own curated curriculu
 
 | Layer | Technology |
 |-------|------------|
-| **Framework** | [Next.js 14](https://nextjs.org/) (App Router) |
+| **Framework** | [Next.js 16](https://nextjs.org/) (App Router) |
 | **Language** | [TypeScript 5.9](https://www.typescriptlang.org/) |
 | **UI Library** | [React 19](https://react.dev/) |
 | **Styling** | [Tailwind CSS 3.4](https://tailwindcss.com/) |
 | **Components** | [shadcn/ui](https://ui.shadcn.com/) + [Radix UI](https://www.radix-ui.com/) |
 | **PDF Generation** | [@react-pdf/renderer 4.3](https://react-pdf.org/) |
-| **Lead Capture** | [Google Sheets API](https://developers.google.com/sheets/api) via `googleapis` |
+| **Lead Capture** | [MySQL](https://www.mysql.com/) via `mysql2` |
 | **Validation** | [Zod 4](https://zod.dev/) (runtime schema validation) |
 | **Icons** | [Lucide React](https://lucide.dev/) |
 | **Data Storage** | Local filesystem — JSON file persistence (no database required) |
+| **Error Tracking** | [Sentry](https://sentry.io/) (`@sentry/nextjs`) — client, server, and edge runtimes |
+| **Analytics** | [Microsoft Clarity](https://clarity.microsoft.com/) — session recordings, heatmaps (consent-gated) |
 | **CI/CD** | GitHub Actions |
 | **Containerization** | Docker (multi-stage build, Alpine, non-root) |
+| **Deployment** | [Coolify](https://coolify.io/) (self-hosted PaaS) |
 
 ---
 
@@ -92,9 +98,9 @@ career-navigator/
 ├── app/                            # Next.js App Router
 │   ├── api/
 │   │   ├── admin/                  # Auth endpoints (login, logout, status check)
-│   │   ├── feedback/               # Feedback capture → Google Sheets
+│   │   ├── feedback/               # Feedback capture → MySQL
 │   │   ├── health/                 # Health check (includes data file verification)
-│   │   ├── leads/                  # Lead capture → Google Sheets
+│   │   ├── leads/                  # Lead capture → MySQL
 │   │   └── syllabus/               # Syllabus CRUD (GET / PUT)
 │   ├── admin/
 │   │   ├── layout.tsx              # Admin layout wrapper
@@ -121,6 +127,8 @@ career-navigator/
 │   │   ├── RoadmapResult.tsx       # Generated roadmap viewer + feedback widget
 │   │   ├── SelectionStep.tsx       # Single-select question step wrapper
 │   │   └── UserDetailsStep.tsx     # Name & email collection form
+│   ├── ClarityScript.tsx            # Microsoft Clarity analytics (consent-gated)
+│   ├── CookieConsent.tsx            # GDPR cookie consent banner (Accept/Reject)
 │   └── ui/                         # Reusable shadcn/ui primitives (button, dialog, input, etc.)
 │
 ├── data/
@@ -134,7 +142,7 @@ career-navigator/
 │   │   └── templates/
 │   │       └── CareerRoadmapPdf.tsx # Branded PDF React component
 │   ├── leads/
-│   │   └── sheets.ts               # Google Sheets API integration (lead & feedback capture)
+│   │   └── db.ts                   # MySQL integration (lead & feedback capture)
 │   ├── schemas/
 │   │   └── planInputSchema.ts      # Zod schema for plan input validation
 │   ├── auth.ts                     # HMAC-SHA256 cookie-based admin auth
@@ -151,6 +159,10 @@ career-navigator/
 │   └── validatePlan.ts             # Plan quality & consistency validation
 │
 ├── middleware.ts                    # Edge middleware (admin route protection)
+├── instrumentation.ts              # Sentry initialization (conditional on DSN)
+├── sentry.client.config.ts         # Sentry client-side configuration
+├── sentry.server.config.ts         # Sentry server-side configuration
+├── sentry.edge.config.ts           # Sentry edge runtime configuration
 ├── public/
 │   └── fonts/                      # Custom brand fonts (Kanit, Saira)
 ├── .github/workflows/ci.yml        # GitHub Actions CI pipeline
@@ -221,9 +233,9 @@ Create a `.env.local` file in the project root (use `.env.example` as a template
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
 | `ADMIN_PASSWORD` | No | — | Password to access the admin panel at `/admin`. Only needed if you use the admin panel. The public app works without it. |
-| `GOOGLE_SERVICE_ACCOUNT_EMAIL` | No | — | Google Cloud service account email for Sheets API. If not set, lead/feedback capture is silently skipped. |
-| `GOOGLE_PRIVATE_KEY` | No | — | Private key for the service account (PEM format, in double quotes). |
-| `GOOGLE_SHEET_ID` | No | — | ID of the Google Sheet to write leads and feedback to. |
+| `MYSQL_URL` | No | — | MySQL connection URL (e.g. `mysql://user:pass@host:3306/career_navigator`). If not set, lead/feedback capture is silently skipped. |
+| `NEXT_PUBLIC_SENTRY_DSN` | No | — | Sentry DSN for error tracking. If not set, Sentry is disabled. Works across client, server, and edge runtimes. |
+| `NEXT_PUBLIC_CLARITY_ID` | No | — | Microsoft Clarity project ID for analytics. Only loads after the user accepts the cookie consent banner. |
 | `STRICT_VALIDATION` | No | `false` | Set to `"true"` to enable stricter plan validation rules during roadmap generation. |
 
 > **Note:** Never commit `.env.local` to version control. It is already listed in `.gitignore`.
@@ -284,8 +296,8 @@ All API routes live under `/api/`. Authentication is required only for write ope
 | `PUT` | `/api/syllabus` | **Yes** | — | Update the syllabus (admin only). Body is validated with Zod. |
 | `POST` | `/api/admin/auth` | No | 5 req/15 min | Admin login (`{ password }`) or logout (`{ action: "logout" }`) |
 | `GET` | `/api/admin/check` | No | — | Check current admin authentication status |
-| `POST` | `/api/leads` | No | 10 req/15 min | Capture lead data (name, email, target role) to Google Sheets |
-| `POST` | `/api/feedback` | No | 10 req/15 min | Capture star rating and feedback comment to Google Sheets |
+| `POST` | `/api/leads` | No | 10 req/15 min | Capture lead data (name, email, target role) to MySQL |
+| `POST` | `/api/feedback` | No | 10 req/15 min | Capture star rating and feedback comment to MySQL |
 | `GET` | `/api/health` | No | — | Health check — returns `{ status: "ok" }` or `503` if degraded |
 
 ### Example: Fetch the Free Syllabus
@@ -353,9 +365,7 @@ docker build -t career-navigator .
 # Run the container
 docker run -p 3000:3000 \
   -e ADMIN_PASSWORD=your-strong-password \
-  -e GOOGLE_SERVICE_ACCOUNT_EMAIL=your-sa@project.iam.gserviceaccount.com \
-  -e GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n" \
-  -e GOOGLE_SHEET_ID=your-sheet-id \
+  -e MYSQL_URL=mysql://user:pass@host:3306/career_navigator \
   career-navigator
 ```
 
@@ -366,16 +376,21 @@ docker run -p 3000:3000 \
 - Built-in health check hitting `/api/health` every 30 seconds
 - Next.js standalone output mode for minimal runtime footprint
 
-### Vercel
+### Coolify (Production)
 
-Deploy directly to Vercel with zero configuration:
+The project is deployed via [Coolify](https://coolify.io/), a self-hosted PaaS:
 
-1. Push your code to GitHub.
-2. Import the repository on [vercel.com](https://vercel.com).
-3. Set the environment variables (`ADMIN_PASSWORD`, etc.) in the Vercel dashboard.
-4. Deploy.
-
-> **Note:** When deploying to Vercel, the JSON data files (`data/*.json`) are read-only at runtime. Admin edits to the syllabus will not persist across redeployments.
+1. Push your code to the GitHub repository.
+2. In the Coolify dashboard, create a new application pointing to the repo.
+3. Set environment variables in Coolify's UI:
+   - `ADMIN_PASSWORD` — a strong password (generate with `openssl rand -base64 32`)
+   - `MYSQL_URL` — MySQL connection URL for lead/feedback capture
+   - `NEXT_PUBLIC_SENTRY_DSN` — for error tracking (optional)
+   - `NEXT_PUBLIC_CLARITY_ID` — for analytics (optional)
+4. Coolify auto-builds using the `Dockerfile` and `docker-compose.yml`.
+5. Point your DNS (`navigator.codebasics.io`) to the Coolify server.
+6. Coolify handles TLS/SSL automatically.
+7. Verify: `GET /api/health` should return `{ status: "ok" }`.
 
 ### Manual / VPS
 
@@ -427,7 +442,7 @@ On every admin save, a backup is automatically created (e.g., `data/syllabus_v3.
 | Port 3000 already in use | Stop the other process or run `npm run dev -- -p 3001` to use a different port. |
 | Admin login not working | Verify `ADMIN_PASSWORD` is set in `.env.local`. Restart the dev server after changing env vars. |
 | PDF download fails | Check the browser console for errors. The PDF generator loads ~100 KB of code on first download — slow connections may hit the 30-second timeout. |
-| Lead capture not working | This is expected if the Google Sheets API env vars are not set. Ensure `GOOGLE_SERVICE_ACCOUNT_EMAIL`, `GOOGLE_PRIVATE_KEY`, and `GOOGLE_SHEET_ID` are all configured in `.env.local`. |
+| Lead capture not working | This is expected if `MYSQL_URL` is not set. Ensure it is configured in `.env.local` and the MySQL database is reachable. |
 | `npm run lint` prompts for config | Ensure `.eslintrc.json` exists with `{ "extends": "next/core-web-vitals" }`. |
 | Health check returns 503 | The data file `data/syllabus_v3.json` is missing or unreadable. Ensure it exists and has correct permissions. |
 | TypeScript errors after pulling | Run `npm install` to ensure dependencies match `package-lock.json`. |
@@ -480,3 +495,5 @@ For technical deep-dives into the architecture and internal logic:
 
 - [API Reference](./docs/api.md)
 - [Architecture & Data Flow](./docs/architecture.md)
+- [Design Decisions](./docs/design-decisions.md)
+- [Operations Runbook](./docs/runbook.md)

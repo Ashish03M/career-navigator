@@ -138,7 +138,7 @@ curl -X PUT http://localhost:3000/api/syllabus \
 
 ## POST /api/leads
 
-Captures lead data (name, email, career preferences) and sends it to Google Sheets via webhook. Includes honeypot bot protection -- if the hidden `honeypot` field is non-empty, the request silently returns success without forwarding data.
+Captures lead data (name, email, career preferences) and stores it in MySQL. Includes honeypot bot protection -- if the hidden `honeypot` field is non-empty, the request silently returns success without storing data.
 
 **Auth required**: No
 
@@ -188,7 +188,7 @@ curl -X POST http://localhost:3000/api/leads \
 
 ## POST /api/feedback
 
-Captures user feedback (star rating + optional comment) and sends it to Google Sheets via the same webhook.
+Captures user feedback (star rating + optional comment) and stores it in MySQL.
 
 **Auth required**: No
 

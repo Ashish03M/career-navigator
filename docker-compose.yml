@@ -3,7 +3,7 @@ services:
     build: .
     ports:
       - "3000:3000"
-    # Set ADMIN_PASSWORD and GOOGLE_SHEETS_WEBHOOK_URL in Coolify's
+    # Set ADMIN_PASSWORD and MYSQL_URL in Coolify's
     # Environment Variables UI (or via .env.local for local dev)
     env_file:
       - path: .env.local

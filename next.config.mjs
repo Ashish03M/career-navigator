@@ -3,7 +3,7 @@ const isDev = process.env.NODE_ENV !== "production";
 
 const nextConfig = {
     output: "standalone",
-    serverExternalPackages: ["@sentry/nextjs", "@sentry/node"],
+    serverExternalPackages: ["@sentry/nextjs", "@sentry/node", "mysql2"],
     images: {
         remotePatterns: [],
     },
@@ -25,7 +25,7 @@ const nextConfig = {
                             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
                             "font-src 'self' https://fonts.gstatic.com",
                             "img-src 'self' data: blob: https://www.clarity.ms",
-                            "connect-src 'self' https://script.google.com https://*.sentry.io https://www.clarity.ms",
+                            "connect-src 'self' https://*.sentry.io https://www.clarity.ms",
                             "frame-ancestors 'none'",
                         ].join("; "),
                     },

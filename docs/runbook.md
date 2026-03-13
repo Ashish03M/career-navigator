@@ -13,9 +13,7 @@ docker run -d \
   --name career-navigator \
   -p 3000:3000 \
   -e ADMIN_PASSWORD=your-strong-password \
-  -e GOOGLE_SERVICE_ACCOUNT_EMAIL=... \
-  -e GOOGLE_PRIVATE_KEY=... \
-  -e GOOGLE_SHEET_ID=... \
+  -e MYSQL_URL=mysql://user:pass@host:3306/career_navigator \
   -v $(pwd)/data:/app/data \
   career-navigator
 ```
@@ -83,11 +81,11 @@ The app creates `data/syllabus_v3.json.backup` before every write.
 cp data/syllabus_v3.json.backup data/syllabus_v3.json
 ```
 
-### Lead/feedback not saving to Google Sheets
+### Lead/feedback not saving to MySQL
 
-1. Verify all three `GOOGLE_*` env vars are set
-2. Verify the service account email has Editor access to the spreadsheet
-3. Check application logs for `sheets:` prefixed errors
+1. Verify `MYSQL_URL` env var is set and the database is reachable
+2. Check application logs for `Failed to capture lead` or `Failed to capture feedback` errors
+3. Verify the MySQL user has CREATE TABLE and INSERT/UPDATE permissions
 
 ### Rate limit hit
 
@@ -110,7 +108,7 @@ After deployment, verify:
 - [ ] Homepage loads correctly
 - [ ] Admin login works at `/admin`
 - [ ] PDF generation works (complete wizard, download PDF)
-- [ ] Lead data appears in Google Sheet (if configured)
+- [ ] Lead data appears in MySQL `submissions` table (if configured)
 
 ## Environment Variables
 
@@ -118,9 +116,7 @@ After deployment, verify:
 |----------|----------|-------------|
 | `ADMIN_PASSWORD` | Yes | Admin panel password and HMAC key |
 | `AUTH_SECRET` | No | Separate HMAC key (falls back to ADMIN_PASSWORD) |
-| `GOOGLE_SERVICE_ACCOUNT_EMAIL` | No | Google Sheets API service account |
-| `GOOGLE_PRIVATE_KEY` | No | Google Sheets API private key (PEM) |
-| `GOOGLE_SHEET_ID` | No | Target Google Sheet ID |
+| `MYSQL_URL` | No | MySQL connection URL for lead/feedback capture |
 | `STRICT_VALIDATION` | No | Enable strict plan validation |
 
 ## Incident Response

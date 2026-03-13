@@ -56,7 +56,7 @@ export default function PrivacyPolicyPage() {
                     <section>
                         <h2 className="text-xl font-semibold text-slate-900 mb-3">4. Data Storage</h2>
                         <p>
-                            Your data is stored securely in Google Sheets, accessible only to Codebasics staff.
+                            Your data is stored securely in a MySQL database, accessible only to Codebasics staff.
                             Data is retained for up to 3 years or until you request deletion.
                         </p>
                     </section>

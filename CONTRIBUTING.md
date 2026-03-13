@@ -33,9 +33,7 @@ Thank you for your interest in contributing. This document explains how to set u
 
    ```env
    ADMIN_PASSWORD=your-local-admin-password
-   GOOGLE_SERVICE_ACCOUNT_EMAIL=           # optional -- Google Sheets API service account email
-   GOOGLE_PRIVATE_KEY=                     # optional -- Google Sheets API private key (PEM)
-   GOOGLE_SHEET_ID=                        # optional -- target Google Sheet ID
+   MYSQL_URL=                              # optional -- MySQL connection URL for lead/feedback capture
    ```
 
    - `ADMIN_PASSWORD` is required for the admin panel to function.
@@ -89,7 +87,7 @@ lib/
   auth.ts                   # Cookie-based HMAC auth
   rateLimit.ts              # In-memory rate limiter
   syllabusStore.ts          # Atomic JSON file read/write
-  leads/sheets.ts           # Google Sheets API integration
+  leads/db.ts               # MySQL integration (lead & feedback capture)
   types.ts                  # Core TypeScript types
   syllabusTypes.ts          # Syllabus data types
   pdf/                      # PDF generation (react-pdf)
@@ -222,6 +220,4 @@ npx playwright test --headed
 | ----------------------------- | -------- | ---------------------------------------------------- |
 | `ADMIN_PASSWORD`              | Yes      | Admin panel password and HMAC key for session tokens |
 | `AUTH_SECRET`                 | No       | Optional separate HMAC key (falls back to ADMIN_PASSWORD) |
-| `GOOGLE_SERVICE_ACCOUNT_EMAIL` | No     | Google Sheets API service account email               |
-| `GOOGLE_PRIVATE_KEY`           | No     | Google Sheets API private key (PEM format)            |
-| `GOOGLE_SHEET_ID`              | No     | Target Google Sheet ID for lead/feedback data         |
+| `MYSQL_URL`                    | No     | MySQL connection URL for lead/feedback capture        |
