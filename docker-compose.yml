@@ -1,8 +1,11 @@
 services:
   app:
     build: .
-    # Set ADMIN_PASSWORD and MYSQL_URL in Coolify's
-    # Environment Variables UI (or via .env.local for local dev)
+    # Coolify injects these from its Environment Variables UI.
+    # For local dev, create a .env.local file with these values.
+    environment:
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - MYSQL_URL=${MYSQL_URL}
     env_file:
       - path: .env.local
         required: false
