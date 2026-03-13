@@ -2,7 +2,9 @@
 FROM node:22-alpine AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm install
+RUN npm install --ignore-scripts
+COPY scripts ./scripts
+RUN node scripts/patch-next.js
 
 # Stage 2: Build the application
 FROM node:22-alpine AS builder
