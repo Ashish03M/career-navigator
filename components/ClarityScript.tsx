@@ -1,10 +1,22 @@
 "use client";
 
 import Script from "next/script";
+import { useState, useEffect } from "react";
+import { getConsentStatus } from "./CookieConsent";
 
 export default function ClarityScript() {
     const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID;
-    if (!clarityId) return null;
+    const [consented, setConsented] = useState(false);
+
+    useEffect(() => {
+        const check = () => setConsented(getConsentStatus() === "accepted");
+        check();
+        window.addEventListener("cookie-consent-change", check);
+        return () =>
+            window.removeEventListener("cookie-consent-change", check);
+    }, []);
+
+    if (!clarityId || !consented) return null;
 
     return (
         <Script
