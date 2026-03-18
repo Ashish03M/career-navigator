@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { type StepOption } from "@/lib/types";
-import { type ReactNode, useRef, useCallback, useEffect } from "react";
+import { type ReactNode, useRef, useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 type SelectionStepProps = {
@@ -22,14 +22,17 @@ export default function SelectionStep({
     columns = 2, onBack, onNext, nextLabel = "Continue →"
 }: SelectionStepProps) {
     const autoAdvanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const [justSelected, setJustSelected] = useState<string | null>(null);
 
     const handleSelect = useCallback((id: string) => {
+        setJustSelected(id);
         onSelect(id);
-        // Auto-advance after 500ms on selection
+        // Auto-advance after 600ms on selection (gives time for the pop animation)
         if (autoAdvanceTimer.current) clearTimeout(autoAdvanceTimer.current);
         autoAdvanceTimer.current = setTimeout(() => {
+            setJustSelected(null);
             onNext();
-        }, 500);
+        }, 600);
     }, [onSelect, onNext]);
 
     // Cleanup timer on unmount to prevent firing after navigation
@@ -47,6 +50,7 @@ export default function SelectionStep({
             <div className={cn("grid gap-4", columns === 2 ? "md:grid-cols-2" : "grid-cols-1")}>
                 {options.map((opt, idx) => {
                     const isSelected = selected === opt.id;
+                    const isJustSelected = justSelected === opt.id;
                     return (
                         <button
                             key={opt.id}
@@ -57,7 +61,8 @@ export default function SelectionStep({
                                 columns === 2 && options.length % 2 !== 0 && idx === options.length - 1 ? "md:col-span-2" : "",
                                 isSelected
                                     ? "scale-[1.02] border-blue-600 bg-blue-50/50 shadow-xl shadow-blue-500/10 ring-1 ring-blue-600 offset-2"
-                                    : "border-slate-200 hover:border-blue-400 bg-white hover:bg-slate-50 hover:shadow-lg hover:scale-[1.01]"
+                                    : "border-slate-200 hover:border-blue-400 bg-white hover:bg-slate-50 hover:shadow-lg hover:scale-[1.01]",
+                                isJustSelected && "animate-select-pop"
                             )}
                         >
                             <div className={cn(
