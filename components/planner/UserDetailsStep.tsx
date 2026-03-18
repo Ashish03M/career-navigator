@@ -35,7 +35,7 @@ export default function UserDetailsStep({
                     Almost There!
                 </h2>
                 <p className="text-sm text-slate-500 mt-1">
-                    Let us know who we're building this roadmap for.
+                    Let us know who we&apos;re building this roadmap for.
                 </p>
             </div>
 

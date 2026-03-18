@@ -102,7 +102,7 @@ export default function PdfDownloadModal({
             );
             setState("error");
         }
-    }, [isValid, name, email, plan, meta, honeypot, sessionId]);
+    }, [isValid, name, email, plan, meta, honeypot, sessionId, personalization]);
 
     // Auto-trigger download when modal opens with pre-filled valid data
     const hasAutoTriggered = useRef(false);
