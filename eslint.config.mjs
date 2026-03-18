@@ -1,3 +1,8 @@
 import coreWebVitals from "eslint-config-next/core-web-vitals";
 
-export default coreWebVitals;
+const config = [
+    { ignores: [".claude/**", ".next/**"] },
+    ...coreWebVitals,
+];
+
+export default config;

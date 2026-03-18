@@ -363,7 +363,8 @@ function testSkipMatrix() {
     // Case 4: Skip many (all checked)
     const allChecked: ExperienceState = {
         python: true, sql: true, statistics: true, ml: true,
-        dl: true, nlp: true, genai: true, mlops: true
+        dl: true, nlp: true, genai: true, mlops: true,
+        excel_bi: true, data_engineering: true, big_data: true
     };
     const skipMany = generatePlan({ ...FREE_BASE, experience: allChecked });
     testInvariants(skipMany, "Skip-Matrix: all checked", freeCatalogIds);

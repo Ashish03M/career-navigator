@@ -63,10 +63,27 @@ const config: Config = {
     				'50%': {
     					backgroundPosition: '100% 50%'
     				}
+    			},
+    			'fade-in-up': {
+    				'0%': {
+    					opacity: '0',
+    					transform: 'translateY(30px)'
+    				},
+    				'100%': {
+    					opacity: '1',
+    					transform: 'translateY(0)'
+    				}
+    			},
+    			'select-pop': {
+    				'0%': { transform: 'scale(1)' },
+    				'50%': { transform: 'scale(1.04)' },
+    				'100%': { transform: 'scale(1.02)' }
     			}
     		},
     		animation: {
-    			'gradient-shift': 'gradient-shift 3s ease infinite'
+    			'gradient-shift': 'gradient-shift 3s ease infinite',
+    			'fade-in-up': 'fade-in-up 0.4s ease-out',
+    			'select-pop': 'select-pop 0.35s ease-in-out'
     		},
     		borderRadius: {
     			lg: 'var(--radius)',

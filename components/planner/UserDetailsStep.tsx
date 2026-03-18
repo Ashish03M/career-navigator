@@ -23,6 +23,11 @@ export default function UserDetailsStep({
 }: UserDetailsStepProps) {
     const isValid = name.trim().length >= 2 && isValidEmail(email);
 
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (isValid) onGenerate();
+    };
+
     return (
         <div className="w-full max-w-md mx-auto">
             <div className="text-center mb-6">
@@ -30,11 +35,11 @@ export default function UserDetailsStep({
                     Almost There!
                 </h2>
                 <p className="text-sm text-slate-500 mt-1">
-                    Let us know who we're building this roadmap for.
+                    Let us know who we&apos;re building this roadmap for.
                 </p>
             </div>
 
-            <div className="space-y-4">
+            <form id="user-details-form" onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
                     <Label htmlFor="name" className="text-sm font-semibold">
                         Full Name <span className="text-red-500">*</span>
@@ -88,11 +93,12 @@ export default function UserDetailsStep({
                     </a>
                     .
                 </p>
-            </div>
+            </form>
 
             <div className="flex items-center gap-4 mt-6">
                 {onBack && (
                     <Button
+                        type="button"
                         variant="ghost"
                         onClick={onBack}
                         className="text-slate-400 hover:text-slate-600 hover:bg-slate-50 pl-0 hover:pl-2 transition-all"
@@ -102,7 +108,8 @@ export default function UserDetailsStep({
                 )}
                 <div className="flex-1" />
                 <Button
-                    onClick={onGenerate}
+                    type="submit"
+                    form="user-details-form"
                     disabled={!isValid}
                     className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-[#6F53C1] hover:from-blue-700 hover:to-[#5d44a8] text-white font-bold py-3 h-auto text-base gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
                 >

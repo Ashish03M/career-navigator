@@ -378,7 +378,9 @@ export default function BootcampPlanner() {
                                         <ProgressBar currentStep={step} totalSteps={TOTAL_STEPS} />
                                     </div>
                                 )}
-                                {renderStep()}
+                                <div key={`step-transition-${step}`} className="animate-fade-in-up">
+                                    {renderStep()}
+                                </div>
                             </div>
                         )}
                     </>
