@@ -21,7 +21,7 @@ const nextConfig = {
                         key: "Content-Security-Policy",
                         value: [
                             "default-src 'self'",
-                            `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} https://www.clarity.ms`,
+                            `script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'${isDev ? " 'unsafe-eval'" : ""} https://www.clarity.ms`,
                             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
                             "font-src 'self' https://fonts.gstatic.com",
                             "img-src 'self' data: blob: https://www.clarity.ms",
